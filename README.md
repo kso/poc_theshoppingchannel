@@ -4,7 +4,7 @@ Demos
 This project contains the responsive demo as seen here: http://quickstart.groupbyinc.com/demo-responsive
 
 Please fork this repository to make changes.  You probably will not be given commit access if you 
-are external to groupby.  If you make changes that you think would be beneficial to make it into 
+are external to GroupBy.  If you make changes that you think would be beneficial to make it into 
 the core demo, please send a pull request.
 
 To make the project run, you will need a copy of the api-java.jar. This jar is available from your 
