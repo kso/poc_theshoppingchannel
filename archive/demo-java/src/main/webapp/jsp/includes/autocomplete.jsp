@@ -1,0 +1,1 @@
+<%@include file="tags.jsp"%>{"autocomplete": [ <c:forEach items="${results.availableNavigationByName['manufacturer'].refinementValues}"  var="val" varStatus="i"><c:if test="${i.index < 100}">"${gc:escapeJs(val.value)}"${i.index ==99 || i.last ? '': ','}</c:if></c:forEach>]}

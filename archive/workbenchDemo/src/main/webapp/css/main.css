@@ -1,0 +1,195 @@
+.top-nav {
+	margin-top: 15px;
+}
+
+.flash {
+	margin-bottom: 10px;
+}
+
+#legal li {
+	margin-top: 7px;
+}
+
+.header-logo-wordmark {
+	font-size: 22px;
+}
+
+.triggers ul li {
+	list-style: none;
+}
+
+#inputhack {
+	position: relative;
+	width: 145px;
+	height: 35px;
+	overflow: hidden;
+}
+
+#inputhack input {
+	cursor: pointer;
+	font: 500px monospace; /* make the input's button HUGE */
+	opacity: 0; /* this will make it transparent */
+	filter: alpha(opacity =                               0);
+	/* transparency for Internet Explorer */
+	position: absolute;
+	/* making it absolute with z-index:1 will place it on top of the button */
+	z-index: 1;
+	top: 0;
+	right: 0;
+	padding: 0;
+	margin: 0;
+}
+
+ul.templateSelect li {
+	display: inline;
+	border: 0;
+}
+
+ul.templateSelect li img {
+	width: 50px;
+	margin: 0;
+	padding: 0;
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+	height: 50px;
+}
+
+ul.templateSelect li  a {
+	display: inline-block;
+	border: 2px solid #EEEEEE;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+
+ul.templateSelect li  a:hover {
+	border: 2px solid #DDDDDD;
+}
+
+ul.templateSelect li a.highlight {
+	border: 2px solid #555599;
+}
+
+.templates {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+img.help {
+	float: left;
+	margin-right: 5px; margin-left; 0;
+	cursor: pointer;
+}
+
+dl.form>dd textarea {
+	min-height: 100px;
+	height: 100px;
+}
+
+#startDate,#endDate,#startDate2,#search {
+	width: 100px;
+}
+
+#startDate2,#search {
+	margin-left: 10px;
+}
+
+#ui-datepicker-div {
+	font-size: 12px;
+}
+
+.triggers ul {
+	clear: both;
+}
+
+.sortable li {
+	cursor: move;
+}
+
+#brandDetail {
+	cursor: text;
+}
+
+.boxed-group+.boxed-group {
+	margin-top: 5px;
+}
+
+.boxed-group {
+	margin-top: 5px;
+}
+
+.marketing .header-logged-out,.header-logged-in {
+	background-position: 0px 0px;
+	height: 86px;
+	background-image: url('/images/background2.png');
+	background-repeat: repeat-x;
+	padding: 0px;
+	margin: 0px;
+	border-bottom: 2px solid #999;
+}
+
+.header-logo-wordmark {
+	padding-top: 25px;
+}
+
+.signout {
+	float: right;
+	color: white;
+	font-weight: normal;
+	text-shadow: none;
+	text-decoration: none;
+	padding-top: 34px;
+	text-decoration: none;
+}
+
+.pane-selector .selector-item h4 {
+	margin: 0;
+}
+
+.highlight {
+	background-color: #ddeffb;
+}
+
+.and {
+	color: #CCCCCC;
+}
+
+.and:hover {
+	color: #0000FF;
+}
+/* remove to fix 100%
+*/
+.container {
+	width: auto;
+	margin: 0;
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+.settings-content {
+	position: relative;
+	float: right;
+	width: 985px;
+	margin-right: 0px;
+}
+
+.signout {
+	margin-right: 4px;
+}
+
+.header-actions {
+	margin-top: 28px;
+	margin-right: 100px;
+}
+/* remove to here to fix 100%
+*/
+.boxed-group {
+	margin-top: 0;
+}
+
+label {
+	cursor: pointer;
+}
+.template b
+{
+font-size:15px;
+}

@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head lang="en">
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<title>Perfetto Documentation</title>
+<link rel="stylesheet" href="assets/blueprint-css/screen.css" type="text/css" media="screen, projection">
+<link rel="stylesheet" href="assets/blueprint-css/print.css" type="text/css" media="print">
+<!--[if lt IE 8]><link rel="stylesheet" href="assets/blueprint-css/ie.css" type="text/css" media="screen, projection"><![endif]-->
+<link rel="stylesheet" href="assets/blueprint-css/plugins/fancy-type/screen.css" type="text/css" media="screen, projection">
+<style type="text/css" media="screen">
+p, table, hr, .box {
+	margin-bottom: 25px;
+}
+.box p {
+	margin-bottom: 10px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <h3 class="center alt">Preciso Documentation by Angelo Mazzilli v1.0</h3>
+  <hr>
+  <h1 class="center">Preciso</h1>
+  <div class="borderTop">
+    <div class="span-6 colborder info prepend-1">
+      <p class="prepend-top"> <strong> Created: 05/25/2013<br>
+        By: Angelo Mazzilli<br>
+        Email: <a href="mailto:youremail@yourdomain.com">info@angelomazzilli.com</a><br />
+        Skype: angelo.mazzilli</strong> (location: Bisceglie)</p>
+    </div>
+    <!-- end div .span-6 -->
+    
+    <div class="span-12 last">
+      <p class="prepend-top append-0">Thank you for purchasing my theme. If you have any questions that are beyond the scope of this help file, please feel free to email via my user page contact form <a href="http://themeforest.net/user/AngeloM">here</a>. Thanks so much!</p>
+    </div>
+  </div>
+  <!-- end div .borderTop -->
+  
+  <hr>
+  <h2 id="toc" class="alt">Table of Contents</h2>
+  <ol class="alpha">
+    <li><a href="#htmlStructure">Bootstrap HTML Structure</a></li>
+    <li><a href="#cssFiles">CSS Files</a></li>
+    <li><a href="#javascript">JavaScript</a></li>
+    <li><a href="#credits">Sources and Credits</a></li>
+  </ol>
+  <hr>
+  <h3 id="htmlStructure"><strong>A) Bootstrap HTML Structure</strong> - <a href="#toc">top</a></h3>
+  <p><strong>This theme was built with bootstrap</strong></p>
+  <p>let's see how to write the code:</p>
+  <h4><strong>DOCTYPE</strong></h4>
+  <pre>
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+...
+&lt;/html&gt;</pre>
+  <h4><strong>INCLUDE META, CSS and JAVASCRIPT</strong></h4>
+  <pre>&lt;!DOCTYPE html&gt;<br />&lt;html&gt;<br />  &lt;head&gt;<br />    &lt;title&gt;Preciso&lt;/title&gt;<br />    &lt;!-- For Devices --&gt;<br />    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;<br />    &lt;!-- Bootstrap --&gt;<br />    &lt;link href=&quot;css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot; media=&quot;screen&quot;&gt;<br />    &lt;!-- Preciso style --&gt;<br />    &lt;link href=&quot;css/style.css&quot; rel=&quot;stylesheet&quot; media=&quot;screen&quot;&gt;<br />&lt;/head&gt;<br />  &lt;body&gt;<br />    &lt;h1&gt;Hello, world!&lt;/h1&gt;<br />    &lt;script src=&quot;http://code.jquery.com/jquery.js&quot;&gt;&lt;/script&gt;<br />    &lt;script src=&quot;js/bootstrap.min.js&quot;&gt;&lt;/script&gt;<br />  &lt;/body&gt;<br />&lt;/html&gt;</pre>
+  <h4><strong>CONTAINER and GRID</strong></h4>
+  <p>Create a .row and add the appropriate number of .span* columns. As this is a 12-column grid, each .span* spans a number of those 12 columns, and should always add up to 12 for each row.</p>
+  <pre>&lt;div class=&quot;container&quot;&gt;
+  &lt;div class=&quot;row&quot;&gt;<br />    &lt;div class=&quot;span9&quot;&gt;<br />      &lt;!--Body content--&gt;<br />    &lt;/div&gt;<br />    &lt;div class=&quot;span3&quot;&gt;<br />      &lt;!--Sidebar content--&gt;<br />    &lt;/div&gt;<br />  &lt;/div&gt;<br />&lt;/div&gt;</pre>
+  <hr />
+  <h4><strong>TYPOGRAPHY</strong></h4>
+  <h5>Lead</h5>
+  <pre>&lt;p class=&quot;lead&quot;&gt;...&lt;/p&gt;</pre>
+  <h5>Alignment classes</h5>
+  <pre>&lt;p class=&quot;text-left&quot;&gt;Left aligned text.&lt;/p&gt;<br />&lt;p class=&quot;text-center&quot;&gt;Center aligned text.&lt;/p&gt;<br />&lt;p class=&quot;text-right&quot;&gt;Right aligned text.&lt;/p&gt;</pre>
+  <h5>Emphasis classes</h5>
+  <pre>&lt;p class=&quot;muted&quot;&gt;Fusce dapibus, tellus ac cursus commodo, tortor mauris nibh.&lt;/p&gt;<br />&lt;p class=&quot;text-warning&quot;&gt;Etiam porta sem malesuada magna mollis euismod.&lt;/p&gt;<br />&lt;p class=&quot;text-error&quot;&gt;Donec ullamcorper nulla non metus auctor fringilla.&lt;/p&gt;<br />&lt;p class=&quot;text-info&quot;&gt;Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis.&lt;/p&gt;<br />&lt;p class=&quot;text-success&quot;&gt;Duis mollis, est non commodo luctus, nisi erat porttitor ligula.&lt;/p&gt;</pre>
+  <h5>Address</h5>
+  <pre>&lt;address&gt;<br />  &lt;strong&gt;Twitter, Inc.&lt;/strong&gt;&lt;br&gt;<br />  795 Folsom Ave, Suite 600&lt;br&gt;<br />  San Francisco, CA 94107&lt;br&gt;<br />  &lt;abbr title=&quot;Phone&quot;&gt;P:&lt;/abbr&gt; (123) 456-7890<br />&lt;/address&gt;<br /> <br />&lt;address&gt;<br />  &lt;strong&gt;Full Name&lt;/strong&gt;&lt;br&gt;<br />  &lt;a href=&quot;mailto:#&quot;&gt;first.last@example.com&lt;/a&gt;<br />&lt;/address&gt;   </pre>
+  <h5>Blockquote</h5>
+  <pre>&lt;blockquote&gt;<br />  &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.&lt;/p&gt;<br />  &lt;small&gt;Someone famous &lt;cite title=&quot;Source Title&quot;&gt;Source Title&lt;/cite&gt;&lt;/small&gt;<br />&lt;/blockquote&gt;</pre>
+  <h5>List</h5>
+  <pre>&lt;ul&gt;<br />  &lt;li&gt;...&lt;/li&gt;<br />&lt;/ul&gt;</pre>
+  <h5>List Unstyled</h5>
+  <pre>&lt;ul class=&quot;inline&quot;&gt;<br />  &lt;li&gt;...&lt;/li&gt;<br />&lt;/ul&gt;</pre>
+  <h5>List Inline</h5>
+  <pre>&lt;ul class=&quot;unstyled&quot;&gt;<br />  &lt;li&gt;...&lt;/li&gt;<br />&lt;/ul&gt;</pre>
+  <hr />
+  <h4><strong>TABLES</strong></h4>
+  <h5>Table</h5>
+  <pre>&lt;table class=&quot;table&quot;&gt;<br />  …<br />&lt;/table&gt;</pre>
+  <h5>Table Bordered</h5>
+  <pre>&lt;table class=&quot;table table-bordered&quot;&gt;<br />  …<br />&lt;/table&gt;</pre>
+  <hr />
+  <h4><strong>FORM</strong></h4>
+  <pre>&lt;form&gt;<br />  &lt;fieldset&gt;<br />    &lt;legend&gt;Legend&lt;/legend&gt;<br />    &lt;label&gt;Label name&lt;/label&gt;<br />    &lt;input type=&quot;text&quot; placeholder=&quot;Type something…&quot;&gt;<br />    &lt;span class=&quot;help-block&quot;&gt;Example block-level help text here.&lt;/span&gt;<br />    &lt;label class=&quot;checkbox&quot;&gt;<br />      &lt;input type=&quot;checkbox&quot;&gt; Check me out<br />    &lt;/label&gt;<br />    &lt;button type=&quot;submit&quot; class=&quot;btn&quot;&gt;Submit&lt;/button&gt;<br />  &lt;/fieldset&gt;<br />&lt;/form&gt;</pre>
+  <hr />
+  <h4><strong>BUTTONS</strong></h4>
+  <pre>&lt;p&gt;<br />  &lt;button class=&quot;btn btn-large btn-primary&quot; type=&quot;button&quot;&gt;Large button&lt;/button&gt;<br />  &lt;button class=&quot;btn btn-large&quot; type=&quot;button&quot;&gt;Large button&lt;/button&gt;<br />&lt;/p&gt;<br />&lt;p&gt;<br />  &lt;button class=&quot;btn btn-primary&quot; type=&quot;button&quot;&gt;Default button&lt;/button&gt;<br />  &lt;button class=&quot;btn&quot; type=&quot;button&quot;&gt;Default button&lt;/button&gt;<br />&lt;/p&gt;<br />&lt;p&gt;<br />  &lt;button class=&quot;btn btn-small btn-primary&quot; type=&quot;button&quot;&gt;Small button&lt;/button&gt;<br />  &lt;button class=&quot;btn btn-small&quot; type=&quot;button&quot;&gt;Small button&lt;/button&gt;<br />&lt;/p&gt;<br />&lt;p&gt;<br />  &lt;button class=&quot;btn btn-mini btn-primary&quot; type=&quot;button&quot;&gt;Mini button&lt;/button&gt;<br />  &lt;button class=&quot;btn btn-mini&quot; type=&quot;button&quot;&gt;Mini button&lt;/button&gt;<br />&lt;/p&gt;</pre>
+  <hr />
+  <h4><strong>ICONS</strong></h4>
+  <p>All icons are in the img folder</p>
+  <pre>&lt;i class=&quot;icon-search&quot;&gt;&lt;/i&gt;</pre>
+  <pre>&lt;i class=&quot;icon-search icon-white&quot;&gt;&lt;/i&gt;</pre>
+  <hr />
+  <h4><strong>DROPDOWN</strong></h4>
+  <h5>Dropdown</h5>
+  <pre>&lt;div class=&quot;dropdown&quot;&gt;<br />  &lt;!-- Link or button to toggle dropdown --&gt;<br />  &lt;ul class=&quot;dropdown-menu&quot; role=&quot;menu&quot; aria-labelledby=&quot;dLabel&quot;&gt;<br />    &lt;li&gt;&lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;Action&lt;/a&gt;&lt;/li&gt;<br />    &lt;li&gt;&lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;Another action&lt;/a&gt;&lt;/li&gt;<br />    &lt;li&gt;&lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;Something else here&lt;/a&gt;&lt;/li&gt;<br />    &lt;li class=&quot;divider&quot;&gt;&lt;/li&gt;<br />    &lt;li&gt;&lt;a tabindex=&quot;-1&quot; href=&quot;#&quot;&gt;Separated link&lt;/a&gt;&lt;/li&gt;<br />  &lt;/ul&gt;<br />&lt;/div&gt;</pre>
+  <h5>Tabs with dropdowns</h5>
+  <pre>&lt;ul class=&quot;nav nav-tabs&quot;&gt;<br />  &lt;li class=&quot;dropdown&quot;&gt;<br />    &lt;a class=&quot;dropdown-toggle&quot;<br />       data-toggle=&quot;dropdown&quot;<br />       href=&quot;#&quot;&gt;<br />        Dropdown<br />        &lt;b class=&quot;caret&quot;&gt;&lt;/b&gt;<br />      &lt;/a&gt;<br />    &lt;ul class=&quot;dropdown-menu&quot;&gt;<br />      &lt;!-- links --&gt;<br />    &lt;/ul&gt;<br />  &lt;/li&gt;<br />&lt;/ul&gt;</pre>
+  <hr />
+  <h4><strong>NAVS</strong></h4>
+  <h5>Stacked tabs</h5>
+  <pre>&lt;ul class=&quot;nav nav-tabs nav-stacked&quot;&gt;<br />  ...<br />&lt;/ul&gt;</pre>
+  <hr />
+  <h4><strong>NAVBAR</strong></h4>
+  <pre>&lt;div class=&quot;navbar&quot;&gt;<br />  &lt;div class=&quot;navbar-inner&quot;&gt;<br />    &lt;div class=&quot;container&quot;&gt;<br /> <br />      &lt;!-- .btn-navbar is used as the toggle for collapsed navbar content --&gt;<br />      &lt;a class=&quot;btn btn-navbar&quot; data-toggle=&quot;collapse&quot; data-target=&quot;.nav-collapse&quot;&gt;<br />        &lt;span class=&quot;icon-bar&quot;&gt;&lt;/span&gt;<br />        &lt;span class=&quot;icon-bar&quot;&gt;&lt;/span&gt;<br />        &lt;span class=&quot;icon-bar&quot;&gt;&lt;/span&gt;<br />      &lt;/a&gt;<br /> <br />      &lt;!-- Be sure to leave the brand out there if you want it shown --&gt;<br />      &lt;a class=&quot;brand&quot; href=&quot;#&quot;&gt;Project name&lt;/a&gt;<br /> <br />      &lt;!-- Everything you want hidden at 940px or less, place within here --&gt;<br />      &lt;div class=&quot;nav-collapse collapse&quot;&gt;<br />        &lt;!-- .nav, .navbar-search, .navbar-form, etc --&gt;<br />      &lt;/div&gt;<br /> <br />    &lt;/div&gt;<br />  &lt;/div&gt;<br />&lt;/div&gt;</pre>
+  <hr />
+  <h4><strong>BREADBRUMB</strong></h4>
+  <pre>&lt;ul class=&quot;breadcrumb&quot;&gt;<br />  &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Home&lt;/a&gt; &lt;span class=&quot;divider&quot;&gt;/&lt;/span&gt;&lt;/li&gt;<br />  &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Library&lt;/a&gt; &lt;span class=&quot;divider&quot;&gt;/&lt;/span&gt;&lt;/li&gt;<br />  &lt;li class=&quot;active&quot;&gt;Data&lt;/li&gt;<br />&lt;/ul&gt;</pre>
+  <h4><strong>PAGINATION</strong></h4>
+  <pre>&lt;div class=&quot;pagination&quot;&gt;<br />  &lt;ul&gt;<br />    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Prev&lt;/a&gt;&lt;/li&gt;<br />    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;1&lt;/a&gt;&lt;/li&gt;<br />    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;2&lt;/a&gt;&lt;/li&gt;<br />    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;3&lt;/a&gt;&lt;/li&gt;<br />    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;4&lt;/a&gt;&lt;/li&gt;<br />    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;5&lt;/a&gt;&lt;/li&gt;<br />    &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Next&lt;/a&gt;&lt;/li&gt;<br />  &lt;/ul&gt;<br />&lt;/div&gt;</pre>
+  <h4><strong>HERO UNIT</strong></h4>
+  <pre>&lt;div class=&quot;hero-unit&quot;&gt;<br />  &lt;h1&gt;Heading&lt;/h1&gt;<br />  &lt;p&gt;Tagline&lt;/p&gt;<br />  &lt;p&gt;<br />    &lt;a class=&quot;btn btn-primary btn-large&quot;&gt;<br />      Learn more<br />    &lt;/a&gt;<br />  &lt;/p&gt;<br />&lt;/div&gt;</pre>
+  <h4><strong>WELLS</strong></h4>
+  <pre>&lt;div class=&quot;well&quot;&gt;<br />  ...<br />&lt;/div&gt;</pre>
+  <h4><strong>THUMBNAILS</strong></h4>
+  <pre>&lt;ul class=&quot;thumbnails&quot;&gt;<br />  &lt;li class=&quot;span4&quot;&gt;<br />    &lt;div class=&quot;thumbnail&quot;&gt;<br />      &lt;img data-src=&quot;holder.js/300x200&quot; alt=&quot;&quot;&gt;<br />      &lt;h3&gt;Thumbnail label&lt;/h3&gt;<br />      &lt;p&gt;Thumbnail caption...&lt;/p&gt;<br />    &lt;/div&gt;<br />  &lt;/li&gt;<br />  ...<br />&lt;/ul&gt;</pre>
+  <h4><strong>ALERTS</strong></h4>
+  <pre>&lt;div class=&quot;alert&quot;&gt;<br />  &lt;button type=&quot;button&quot; class=&quot;close&quot; data-dismiss=&quot;alert&quot;&gt;&amp;times;&lt;/button&gt;<br />  &lt;strong&gt;Warning!&lt;/strong&gt; Best check yo self, you're not looking too good.<br />&lt;/div&gt;</pre>
+  <h4><strong>PROGRESS BAR</strong></h4>
+  <pre>&lt;div class=&quot;progress progress-info&quot;&gt;<br />  &lt;div class=&quot;bar&quot; style=&quot;width: 20%&quot;&gt;&lt;/div&gt;<br />&lt;/div&gt;<br />&lt;div class=&quot;progress progress-success&quot;&gt;<br />  &lt;div class=&quot;bar&quot; style=&quot;width: 40%&quot;&gt;&lt;/div&gt;<br />&lt;/div&gt;<br />&lt;div class=&quot;progress progress-warning&quot;&gt;<br />  &lt;div class=&quot;bar&quot; style=&quot;width: 60%&quot;&gt;&lt;/div&gt;<br />&lt;/div&gt;<br />&lt;div class=&quot;progress progress-danger&quot;&gt;<br />  &lt;div class=&quot;bar&quot; style=&quot;width: 80%&quot;&gt;&lt;/div&gt;<br />&lt;/div&gt;</pre>
+  <h4><strong>MEDIA LIST (eg. comments)</strong></h4>
+  <pre>&lt;ul class=&quot;media-list&quot;&gt;<br />  &lt;li class=&quot;media&quot;&gt;<br />    &lt;a class=&quot;pull-left&quot; href=&quot;#&quot;&gt;<br />      &lt;img class=&quot;media-object&quot; data-src=&quot;holder.js/64x64&quot;&gt;<br />    &lt;/a&gt;<br />    &lt;div class=&quot;media-body&quot;&gt;<br />      &lt;h4 class=&quot;media-heading&quot;&gt;Media heading&lt;/h4&gt;<br />      ...<br /> <br />      &lt;!-- Nested media object --&gt;<br />      &lt;div class=&quot;media&quot;&gt;<br />        ...<br />     &lt;/div&gt;<br />    &lt;/div&gt;<br />  &lt;/li&gt;<br />&lt;/ul&gt;</pre>
+  <hr>
+  <h3 id="cssFiles"><strong>B) CSS Files</strong> - <a href="#toc">top</a></h3>
+  <p>I'm using 8 CSS files in this theme. The first two is bootstrap file.</p>
+  <p>The third file contains all of the specific stylings for the page.</p>
+  <p>we include the css file in the HEAD section of the HTML page like this:</p>
+  <pre>&lt;!-- Bootstrap CSS --&gt;
+&lt;link href=&quot;css/bootstrap.min.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;screen&quot; /&gt;<br />&lt;link href=&quot;css/bootstrap-responsive.min.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;
+
+&lt;!-- Font Awsome CSS --&gt;
+&lt;link href=&quot;css/font-awesome.min.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;screen&quot; /&gt;<br />
+&lt;!-- Preciso CSS --&gt;
+&lt;link href=&quot;css/style.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;screen&quot; /&gt;<br />
+&lt;!-- flexslider Slider CSS --&gt;
+&lt;link href=&quot;css/flexslider.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;screen&quot; /&gt;<br />
+&lt;!-- Masonry CSS --&gt;
+&lt;link href=&quot;css/masonry.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;screen&quot; /&gt;<br />
+&lt;!-- Fancybox CSS --&gt;
+&lt;link href=&quot;css/fancybox.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;screen&quot; /&gt;<br />
+&lt;!-- Custom Color CSS --&gt;
+&lt;link href=&quot;css/color/multicolor.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; id=&quot;colorLink&quot; /&gt;<br />
+&lt;!-- Google Font CSS --&gt;
+&lt;link href=&quot;http://fonts.googleapis.com/css?family=Roboto+Condensed&quot; /&gt;</pre>
+  <p>If you would like to edit a specific section of the site, simply find the appropriate label in the CSS file, and then scroll down until you find the appropriate style that needs to be edited.</p>
+  <hr>
+  <h3 id="javascript"><strong>C) JavaScript</strong> - <a href="#toc">top</a></h3>
+  <p>This theme imports six Javascript files.</p>
+  <pre>&lt;!-- jQuery --&gt;
+&lt;script src=&quot;http://code.jquery.com/jquery-1.9.1.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;<br />
+&lt;!-- Bootstrap js --&gt;
+&lt;script src=&quot;js/bootstrap.min.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;<br />
+&lt;!-- flexslider js --&gt;
+&lt;script src=&quot;js/jquery.flexslider.min.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;<br />
+&lt;!-- Masonry js --&gt;
+&lt;script src=&quot;js/masonry.min.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;<br />
+&lt;!-- Fancybox js --&gt;
+&lt;script src=&quot;js/fancybox.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+<br />&lt;!-- Nicescroll js --&gt;
+&lt;script src=&quot;js/jquery.nicescroll.min.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+
+&lt;!-- Functions to call scripts js --&gt;
+&lt;script src=&quot;js/functions.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</pre>
+  <p>Option are in the function.js</p>
+  <hr>
+  <h3 id="credits"><strong>D) Sources and Credits</strong> - <a href="#toc">top</a></h3>
+  <ul>
+    <li><a href="http://twitter.github.io/bootstrap/" target="_blank">Bootstrap</a></li>
+    <li><a href="http://fortawesome.github.io/Font-Awesome/" target="_blank">Font Awsome</a></li>
+    <li><a href="http://www.woothemes.com/flexslider/" target="_blank">Flexslider</a></li>
+    <li><a href="http://fancyapps.com/fancybox/" target="_blank">Fancybox</a></li>
+    <li><a href="http://masonry.desandro.com/" target="_blank">Masonry</a></li>
+    <li><a href="http://areaaperta.com/nicescroll/" target="_blank">Nicescroll</a></li>
+  </ul>
+  <hr>
+  <p>Once again, thank you so much for purchasing this theme.</p>
+  <p class="append-bottom alt large"><strong>Angelo Mazzilli</strong></p>
+  <p><a href="#toc">Go To Table of Contents</a></p>
+  <hr class="space">
+</div>
+<!-- end div .container -->
+</body>
+</html>

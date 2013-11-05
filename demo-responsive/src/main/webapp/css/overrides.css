@@ -1,0 +1,117 @@
+#dym {
+	text-transform: none;
+	font-size: 15px;
+	margin-left: 20px;
+	display: inline-block;
+}
+
+.noRefinements {
+	margin-top: 10px;
+}
+
+.flex-control-thumbs {
+	display: none;
+}
+
+.regionSelected {
+	text-decoration: underline;
+}
+
+.thumb img {
+	max-height: 210px;
+}
+
+.compareLabel input {
+	margin-top: 0;
+}
+
+.compareLabel {
+	display: block;
+	font-size: 12px;
+	text-decoration: none;
+	line-height: 12px;
+	color: blue;
+	padding-top: 18px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.recordDetails {
+	margin-right: 30px;
+}
+
+#compareContainer img {
+	border: none;
+}
+
+#compareContainer th {
+	text-align: left;
+	white-space: nowrap;
+	padding-right: 10px;
+}
+
+#compareContainer td {
+	text-align: center;
+}
+
+#compareContainer {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding-bottom: 10px;
+	border-bottom: 3px solid #EEEEEE;
+}
+
+.compare {
+	background-color: #CCCCCC;
+	padding: 10px;
+	font-size: 13px;
+	color: #666666;
+	margin-bottom: 20px;
+	background-color: #CCCCCC;
+}
+
+.compare img {
+	vertical-align: middle;
+	border: 1px solid #999999;
+}
+
+[class*="span"],.uneditable-input[class*="span"],.row-fluid [class*="span"]
+	{
+	float: left;
+}
+
+.diff {
+	background-color: #FFFFE0;
+	border-top: 2px solid yellow;
+}
+
+.search-results-grid {
+	display: inline-block;
+	width: 300px;
+	height: 240px;
+}
+.search-results-grid img {
+	max-height:190px;
+}
+.twoZone img {
+	max-height:230px;
+}
+
+.withOutline, .twoZone {
+	box-shadow: 0 0 6px rgba(0, 0, 0, 0.21);
+	margin: 10px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+
+.withOutline {
+	font-size:15px;
+	width:200px; !important
+}
+
+.withOutline div.row {
+	float: none;
+	padding-left:40px;
+}
+

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>GroupBy</title>
+	<!-- Stylesheet -->
+	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
+	<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+	<link href="css/style.css" rel="stylesheet" type="text/css" />
+	<link href="css/custom.css" rel="stylesheet" type="text/css" />
+	<link href="css/flexslider.css" rel="stylesheet" type="text/css" />
+	<link href="css/fancybox.css" rel="stylesheet" type="text/css" />
+	<link href="css/masonry.css" rel="stylesheet" type="text/css" />
+	<link href="http://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet" type="text/css" />
+
+	<!-- Scripts -->
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/jquery.nicescroll.min.js"></script>
+	<script type="text/javascript" src="js/jquery.flexslider.min.js"></script>
+	<script type="text/javascript" src="js/jquery.fancybox.min.js"></script>
+	<script type="text/javascript" src="js/jquery.masonry.min.js"></script>
+	<script type="text/javascript" src="js/functions.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false" type="text/javascript"></script>
+	<script type="text/javascript">		
+		var map;
+		var my_lat_lang = new google.maps.LatLng(43.6481, -79.4042);
+		function initialize() 
+		{
+			var mapOptions = {
+				zoom: 13,
+				center: my_lat_lang,
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+
+			map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+			var contentString = 
+				'<div class="map-tooltip">'+
+			    	'<h4>Store Name</h4>' +
+			    	'<ul class="unstyled address">' +
+			    		'<li>123 Street Name Ave.</li>' +
+			    		'<li>Toronto, ON A1A 1A1</li>' +
+			    		'<li class="phone"><strong>Phone:</strong> 416-123-4567</li>' +
+			    	'</ul>' +
+			    	'<ul class="unstyled hours">' +
+			    		'<li><strong>Mon-Fri:</strong> 9:00AM - 9:00PM</li>' +
+			    		'<li><strong>Sat:</strong> 9:00AM - 6:00PM</li>' +
+			    	'</ul>' +
+			    '</div>';
+
+			var infowindow = new google.maps.InfoWindow({
+			    content: contentString
+			});		
+
+			var marker = new google.maps.Marker({
+		    	position: my_lat_lang,
+		    	title:"Hello World!"
+			});
+			marker.setMap(map);
+
+			google.maps.event.addListener(marker, 'click', function() {
+				infowindow.open(map,marker);
+			});
+		}
+
+		google.maps.event.addDomListener(window, 'load', initialize);
+	</script>
+</head>
+<body>
+
+	<!-- Header -->
+	<div class="header">
+		<div class="container">
+			<div class="row"> 
+
+				<!-- Secondary Menu -->
+				<ul class="nav nav-pills span6">
+					<li><a href="#">Home</a></li>
+					<li><a href="#">Wish List</a></li>
+					<li><a href="#">My Account</a></li>
+					<li><a href="#">Shopping Cart</a></li>
+					<li><a href="#">Checkout</a></li>
+				</ul>
+
+				<!-- Header Cart -->
+				<div class="cart"><i class="icon-shopping-cart"></i>
+					<p>&euro; 0,00 <span>( 0 )</span></p>
+
+					<!-- Header Cart Content -->
+					<div class="cart-content">
+						<!--
+						<div class="mini-cart-info">
+							<h3>Shopping Cart</h3>
+							<p class="empty">Empty cart</p>
+						</div>
+						-->
+						<div class="mini-cart-info">
+							<h3>Shopping Cart</h3>
+							<ul>
+								<li><a href="#"><img src="products/iphone.png" alt="Product" /></a>
+									<div class="mini-cart-detail">
+										<h5><a href="#">iPhone 5 16GB Black</a></h5>
+										<em>1 item</em>
+										<p><span>&euro; 1.230</span> &euro; 880</p>
+									</div>
+								</li>
+								<li><a href="#"><img src="products/iphone.png" alt="Product" /></a>
+									<div class="mini-cart-detail">
+										<h5><a href="#">iPhone 4s 8GB White</a></h5>
+										<em>1 item</em>
+										<p>&euro; 120.00</p>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="mini-cart-total">
+							<ul>
+								<li>Sub-Total <span>&euro; 101.00</span></li>
+								<li>Eco Tax <span>&euro; 2.00</span></li>
+								<li>VAT <span>&euro; 17.68</span></li>
+							</ul>
+							<p class="total">Total <span>&euro; 120.00</span> 
+						</div>
+						<div class="checkout"><a href="#" class="btn">View Cart</a> <a href="#" class="btn btn-checkout">Checkout</a></div>
+					</div>
+				</div>
+
+				<!-- Currency -->
+				<ul class="nav nav-pills currency">
+					<li><a href="#">&euro;</a></li>
+					<li><a href="#">$</a></li>
+					<li><a href="#">&pound;</a></li>
+				</ul>
+
+				<!-- Header Login -->
+				<p class="log-reg"><a href="#">Sign In</a> <a href="#">Register</a></p>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Main Navbar -->
+	<div class="navbar-cont">
+		<div class="container">
+			<div class="row">
+				<div class="span12">
+					<!-- Navbar Search -->
+					<form action="header-search" class="header-search">
+						<fieldset>
+							<input type="text" placeholder="Search" />
+							<button><i class="icon-search"></i></button>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<div class="navbar">
+						<div class="navbar-inner">
+							<div class="container"><a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse"><i class="icon-align-justify"></i></a>
+								<div class="nav-collapse collapse navbar-responsive-collapse">
+									<ul class="nav">
+										<li><a href="index.html">Home</a></li>
+										<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Products<i class="icon-angle-down"></i></a> 
+
+											<!-- Dropdown Navbar -->
+											<ul class="dropdown-menu">
+												<li><a href="#">Computers &amp; Tablets</a></li>
+												<li><a href="#">TV &amp; Home Theatre</a></li>
+												<li><a href="#">Cameras &amp; Camcorders</a></li>
+												<li><a href="#">iPod &amp; Audio</a></li>
+												<li><a href="#">Cell Phones</a></li>
+												<li><a href="#">GPS, Car Audio &amp; Satellite Radio</a></li>
+												<li><a href="#">Movies &amp; Music</a></li>
+												<li><a href="#">Musical Instruments</a></li>
+												<li><a href="#">Video Games</a></li>
+												<li><a href="#">Ink &amp; Office Supplies</a></li>
+												<li><a href="#">Appliances</a></li>
+												<li><a href="#">Beauty, Health &amp; Baby</a></li>
+												<li><a href="#">Home &amp; Garden Tools</a></li>
+												<li><a href="#">Travel, Sports &amp; Outdoor</a></li>
+												<li><a href="#">Toys, Games &amp; Collectibles</a></li>
+											</ul>
+										</li>
+										<li><a href="contact.html">Contact</a></li>
+									</ul>										
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="container map-container">
+		<div class="row"> 
+			<!-- Contact Page-->
+			<div class="span12"> 
+				<h1 class="margin-bottom">Store <span>Locator</span></h1>
+			</div>
+		</div>
+
+		<div class="row"> 
+
+			<div class="span3">
+				<form action="map-form" class="map-form" >
+					<div class="control-group">
+						<label class="control-label" for="location">Show stores nearest to:</label>
+						<div class="input-append">
+							<input id="location" name="location" type="text" placeholder="Enter postal code, or city" />
+							<button class="btn" type="button"><i class="icon-search"></i></button>
+						</div>
+						<div class="refine">
+							<p>Refine your search:</p>
+							<label class="checkbox"><input type="checkbox"> Open late</label>
+							<label class="checkbox"><input type="checkbox"> Another option</label>
+						</div>
+					</div>
+				</form>
+
+				<div class="map-form-results">
+					<ul class="unstyled">
+						<li class="clearfix">
+							<div class="num">1</div>
+							<div class="info">
+								<strong>Store Name</strong><br>
+								123 Street Name Ave.<br>
+								Toronto, ON A1A 1A1<br>
+								<strong>Phone:</strong> 416-123-4567
+							</div>							
+						</li>
+						<li class="clearfix">
+							<div class="num">2</div>
+							<div class="info">
+								<strong>Store Name</strong><br>
+								123 Street Name Ave.<br>
+								Toronto, ON A1A 1A1<br>
+								<strong>Phone:</strong> 416-123-4567
+							</div>							
+						</li>
+						<li class="clearfix">
+							<div class="num">3</div>
+							<div class="info">
+								<strong>Store Name</strong><br>
+								123 Street Name Ave.<br>
+								Toronto, ON A1A 1A1<br>
+								<strong>Phone:</strong> 416-123-4567
+							</div>							
+						</li>
+						<li class="clearfix">
+							<div class="num">4</div>
+							<div class="info">
+								<strong>Store Name</strong><br>
+								123 Street Name Ave.<br>
+								Toronto, ON A1A 1A1<br>
+								<strong>Phone:</strong> 416-123-4567
+							</div>							
+						</li>
+						<li class="clearfix">
+							<div class="num">5</div>
+							<div class="info">
+								<strong>Store Name</strong><br>
+								123 Street Name Ave.<br>
+								Toronto, ON A1A 1A1<br>
+								<strong>Phone:</strong> 416-123-4567
+							</div>							
+						</li>
+					</ul>					
+				</div>
+
+			</div>
+			<!-- Contact Map -->
+			<div class="span9 margin-bottom">
+				<div id="map-canvas" style="width: 100%; height: 500px;"></div>
+			</div>
+		</div><!-- end row -->
+	</div><!-- end container -->
+
+	<!-- Small Banners -->
+	<div class="container">
+		<div class="row">
+			<div class="span6">
+				<div class="banner-small"><a href="#"><img src="banner/banner-small-1.jpg" alt="Banner" /></a></div>
+			</div>
+			<div class="span6">
+				<div class="banner-small"><a href="#"><img src="banner/banner-small-2.jpg" alt="Banner" /></a></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Footer Links -->
+	<div class="footer-links">
+		<div class="container">
+			<div class="row">
+				<div class="span3">
+					<h5><i class="icon-info"></i>Information</h5>
+					<ul>
+						<li><a href="#">About Us</a></li>
+						<li><a href="#">Delivery Information</a></li>
+						<li><a href="#">Privacy Policy</a></li>
+						<li><a href="#">Terms &amp; Conditions</a></li>
+					</ul>
+				</div>
+				<div class="span3">
+					<h5><i class="icon-comment"></i>Customer Service</h5>
+					<ul>
+						<li><a href="#">Contact Us</a></li>
+						<li><a href="#">Returns</a></li>
+						<li><a href="#">Delivery</a></li>
+						<li><a href="#">Site Map</a></li>
+					</ul>
+				</div>
+				<div class="span3">
+					<h5><i class="icon-unlock-alt"></i>My Account</h5>
+					<ul>
+						<li><a href="#">My Account</a></li>
+						<li><a href="#">Order History</a></li>
+						<li><a href="#">Wish List</a></li>
+						<li><a href="#">Newsletter</a></li>
+					</ul>
+				</div>
+				<div class="span3 contact">
+					<h5><i class="icon-rss"></i>Keep in touch</h5>
+					<div class="footer-social"> <a href="#" class="icon-facebook"></a> <a href="#" class="icon-twitter"></a> <a href="#" class="icon-google-plus"></a> <a href="#" class="icon-pinterest"></a> <a href="#" class="icon-linkedin"></a></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Copy -->
+	<div class="copy">
+		<div class="container">
+			<div class="row">
+				<div class="span12"> 
+					<!-- Cards --> 
+					<img src="img/cards.png" alt="Cards" />
+					<p class="text-center">Powered by <strong>GroupBy</strong> - &copy; 2013</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- to Top -->
+	<div id="toTop"><i class="icon-chevron-up icon-white"></i></div>
+
+</body>
+</html>
