@@ -16,13 +16,11 @@
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 			};
 
-
 			map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 			
-			var input = /** @type {HTMLInputElement} */(document.getElementById('q'));
-  var autocomplete = new google.maps.places.Autocomplete(input);
-
-  autocomplete.bindTo('bounds', map);
+			var input = /** @type {HTMLInputElement} */(document.getElementById('q2'));
+			var autocomplete = new google.maps.places.Autocomplete(input);
+			autocomplete.bindTo('bounds', map);
   
 			<c:forEach items="${results.records}" var="record" varStatus="status">
             <c:set var="m" value="${record.allMeta}"/>
@@ -53,13 +51,10 @@
 			</c:forEach>
 
 			map.fitBounds(bounds);
-
 		}
 
 
 		function createMarker(pBounds, pMap, pPosition, pText){
-		
-
 		    bounds.extend(pPosition);
 
 			var infowindow = new google.maps.InfoWindow({
@@ -189,26 +184,17 @@
 		</div>
 
 		<div class="row"> 
-
-
 			<div class="span3">
-					<div class="control-group">
-						
-						
-            
-                      
-                        <%@include file="includes/refinements.jsp"%>
+				<%@include file="includes/locationSearch.jsp"%>
+				<div class="control-group">
+                     <%@include file="includes/refinements.jsp"%>
 
-
-
-                <c:set var="hide" value=",mon,tue,wed,thu,fri,sat,sun,day," />
-                <c:if test="${fn:length(results.selectedRefinements) == 0}">
-                <c:set var="hide" value=",mon,tue,wed,thu,fri,sat,sun,city,day," />
-                </c:if>
-                <%@include file="includes/navigation.jsp"%>
-						
-
-					</div>
+                	<c:set var="hide" value=",mon,tue,wed,thu,fri,sat,sun,day," />
+                	<c:if test="${fn:length(results.selectedRefinements) == 0}">
+                		<c:set var="hide" value=",mon,tue,wed,thu,fri,sat,sun,city,day," />
+                	</c:if>
+                	<%@include file="includes/navigation.jsp"%>
+				</div>
 
 				<div class="map-form-results">
 					<ul class="unstyled">

@@ -41,8 +41,7 @@ public class NavigationController extends AbstractController {
 				model.put("error", "Must provide email and password");
 			} else {
 				email = email.toLowerCase().trim();
-				if (passwords.containsKey(email)
-						&& password.equals(passwords.get(email))) {
+				if (passwords.containsKey(email) && password.equals(passwords.get(email))) {
 					pRequest.getSession().setAttribute("signedIn", true);
 					pRequest.getSession().setAttribute("username", email);
 					if (email != null && email.indexOf("@") != -1) {
@@ -139,7 +138,7 @@ public class NavigationController extends AbstractController {
 			String[] lines = passwords.split("\n");
 			for (String line : lines) {
 				String[] emailPassword = line.split("=", 2);
-				passwordMap.put(emailPassword[0], emailPassword[1]);
+				passwordMap.put(emailPassword[0].trim(), emailPassword[1].trim());
 			}
 			return passwordMap;
 		} catch (IOException e) {
