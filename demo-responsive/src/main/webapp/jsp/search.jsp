@@ -157,4 +157,5 @@
 	<!-- to Top -->
 	<div id="toTop"><i class="icon-chevron-up icon-white"></i></div>
 </body>
+<%@include file="includes/tracker.jsp"%>
 </html>
