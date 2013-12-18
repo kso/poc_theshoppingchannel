@@ -7,8 +7,14 @@
    <c:when test="${!empty param.tab}">
       store.jsp
     </c:when>
+    <c:when test="${results.template.name eq 'Big Query Sliding Header'}">
+    	BigQuerySlidingHeader.jsp
+    </c:when>
+    <c:when test="${results.template.name eq 'Category Landing Page'}">
+    	CategoryLandingPage.jsp
+    </c:when>
     <c:when test="${results.template.name ne 'default'}">
-     ${gc:replaceAll(results.template.name, ' ', '')}.jsp
+    default.jsp
     </c:when>
     <c:when test="${!empty param.q}">
       search.jsp

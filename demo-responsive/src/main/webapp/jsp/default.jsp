@@ -8,17 +8,14 @@
 		<div class="container">
 			<div class="row"> 
 				<%@include file="includes/secondaryNav.jsp"%>
-
 				<!-- Header Cart -->
 				<%@include file="includes/cart.jsp" %>
-
 				<!-- Currency -->
 				<ul class="nav nav-pills currency">
 					<li><a href="#">&euro;</a></li>
 					<li><a href="#">$</a></li>
 					<li><a href="#">&pound;</a></li>
 				</ul>
-
 				<%@include file="includes/signOut.jsp"%>
 			</div>
 		</div>
@@ -47,6 +44,8 @@
 			<div class="span2 sidebar search-sidebar ${fn:length(results.selectedRefinements) == 0 ? 'noRefinements' : ''}">
 				<div class="search-sidebar-refined">
 					<ul class="unstyled">
+						<!-- recordUpsellVertical is for LandingPagewithBreakoutPromotion -->
+						<%@include file="includes/recordUpsellVertical.jsp"%>
                         <%@include file="includes/refinements.jsp"%>
 					</ul>
 				</div>
@@ -55,6 +54,44 @@
 
 			<!-- Search Results -->
 			<div class="span10 search-results">  
+				<c:set var="templateName" value="${gc:replaceAll(results.template.name, ' ', '')}" />
+				<c:choose>
+				<c:when test="${templateName eq 'SlidingHeader'}">
+					<div class="banner">
+				  		<div class="row">
+				  			<div class="span10">
+				  				<div class="banner-slider">
+				  					<ul class="slides">
+				  						<c:forEach begin="1" end="4" var="rowNumber">
+				  							<%@include file="includes/slidingRow.jsp"%>
+				  						</c:forEach>                  
+                					</ul>
+              					</div>
+            				</div>
+          				</div>
+        			</div>
+        		</c:when>
+        		<c:when test="${templateName eq 'FamousPersonLandingPage'}">
+        			<div class="banner person">
+          				<div class="row">
+            				<div class="span7">
+								<img class="span7" src="<c:url value="${results.template.zonesByName['Picture of famous person'].content}"/>" style="max-width:455px;margin-bottom:10px;">
+            				</div>
+            				<div class="span3">
+								<%@include file="includes/famousSku.jsp"%>
+            				</div>
+          				</div>
+        			</div>    
+        		</c:when>
+        		<c:when test="${templateName eq 'LandingPagewithBreakoutPromotion'}">
+        			<!-- Text here -->
+    	 			<div style="margin-left:100px;" class="banner person">
+    					<img src="/images/${results.template.zonesByName['Image Path'].content}" style="width:805px;margin-bottom:10px;">
+					</div>
+				</c:when>
+				
+				</c:choose>
+				
 				<div class="pages">
 					<div class="row">
 						<div class="span3">
@@ -80,7 +117,14 @@
 				</div>
 
 				<%@include file="includes/compare.jsp"%>
-                <%@include file="includes/results.jsp"%>
+				<c:choose>
+					<c:when test="${templateName ne 'LowLevelCategoryPage'}">
+                		<%@include file="includes/results.jsp"%>
+                	</c:when>
+                	<c:when test="${templateName eq 'LowLevelCategoryPage'}">
+                		<%@include file="includes/resultsGrid.jsp"%>
+                	</c:when>
+                </c:choose>
 			</div><!-- End Search Results -->
 
 
