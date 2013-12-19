@@ -29,7 +29,7 @@
   				<li>
 				<label class="checkbox" id="searchTerm">
 					<input type="checkbox" id="searchBox" checked="checked" value="<c:out value="searchTerm=${param.q}"/>" onclick="removeSearchTerm()"/>
-					Search Term:<c:out value="${param.q}"/>
+					<span class="navg">Search Term: </span><span class="navgVal"><str:capitalize><c:out value="${param.q}"/></str:capitalize></span>
 				</label>
 				</li>
 			</c:if>

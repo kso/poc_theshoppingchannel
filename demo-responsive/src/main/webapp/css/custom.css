@@ -667,6 +667,16 @@ h3.search-results-header {
 	border-bottom: 1px solid #AAA;
 }
 
+.search-sidebar-refined .navg {
+	font-size:12px;
+	font-weight:bold;
+}
+
+.search-sidebar-refined .navgVal {
+	color: #006abf;
+	font-weight:bold;
+}
+
 .search-sidebar-filter {
 	border: 1px solid #AAAAAA;
 	margin-bottom: 20px;
