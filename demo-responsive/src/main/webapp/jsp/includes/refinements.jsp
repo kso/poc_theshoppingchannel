@@ -2,7 +2,7 @@
 
 <c:set var="showSearchTerm" value="false" />
  <% if(request.getParameter("q") != null) {
- if(!request.getParameter("q").equals("*") && request.getParameter("tab")==null) {  %>
+ if(!request.getParameter("q").equals("") && request.getParameter("tab")==null) {  %>
  	<c:set var="showSearchTerm" value="true" />
  <% } }%>
 
@@ -18,8 +18,9 @@
   		}
   		function removeSearchTerm()
 		{
-			document.getElementById("q").value="*";
+			document.getElementById("q").value="";
 			document.getElementById("searchTerm").remove();
+			$('#form').submit();
 		}
   		</script>
   		

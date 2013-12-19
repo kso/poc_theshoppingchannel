@@ -19,6 +19,9 @@
     <c:when test="${!empty param.q}">
       search.jsp
     </c:when>
+     <c:when test="${empty param.q}">
+      default.jsp
+    </c:when>
   </c:choose>
 </c:set>
 <jsp:include page="${page}"/>
