@@ -14,7 +14,7 @@
     $<fmt:formatNumber pattern="#,##0">${fn:toLowerCase(value['low'])}</fmt:formatNumber> 
     - 
     $<fmt:formatNumber pattern="#,##0">${fn:toLowerCase(value['high'])}</fmt:formatNumber>
-    <span class="count">(${value['count'] })</span>
+    <span class="count">(${value['count'] })</span> 
     </a></li>
   </c:if>
 </c:forEach>
