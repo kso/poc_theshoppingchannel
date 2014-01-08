@@ -18,6 +18,7 @@ function removeTab()
      <button><i class="icon-search"></i></button>
 </fieldset>
   <input type="hidden" name="refinements" id="refinements" value="<c:out value="${param.refinements }"/>">
+  <input type="hidden" name="requiredFields" id="requiredFields" value="<c:out value="${param.requiredFields }"/>">
   <input type="hidden" name="p" id="p" value="0">
   <% if(request.getParameter("tab") != null) { %>
   		<input type="hidden" name="tab" id="tab" value="${param.tab}">

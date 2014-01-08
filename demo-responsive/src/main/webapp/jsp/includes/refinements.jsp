@@ -5,6 +5,13 @@
  if(!request.getParameter("q").equals("") && request.getParameter("tab")==null) {  %>
  	<c:set var="showSearchTerm" value="true" />
  <% } }%>
+ 
+ <% if(request.getParameter("requiredFields") != null) {
+ if(!request.getParameter("requiredFields").equals("") && request.getParameter("tab")==null) {  %>
+ 	<c:set var="showRequiredFields" value="true" />
+ 	<c:set var="multiNavArray" value="${fn:split(param.requiredFields, '~')}" />
+ 	
+ <% } }%>
 
 <div class="search-sidebar-refined">
   	<ul class="unstyled">
@@ -22,6 +29,14 @@
 			document.getElementById("searchTerm").remove();
 			$('#form').submit();
 		}
+		function removeMultiNav()
+		{
+			$('#requiredFields').val('');
+  			$('#multiNav input[type=checkbox]:checked').each(function(){
+  				$('#requiredFields').val($('#requiredFields').val() + "~" + $(this).attr('value'));
+  			});
+  			$('#form').submit();
+		}
   		</script>
   		
   		<div id="refinementsDiv">
@@ -34,7 +49,7 @@
 				</label>
 				</li>
 			</c:if>
-  			<div id="refinementsDivs">
+  			
   			<c:if test="${fn:length(results.selectedRefinements) > 0}">
  		 		<c:forEach items="${results.selectedRefinements }" var="refinement">
    			 		<c:set var="refinement" value="${refinement }" scope="request"/>
@@ -42,7 +57,18 @@
     				<jsp:include page="includes/${jspInclude}"/>
   				</c:forEach>
 			</c:if>
-			</div>
+			
+			<c:if test="${showRequiredFields eq 'true'}">
+				<c:forEach items="${multiNavArray}" var="multiNavArrayValue">
+  					<li>
+					<label class="checkbox" id="multiNav">
+						<c:set var="ind" value="${fn:indexOf(multiNavArrayValue, ':')}" />
+						<input type="checkbox" id="${multiNavArrayValue}" checked="checked" value="<c:out value="${multiNavArrayValue}"/>" onclick="removeMultiNav()"/>
+						<span class="navg">${fn:substring(multiNavArrayValue,0, ind)}: </span><span class="navgVal"><str:capitalize><c:out value="${fn:substring(multiNavArrayValue,ind+1,fn:length(multiNavArrayValue))}"/></str:capitalize></span>
+					</label>
+					</li>
+				</c:forEach>
+			</c:if>
 		</div>
  	</ul>
 </div>

@@ -2,8 +2,6 @@
 
 <c:set var="elements" value="0" />
 <c:set var="select">
-
-
   <select onchange="$('#refinements').val($('#refinements').val() + '~' + $(this).val());$('#form').submit();">
     <option disabled="disabled" selected="selected">${nav['displayName'] }</option>
     <c:forEach items="${nav.refinementValues}" var="value">

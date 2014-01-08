@@ -18,6 +18,7 @@ import com.gbi.gsa.Bridge;
 import com.gbi.gsa.Query;
 import com.gbi.gsa.SimpleBridge;
 import com.gbi.gsa.model.Results;
+import com.gbi.util.UrlEncoder;
 
 public class NavigationController extends AbstractController {
 
@@ -73,12 +74,37 @@ public class NavigationController extends AbstractController {
 		}
 		
 		query.addField("*");
-		String refinements = ServletRequestUtils.getStringParameter(pRequest,
-							"refinements", "");
+		String refinements = ServletRequestUtils.getStringParameter(pRequest, "refinements", "");
 		query.addRefinementsByString(refinements);
+		
+		String requiredFieldsString = ServletRequestUtils.getStringParameter(pRequest, "requiredFields", "");
+		String[] filterStrings = requiredFieldsString.split("~",0);
+		String finalFields = "";
+		
+		if(filterStrings.length > 0) {
+			if(filterStrings.length > 1) {
+				finalFields = filterStrings[1];
+			
+				if(filterStrings.length > 2) {
+					for (int i=2; i<filterStrings.length; i++) {
+						finalFields = finalFields + "|" + filterStrings[i];
+					}
+				}
+			}
+			query.setRequiredFields(finalFields);
+		}
+		
+		// 1)department:AUDIO
+		// 2)department:DIGITAL COMMUNICATIO
+		
+		//if(filterStrings[1].equals("department:AUDIO")) {
+			//query.setRequiredFields("department:AUDIO|department:DIGITAL COMMUNICATIO");
+			//query.setRequiredFields(finalFields);
+		//}
+		
 		String q = ServletRequestUtils.getStringParameter(pRequest, "q", "");
 		query.setSearchString(q);
-			
+		
 		query.setSkip(ServletRequestUtils.getLongParameter(pRequest, "p", 0));
 		// set a sub collection.
 		String tab = ServletRequestUtils.getStringParameter(pRequest, "tab",
@@ -88,14 +114,12 @@ public class NavigationController extends AbstractController {
 			query.setSubCollection("Stores");
 			query.setPageSize(300);
 		}
-		if (StringUtils.isBlank(tab) && StringUtils.isBlank(q)
-			&& StringUtils.isBlank(refinements)) {
+		if (StringUtils.isBlank(tab) && StringUtils.isBlank(q) && StringUtils.isBlank(refinements)) {
 			query.addCustomUrlParam("home", "true");
 			query.setSubCollection("Simple");
 		}
 
-		String region = ServletRequestUtils.getStringParameter(pRequest,
-			"region", null);
+		String region = ServletRequestUtils.getStringParameter(pRequest, "region", null);
 		if (StringUtils.isNotBlank(region) && !region.endsWith("1")) {
 			query.addCustomUrlParam("region", "true");
 		}
@@ -111,6 +135,7 @@ public class NavigationController extends AbstractController {
 		// fire the query.
 		Results results = bridge.search(query);
 		model.put("results", results);
+		
 
 		String uri = pRequest.getRequestURI();
 		int lastIndexOf = uri.lastIndexOf("/");
