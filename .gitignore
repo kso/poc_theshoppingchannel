@@ -1,5 +1,5 @@
 *.class
-
+**/passwords.txt
 # Package Files #
 *.jar
 *.war

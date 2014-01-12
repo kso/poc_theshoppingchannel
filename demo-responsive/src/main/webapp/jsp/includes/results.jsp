@@ -8,7 +8,7 @@
   		<div class="span2">
                   
             <img src="${record.allMeta.thumbnailImage}" id="recordThumbnail${status.index}" style="display:none">
-            <img onclick="$('#a${status.index}AllDetails').toggle()" src="${m['image']}" alt="Placeholder Image" class="product-image" />
+            <img onclick="$('#a${status.index}AllDetails').toggle(); sendEvent(${record.allMeta.sku});" src="${m['image']}" alt="Placeholder Image" class="product-image" />
             <label  for="compare${status.index}" class="compareLabel">
             <input id="compare${status.index}" onclick="toggleCompare(${status.index})" type="checkbox">
             Compare 
