@@ -51,23 +51,38 @@
                         <%@include file="includes/refinements.jsp"%>
 					</ul>
 				</div>
+
+
+
                 <%@include file="includes/navigation.jsp"%>
+                
+
 			</div>
 
 			<!-- Search Results -->
 			<div class="span10 search-results">
-      			<div class="banner">
+      
+      
+      
+      
+      <div class="banner">
                   <div id="bqLoading">
-                  	<img src="<c:url value="/img/loading.gif"/>">
-                  	Querying Big Query
+                  <img src="<c:url value="/img/loading.gif"/>">
+                  Querying Big Query
                   </div>
-          		<div class="row" id="bqSlidingBanner" style="display:none">
-            	<div class="span10">
-              	<div class="banner-slider">
+          <div class="row" id="bqSlidingBanner" style="display:none">
+            <div class="span10">
+              <div class="banner-slider">
                 <ul class="slides">
+                    
+                    
+
                     <li data-thumb="<c:url value="/img/empty.png"/>">
                       <h3>Big Query Suggests People in your region liked these PS3 Games</h3>
+                      
                       <div class="row">
+  
+  
 
 	<c:if test="${param.region eq 'region2' }">
 	    <div class="span2 offset1">
@@ -117,34 +132,45 @@
           </div>
         </div>  
       
-   
-		<div class="pages">
-			<div class="row">
-				<div class="span3">
-					<span class="now-showing"><%@include file="includes/recordCount.jsp"%></span>							
-				</div>
-				<div class="span4">
-					<div class="pagination pagination-centered">
-						<ul>
-							<li><a href="javascript:;" onclick="$('#p').val('${results.pageInfo.recordStart-11}');$('#form').submit()">&lt;</a></li>
-						</ul>
-						<ul>
-							<li><a href="javascript:;" onclick="$('#p').val('${results.pageInfo.recordEnd}');$('#form').submit()">&gt;</a></li>
-						</ul>
+      
+      
+      
+      
+      
+      
+      
+      
+				<div class="pages">
+					<div class="row">
+						<div class="span3">
+							<span class="now-showing">
+                          <%@include file="includes/recordCount.jsp"%>
+              </span>							
+						</div>
+						<div class="span4">
+							<div class="pagination pagination-centered">
+								<ul>
+									<li><a href="javascript:;" onclick="$('#p').val('${results.pageInfo.recordStart-11}');$('#form').submit()">&lt;</a></li>
+								</ul>
+								<ul>
+									<li><a href="javascript:;" onclick="$('#p').val('${results.pageInfo.recordEnd}');$('#form').submit()">&gt;</a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="span3">
+							<select class="pull-right">
+								<option>Relevancy</option>
+								<option>Price - High to Low</option>								
+							</select>
+						</div>
 					</div>
 				</div>
-				<div class="span3">
-					<select class="pull-right">
-						<option>Relevancy</option>
-						<option>Price - High to Low</option>								
-					</select>
-				</div>
-			</div>
-		</div>
 
-		<%@include file="includes/compare.jsp"%>
-        <%@include file="includes/results.jsp"%>				
-	</div><!-- End Search Results -->
+				<%@include file="includes/compare.jsp"%>
+
+                <%@include file="includes/results.jsp"%>				
+
+			</div><!-- End Search Results -->
 
 
 		</div><!-- end main row -->

@@ -10,15 +10,10 @@
             <img src="${record.allMeta.thumbnailImage}" id="recordThumbnail${status.index}" style="display:none">
             <img onclick="$('#a${status.index}AllDetails').toggle()" src="${m['image']}" alt="Placeholder Image" class="product-image" />
             <label  for="compare${status.index}" class="compareLabel">
-            	<input id="compare${status.index}" onclick="toggleCompare(${status.index})" type="checkbox">
-            	Compare 
+            <input id="compare${status.index}" onclick="toggleCompare(${status.index})" type="checkbox">
+            Compare 
             </label>
-            
-            <a href="#" class="compareLabel" id="more${status.index}" onclick="$('#requiredFields').val('');$('#q').val('');$('#refinements').val('');$('#q1').val('');$('#refinements').val($('#refinements').val() + '~' + 'manufacturer=${record.allMeta.manufacturer}' + '~' + 'department=${record.allMeta.department}'); $('#form').submit();">
-            	More Like This
-            </a> 
         </div>
-        
   		<div class="span6">
   			<span class="title"><a href="#">${m['name']}</a></span>
   			<p><strong>Model:</strong> ${m['modelNumber']} <strong>SKU:</strong> ${m['sku']}</p>

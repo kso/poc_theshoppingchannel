@@ -3,6 +3,8 @@
 		<input autocomplete="off" type="text" onkeydown="$('#refinements').val('')" name="q" id="q2" class="cursorFocus" value="<c:out value="${param.q2}"/>">
          <button><i class="icon-search"></i></button>
     </fieldset>
+  
+  	<input type="hidden" name="refinements" id="refinements" value="<c:out value="${param.refinements }"/>">
   	<input type="hidden" name="p" id="p" value="0">
   	<input type="hidden" name="tab" id="tab" value="${param.tab}">
   	<input type="hidden" name="region" id="region" value="${param.region}">

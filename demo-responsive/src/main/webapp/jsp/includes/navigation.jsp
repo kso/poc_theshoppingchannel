@@ -7,9 +7,6 @@
     <c:if test="${nav.name eq 'regularPrice'}">
       <%@include file="slider.jsp"%>
     </c:if>
-    
-    
-    <c:if test="${nav['name'] ne 'department'}">
     <c:if test="${nav.name ne 'regularPrice'}">
       <div class="search-sidebar-filter">
         <h3>${nav.displayName}<i class="icon-chevron-right pull-right"></i></h3>
@@ -22,15 +19,6 @@
       </div>  
     </c:if>
   </c:if>
-  </c:if>
-  
-  <c:if test="${nav['name'] eq 'department'}">
-      	<div class="search-sidebar-filter">
-          <h3>${nav.displayName}<i class="icon-chevron-right pull-right"></i></h3>
-          <%@include file="navMultiLink.jsp"%>
-      	</div>
-  </c:if>
-  
 </c:forEach>
 </c:set>
 <c:if test="${!empty navString}">
