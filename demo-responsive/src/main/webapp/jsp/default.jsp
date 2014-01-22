@@ -40,6 +40,8 @@
 				<h3 class="search-results-header">Search Results for ${param.q} <%@include file="includes/didYouMean.jsp"%></h3>
 			</div>			
 		</div>
+		
+		
 		<div class="row">
 			<div class="span2 sidebar search-sidebar ${fn:length(results.selectedRefinements) == 0 ? 'noRefinements' : ''}">
 				<div class="search-sidebar-refined">
@@ -58,6 +60,7 @@
 				<c:choose>
 				<c:when test="${templateName eq 'SlidingHeader'}">
 					<div class="banner">
+						<div class="custom-text-header">${results.template.zonesByName['Custom Site Text'].content}</div>
 				  		<div class="row">
 				  			<div class="span10">
 				  				<div class="banner-slider">

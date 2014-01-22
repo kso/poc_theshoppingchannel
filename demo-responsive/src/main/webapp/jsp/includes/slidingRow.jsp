@@ -6,10 +6,7 @@ Featured Items Title ${rowNumber}
 Featured Items Query ${rowNumber}
 </c:set>
 <li data-thumb="<c:url value="/img/empty.png"/>">
-<!--
-<li data-thumb="http://placehold.it/250x70">
--->
-  <h3>Shop ${results.template.zonesByName[titleName].content}</h3>
+  <h3>${results.template.zonesByName[titleName].content}</h3>
   <div class="row">
   
   <c:forEach items="${results.template.zonesByName[queryName].records}" var="record" varStatus="recordI">

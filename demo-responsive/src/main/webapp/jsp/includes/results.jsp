@@ -13,6 +13,11 @@
             <input id="compare${status.index}" onclick="toggleCompare(${status.index})" type="checkbox">
             Compare 
             </label>
+            
+             <a href="#" class="compareLabel" id="more${status.index}" onclick="$('#q').val('');$('#refinements').val('');$('#q1').val('');$('#refinements').val($('#refinements').val() + '~' + 'manufacturer=${record.allMeta.manufacturer}' + '~' + 'department=${record.allMeta.department}'); $('#form').submit();">
+	              More Like This
+            </a> 
+            
         </div>
   		<div class="span6">
   			<span class="title"><a href="#">${m['name']}</a></span>
