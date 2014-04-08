@@ -752,6 +752,70 @@ h3.search-results-header {
 
 
 /**
+ * SEARCH AS YOU TYPE
+ */
+#sayt-menu {
+	background: white;
+	font: normal 14px/30px Roboto Condensed, Arial, Helvetica, sans-serif;
+	text-transform: uppercase;
+	width: 575px;
+}
+
+#sayt-menu,
+.ui-widget-content .ui-state-hover,
+.ui-widget-content .ui-state-focus {
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
+	-khtml-border-radius: 0px;
+	border-radius: 0px;
+}
+
+.ui-autocomplete-category {
+	color: black;
+	font-weight:bold;
+	padding-left:2px;
+	font-size: 15px;
+}
+
+.ui-widget-content .ui-state-hover,
+.ui-widget-content .ui-state-focus {
+	background: #c4e9ff;
+}
+
+.sayt-content {
+	color: #555;
+	padding: 2px;
+}
+
+.sayt-product-anchor {
+	width: 104px;
+	display: inline-block;
+	float: left;
+	font-size: 10px;
+}
+
+.sayt-additional {
+	font-size: 12px;
+	float: right;
+	color: gray;
+}
+
+.sayt-hyperlink {
+	color: blue;
+	text-decoration: underline;
+}
+
+.sayt-product-image {
+	display: block;
+	margin: auto;
+	max-width: 100px;
+	max-height: 100px;
+	border: 2px solid #eee;
+	margin-bottom: 5px;
+}
+
+
+/**
  * MEDIA QUERIES
  */
 @media (min-width: 1200px) 

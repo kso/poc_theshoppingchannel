@@ -26,3 +26,39 @@ function removeTab()
   <input type="hidden" name="region" id="region" value="${param.region}">
 </form>
 
+<script>
+  $('#q').sayt({
+    source: function(request, response) {
+      $.getJSON('http://localhost:20425/autocomplete?callback=?', { c:'bestbuy', q:request.term, si:5, ni:4 }, response);
+    },
+    focus: function(event, ui) {
+	  event.preventDefault();
+	  if (ui.item.type == 'autocorrect') {
+	    searchProduct(ui.item.value);
+	  } else if (ui.item.type == 'navigation') {
+		searchProduct('*', '~' + ui.item.category + '=' + ui.item.value); 
+	  }
+	},
+	select: function(event, ui) {
+	  event.preventDefault();
+	  if (ui.item.type == 'autocorrect') {
+	  	$('#form').submit();
+	  } else if (ui.item.type == 'navigation') {
+		$('#q').val('');
+		$('#refinements').val($('#refinements').val() + '~' + ui.item.category + '=' + ui.item.value);
+		$('#form').submit()
+	  } else if (ui.item.type == 'product') {
+		// add product search here
+	  }
+    }
+  });
+  
+  function searchProduct(searchTerm, refinements) {
+    $.getJSON('http://localhost:20425/productSearch?callback=?', { c:'bestbuy', q:searchTerm, r:refinements, pi:5 }, function(data) {
+	  dust.render('productTemplate.dust', { items:data }, function(err, out) {
+  	    $('.sayt-product-content').remove();
+  		$('#sayt-menu').append(out);
+  	  });
+    });
+  }
+</script>
