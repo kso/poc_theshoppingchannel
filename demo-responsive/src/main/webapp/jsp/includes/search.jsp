@@ -29,7 +29,7 @@ function removeTab()
 <script>
   $('#q').sayt({
     source: function(request, response) {
-      $.getJSON('http://localhost:20425/autocomplete?callback=?', { c:'bestbuy', q:request.term, si:5, ni:4 }, response);
+      $.getJSON('http://quickstart.groupbyinc.com/sayt/autocomplete?callback=?', { c:'bestbuy', q:request.term, si:5, ni:4 }, response);
     },
     focus: function(event, ui) {
 	  event.preventDefault();
@@ -54,7 +54,7 @@ function removeTab()
   });
   
   function searchProduct(searchTerm, refinements) {
-    $.getJSON('http://localhost:20425/productSearch?callback=?', { c:'bestbuy', q:searchTerm, r:refinements, pi:5 }, function(data) {
+    $.getJSON('http://quickstart.groupbyinc.com/sayt/productSearch?callback=?', { c:'bestbuy', q:searchTerm, r:refinements, pi:5 }, function(data) {
 	  dust.render('productTemplate.dust', { items:data }, function(err, out) {
   	    $('.sayt-product-content').remove();
   		$('#sayt-menu').append(out);

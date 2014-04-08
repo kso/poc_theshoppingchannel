@@ -26,6 +26,6 @@
   <script type="text/javascript" src="<c:url value="/js/jquery.masonry.min.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/functions.js"/>"></script>
   <script type="text/javascript" src="<c:url value="/js/main.js"/>"></script>
-  <script type="text/javascript" src="http://localhost:20425/js/sayt.js"></script>
+  <script type="text/javascript" src="http://quickstart.groupbyinc.com/sayt/js/sayt.js"></script>
   <link rel="icon" href="<c:url value="/img/favicon.png"/>">
 </head>
