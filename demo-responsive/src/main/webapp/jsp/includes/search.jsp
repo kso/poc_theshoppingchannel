@@ -42,6 +42,7 @@ function removeTab()
 	select: function(event, ui) {
 	  event.preventDefault();
 	  if (ui.item.type == 'autocorrect') {
+		  $('#q').val(ui.item.value);
 	  	$('#form').submit();
 	  } else if (ui.item.type == 'navigation') {
 		$('#q').val('');
