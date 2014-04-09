@@ -88,7 +88,7 @@ public class NavigationController extends AbstractController {
 				null);
 
 		if (StringUtils.isNotBlank(tab)) {
-			query.setSubCollection("Stores");
+			query.setSubCollection("bestbuydemoold1Stores");
 			query.setPageSize(300);
 		}
 		if (StringUtils.isBlank(tab) && StringUtils.isBlank(q)

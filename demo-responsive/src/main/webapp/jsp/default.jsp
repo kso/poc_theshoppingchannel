@@ -78,7 +78,7 @@
         			<div class="banner person">
           				<div class="row">
             				<div class="span7">
-								<img class="span7" src="<c:url value="${results.template.zonesByName['Picture of famous person'].content}"/>" style="max-width:455px;margin-bottom:10px;">
+								<img class="span7" src="http://commandcenter.groupbyinc.com/merchandising/bannerThumbs/33930/99968/bestbuydemo1laurencekrulik/v1taylorswift.png" style="max-width:455px;margin-bottom:10px;">
             				</div>
             				<div class="span3">
 								<%@include file="includes/famousSku.jsp"%>
