@@ -29,7 +29,7 @@ function removeTab()
 <script>
   $('#q').sayt({
     source: function(request, response) {
-      $.getJSON('http://quickstart.groupbyinc.com/sayt/autocomplete?callback=?', { c:'bestbuy', q:request.term, si:5, ni:4 }, response);
+      $.getJSON('http://quickstart.groupbyinc.com/sayt/autocomplete?callback=?', { q:request.term, si:5, ni:4 }, response);
     },
     focus: function(event, ui) {
 	  event.preventDefault();
