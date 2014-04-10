@@ -41,12 +41,12 @@
 
 	<context-param>
 		<param-name>bridgeHost</param-name>
-		<param-value>vpn.groupbyinc.com</param-value>
+		<param-value>localhost</param-value>
 	</context-param>
 
 	<context-param>
 		<param-name>bridgePort</param-name>
-		<param-value>9050</param-value>
+		<param-value>9060</param-value>
 	</context-param>
 
 	<context-param>
