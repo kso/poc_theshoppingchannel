@@ -33,7 +33,7 @@ function removeTab()
     },
     focus: function(event, ui) {
 	  event.preventDefault();
-	  if (ui.item.type == 'autocorrect') {
+	  if (ui.item.type == 'searchTerm') {
 	    searchProduct(ui.item.value);
 	  } else if (ui.item.type == 'navigation') {
 		searchProduct('*', '~' + ui.item.category + '=' + ui.item.value); 
@@ -41,7 +41,7 @@ function removeTab()
 	},
 	select: function(event, ui) {
 	  event.preventDefault();
-	  if (ui.item.type == 'autocorrect') {
+	  if (ui.item.type == 'searchTerm') {
 		  $('#q').val(ui.item.value);
 	  	$('#form').submit();
 	  } else if (ui.item.type == 'navigation') {
