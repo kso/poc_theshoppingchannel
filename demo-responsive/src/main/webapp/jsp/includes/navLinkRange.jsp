@@ -6,7 +6,7 @@
 
 <script>
 	function addrefinementrange(name, low, high){
-		$('#refinements').val($('#refinements').val() + '~' + name + '=' + value + '..' + high);
+		$('#refinements').val($('#refinements').val() + '~' + name + '=' + low + '..' + high);
 		$('#form').submit();
 	}
 </script>
