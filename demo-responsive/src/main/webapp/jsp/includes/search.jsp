@@ -28,7 +28,7 @@ function removeTab()
 
 <script>
     $('#q').sayt({
-        domain : 'http://mysearch.com:14993/sayt',
+        domain : 'http://1083.demo.groupbyinc.com/sayt',
         customerId : 'bestbuydemo',
         selectSearchTerm : function(data) {
             $('#q').val(data.value);
