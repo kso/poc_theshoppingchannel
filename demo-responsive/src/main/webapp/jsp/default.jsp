@@ -40,8 +40,6 @@
 				<h3 class="search-results-header">Search Results for ${param.q} <%@include file="includes/didYouMean.jsp"%></h3>
 			</div>			
 		</div>
-		
-		
 		<div class="row">
 			<div class="span2 sidebar search-sidebar ${fn:length(results.selectedRefinements) == 0 ? 'noRefinements' : ''}">
 				<div class="search-sidebar-refined">
@@ -82,6 +80,18 @@
             				</div>
             				<div class="span3">
 								<%@include file="includes/famousSku.jsp"%>
+            				</div>
+          				</div>
+        			</div>    
+        		</c:when>
+        		<c:when test="${templateName eq 'CrossPromotionSpotlight'}">
+        			<div class="banner person">
+          				<div class="row">
+            				<div class="span7">
+								<img class="span7" src="<c:url value="${results.template.zonesByName['Banner Image'].content}"/>" style="max-width:455px;margin-bottom:10px;">
+            				</div>
+            				<div class="span3">
+								<%@include file="includes/crossPromotionSpotlight.jsp"%>
             				</div>
           				</div>
         			</div>    
