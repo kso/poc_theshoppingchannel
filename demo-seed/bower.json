@@ -1,0 +1,15 @@
+{
+  "name": "groupby-cloud-demo",
+  "description": "GroupBy Cloud Demo",
+  "version": "0.0.1",
+  "homepage": "https://github.com/groupby/demos",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "^1.4.8",
+    "angular-route": "^1.4.8",
+    "angular-loader": "^1.4.8",
+    "angular-mocks": "^1.4.8",
+    "html5-boilerplate": "~5.2.0"
+  }
+}

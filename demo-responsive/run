@@ -1,3 +1,0 @@
-export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
-export MAVEN_OPTS="-DbridgePort=9060 -DbridgeHost=192.168.0.217 -XX:+CMSClassUnloadingEnabled -XX:PermSize=256M -XX:MaxPermSize=512M"
-mvn jetty:run  

@@ -1,9 +1,0 @@
-*.class
-**/passwords.txt
-# Package Files #
-*.jar
-*.war
-*.ear
-target
-bin
-.settings
