@@ -1,30 +1,79 @@
-/* app css stylesheet */
+@import url("//fonts.googleapis.com/css?family=Lobster");
 
-.menu {
-  list-style: none;
-  border-bottom: 0.1em solid black;
-  margin-bottom: 2em;
-  padding: 0 0 0.5em;
+body {
+	margin-top: 50px;
 }
 
-.menu:before {
-  content: "[";
+.section-title, .navbar-brand {
+	font-family: 'Lobster', cursive;
+	font-weight: bold;
+	line-height: 1.1;
+	font-size: 26px;
+	margin-top: 0px;
+	padding: 15px;
 }
 
-.menu:after {
-  content: "]";
+.results-title {
+	font-family: 'Lobster', cursive;
 }
 
-.menu > li {
-  display: inline;
+.refinement {
+	padding: 5px;
 }
 
-.menu > li:before {
-  content: "|";
-  padding-right: 0.3em;
+.product-container {
+	height: 250px;
 }
 
-.menu > li:nth-child(1):before {
-  content: "";
-  padding: 0;
+.product-thumb {
+	text-align: center;
+	color: black;
+}
+
+.product-thumb h5 {
+	font-weight: bold;
+	margin-top: 0px;
+}
+
+.product-thumb:hover {
+	text-decoration: none;
+	color: grey;
+}
+
+.thumbnail {
+	margin-bottom: 10px;
+	max-height: 200px;
+}
+
+.pager {
+	float: right;
+	margin-right: 10px;
+}
+
+.product-details .poster {
+	float: left;
+	margin-right: 20px;
+}
+
+.product-details .product-title {
+	font-family: 'Lobster', cursive;
+	font-size: 35px;
+	margin-top: 0px;
+}
+
+.product-details .btn-info {
+	margin-right: 5px;
+}
+
+.product-details .overview {
+	font-size: 17px;
+	margin: 15px 5% 15px 0px;
+} 
+
+.product-details .return-link {
+	float: right;
+}
+
+.extra-details kbd {
+	margin-right:5px;
 }

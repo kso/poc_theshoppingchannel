@@ -9,7 +9,8 @@
     "angular": "^1.4.8",
     "angular-route": "^1.4.8",
     "angular-loader": "^1.4.8",
-    "angular-mocks": "^1.4.8",
-    "html5-boilerplate": "~5.2.0"
+    "html5-boilerplate": "~5.2.0",
+    "bootstrap": "^3.3.6",
+    "angular-bootstrap": "^1.0.3"
   }
 }
