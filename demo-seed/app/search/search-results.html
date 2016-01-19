@@ -14,7 +14,7 @@
       <ul class="list-group" uib-collapse="isNavCollapsed">
         <li class="list-group-item refinement" ng-repeat="refinement in nav.refinements | limitTo:10 ">
           <span class="badge">{{refinement.count}}</span>
-          <a href="#/{{nav.displayName}}/{{refinement.value}}">{{refinement.value}}</a>
+          <a href="/{{nav.displayName}}/{{refinement.value}}">{{refinement.value}}</a>
         </li>
       </ul>
     </div>
@@ -43,7 +43,7 @@
     <div class="row">
 
       <div class="product-container col-sm-3 col-xs-6" ng-repeat="result in resultList">
-        <a href="#/product/{{result.allMeta.ID}}" class="product-thumb">
+        <a href="/product/{{result.allMeta.ID}}" class="product-thumb">
           <img class="thumbnail img-responsive" ng-src="{{result.allMeta.ClargeImage}}">
           <h5>{{result.allMeta.Ctitle}}</h5>
         </a>
