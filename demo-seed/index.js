@@ -14,7 +14,6 @@ var server = express();
 server.set('port', 8000);
 server.use(express.static(__dirname + '/app'));
 
-
 var proxyOptions = {
     changeOrigin: true,
     target: 'https://crateandbarreldemo.groupbycloud.com'
@@ -31,4 +30,10 @@ server.all("/:type(api|admin)/*", function(req, res) {
 
 server.listen(server.get('port'), function() {
     console.log('Express server listening on port ' + server.get('port'));
+});
+
+//direct all other URLs to the client
+server.get('*', function(req, res) {
+  console.log("Sending request " + req.url + " to client" );
+  res.sendFile(__dirname + '/app/index.html');
 });
