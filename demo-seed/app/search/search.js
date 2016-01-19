@@ -5,7 +5,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 		$scope.query = $routeParams.query;
 		$scope.currentPage = 1;
-		$scope.pageSize = 12;
+		$scope.pageSize = 30;
 		$scope.pageTitle =  "";
 
 		$scope.doSearch = function () {
@@ -14,6 +14,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 			var searchParameters = {
 				skip : $scope.pageSize * ($scope.currentPage - 1),
+				pageSize : $scope.pageSize,
 				query : $scope.query
 			};
 
