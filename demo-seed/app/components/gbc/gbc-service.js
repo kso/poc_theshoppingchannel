@@ -21,11 +21,19 @@ angular.module('groupByDemo.gbc', [])
 		};
 
 		gbcAPI.sayt = function(term) {
-			var dataObj = { 
-				query: term,
-				collection: "default"
-			};
-			return $http.post('/api/v1/sayt/search', dataObj);
+
+			var base_url = "http://crateandbarreldemo.groupbycloud.com";
+			var url = base_url + "/api/v1/sayt/search?";
+			var parameters = {
+				query : term,
+				collection : "default",
+				area : "Production",
+				searchItems : 10,
+				navigationItems : 4,
+			}
+
+			return $http.get( url, { params: parameters } );
+
 		};
 
 		gbcAPI.getCollectionData = function() {
