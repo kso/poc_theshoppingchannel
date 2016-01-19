@@ -11,7 +11,7 @@ httpProxy.prototype.onError = function (err) {
 };
 
 var server = express();
-server.set('port', 3000);
+server.set('port', 8000);
 server.use(express.static(__dirname + '/app'));
 
 
