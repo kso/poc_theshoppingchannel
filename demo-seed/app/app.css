@@ -58,7 +58,8 @@ body {
 
 .product-thumb {
 	text-align: center;
-	color: black;
+	color: grey;
+	border: none;
 }
 
 .product-thumb h5 {
@@ -68,7 +69,15 @@ body {
 
 .product-thumb:hover {
 	text-decoration: none;
-	color: grey;
+	color: black;
+}
+
+.product-thumb > img {
+	border-color: transparent;
+}
+
+.product-thumb:hover > img {
+	border-color: #ddd;
 }
 
 .thumbnail {
