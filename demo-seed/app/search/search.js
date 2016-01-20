@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module("groupByDemo.search",['ui.bootstrap'])
-	.controller('searchCtrl', ['$scope', 'apiService', '$routeParams', function ($scope, apiService, $routeParams) {
+	.controller('searchCtrl', ['$scope', 'apiService', '$routeParams', '$filter', 
+			function ($scope, apiService, $routeParams, $filter) {
 
 		$scope.currentPage = 1;
 
@@ -22,10 +23,11 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			};
 
 		  	apiService.search(parameters).success(function(data){
-				//console.log(data);
+				console.log(data);
 				view_model.totalRecordCount = data.totalRecordCount;
 				view_model.resultList = data.records;
 				view_model.navigationList = data.availableNavigation;
+				view_model.selectedNavigation = data.selectedNavigation;
 
 				var firstResult = view_model.pageSize * ($scope.currentPage - 1) + 1
 				var lastResult =  firstResult + view_model.pageSize - 1
@@ -35,7 +37,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 		view_model.refine = function(navigation, refinement_value, type) {
 
-			console.log("refine: " + navigation + " -->  " + refinement_value);
+			console.log("add refinement: " + navigation + " -->  " + refinement_value);
 			
 			var refinement = {}
 			refinement.type = type;
@@ -54,6 +56,14 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 			view_model.search();
 		}
+
+		view_model.unrefine = function(navigation, refinement_value) {
+
+			console.log("remove refinement: " + navigation + " -->  " + refinement_value);
+
+			view_model.refinements = $filter('filter')(view_model.refinements, {navigationName: '!'+navigation, value: '!'+refinement_value});	
+			view_model.search();
+		} 
 
 		view_model.search();
 

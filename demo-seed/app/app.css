@@ -50,6 +50,10 @@ body {
 	cursor: pointer;
 }
 
+.refinement p {
+	float: right;
+}
+
 .refinement:hover {
 	background-color: #eee;
 }

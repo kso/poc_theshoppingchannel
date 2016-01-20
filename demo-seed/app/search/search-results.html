@@ -1,10 +1,20 @@
 
 
 <div class="row">
-    <div class="section-title">Search Results for: {{search.query}}</div>
+    <div ng-if="search.query" class="section-title">Search Results for: {{search.query}}</div>
+    <div ng-if="!search.query" class="section-title">Browse All Products</div>
 </div>
 <div class="row">
   <div class="navigation-well well col-sm-2">
+    <ul class="list-group">
+      <div ng-repeat="selnav in search.selectedNavigation">
+        <li class="list-group-item refinement" ng-repeat="selref in selnav.refinements"
+             ng-click="search.unrefine(selnav.name, selref.value)">
+          <span>{{selnav.displayName}}: {{selref.value}}</span>
+          <p class="glyphicon glyphicon-remove"></p>
+        </li>
+      </div>
+    </ul>  
     <div class="navigation" ng-repeat="nav in search.navigationList">
       <div ng-click="isNavCollapsed = !isNavCollapsed"> 
         <span >{{nav.displayName}}</span>
