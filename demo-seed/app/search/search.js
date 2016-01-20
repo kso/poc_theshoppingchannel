@@ -1,35 +1,37 @@
 'use strict';
 
 angular.module("groupByDemo.search",['ui.bootstrap'])
-	.controller('searchCtrl', ['$scope', 'apiService', '$routeParams', function ($scope, apiService, $routeParams) {
+	.controller('searchCtrl', ['apiService', '$routeParams', function (apiService, $routeParams) {
 
-		$scope.query = $routeParams.query;
-		$scope.currentPage = 1;
-		$scope.pageSize = 30;
-		$scope.pageTitle =  "";
+		var view_model = this;
 
-		$scope.doSearch = function () {
+		view_model.query = $routeParams.query;
+		view_model.currentPage = 1;
+		view_model.pageSize = 30;
+		view_model.resultSummary =  "";
+
+		view_model.search = function () {
 
 			console.log("running search")
 
-			var searchParameters = {
-				skip : $scope.pageSize * ($scope.currentPage - 1),
-				pageSize : $scope.pageSize,
-				query : $scope.query
+			var parameters = {
+				skip : view_model.pageSize * (view_model.currentPage - 1),
+				pageSize : view_model.pageSize,
+				query : view_model.query
 			};
 
-		  	apiService.search(searchParameters).success(function(data){
+		  	apiService.search(parameters).success(function(data){
 				console.log(data);
-				$scope.totalRecordCount = data.totalRecordCount;
-				$scope.resultList = data.records;
-				$scope.navigationList = data.availableNavigation;
+				view_model.totalRecordCount = data.totalRecordCount;
+				view_model.resultList = data.records;
+				view_model.navigationList = data.availableNavigation;
 
-				var firstResult = $scope.pageSize * ($scope.currentPage - 1) + 1
-				var lastResult =  firstResult + $scope.pageSize - 1
-				$scope.pageTitle =  firstResult.toString() + " - " + lastResult.toString() + " of " +  $scope.totalRecordCount.toString() + " Products";
+				var firstResult = view_model.pageSize * (view_model.currentPage - 1) + 1
+				var lastResult =  firstResult + view_model.pageSize - 1
+				view_model.resultSummary =  firstResult.toString() + " - " + lastResult.toString() + " of " +  view_model.totalRecordCount.toString() + " Products";
 			});
 		};
 
-		$scope.doSearch();
+		view_model.search();
 
 	}])

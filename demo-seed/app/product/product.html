@@ -1,16 +1,16 @@
 <div class="well col-xs-12 product-details">
-	<img class="poster img-thumbnail img-responsive" ng-src="{{product.allMeta.wideImage}}">
+	<img class="poster img-thumbnail img-responsive" ng-src="{{product.meta.wideImage}}">
 
-	<h1 class="product-title">{{product.allMeta.title}} - {{product.allMeta.price | currency:"$"}}</h1>
+	<h1 class="product-title">{{product.meta.title}} - {{product.meta.price | currency:"$"}}</h1>
 
-	<a ng-repeat="color in product.allMeta.Qcolor" class="btn btn-info" href="/">{{color}}</a>
+	<a ng-repeat="color in product.meta.Qcolor" class="btn btn-info" href="/">{{color}}</a>
 
-	<div class="overview">{{product.allMeta.CdescriptionLong}}</div>
+	<div class="overview">{{product.meta.CdescriptionLong}}</div>
 
 	<div class="extra-details">
-		<kbd>Style: {{product.allMeta.Qstyle}} </kbd>
-		<kbd>Type: {{product.allMeta.QtopRatedType}}</kbd>
-		<kbd ng-repeat="feature in product.allMeta.Qfeatures">Feature: {{feature}}</kbd>
+		<kbd>Style: {{product.meta.Qstyle}} </kbd>
+		<kbd>Type: {{product.meta.QtopRatedType}}</kbd>
+		<kbd ng-repeat="feature in product.meta.Qfeatures">Feature: {{feature}}</kbd>
 	</div>
 
 </div>

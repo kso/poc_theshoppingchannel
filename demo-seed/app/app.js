@@ -9,9 +9,21 @@ angular.module("groupByDemo", [
 	]).
 config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
 	$routeProvider.
-		when("/", {templateUrl: "search/search-results.html", controller: "searchCtrl"}).
-		when("/q/:query", {templateUrl: "search/search-results.html", controller: "searchCtrl"}).
-		when("/product/:id", {templateUrl: "product/product.html", controller: "productCtrl"}).
+		when("/", {
+			templateUrl: "search/search-results.html", 
+			controller: "searchCtrl",
+			controllerAs: "search"
+		}).
+		when("/q/:query", {
+			templateUrl: "search/search-results.html", 
+			controller: "searchCtrl",
+			controllerAs: "search"
+		}).
+		when("/product/:id", {
+			templateUrl: "product/product.html", 
+			controller: "productCtrl",
+			controllerAs: "product"
+		}).
 		otherwise({redirectTo: "/"});
 
 	// use the HTML5 History API

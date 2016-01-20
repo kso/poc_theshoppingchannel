@@ -14,18 +14,17 @@
         <a href="/" class="navbar-brand">
           <span class="glyphicon glyphicon-shopping-cart"></span> GroupBy Demo
         </a>
-        <div ng-controller="TypeaheadCtrl">
+        <div ng-controller="TypeaheadCtrl as typeahead">
           <div class="navbar-form navbar-right" role="search">
             <div class="form-group">
-              <!-- <pre>Model: {{asyncSelected | json}}</pre> -->
               <input  type="text" 
                       ng-model="asyncSelected" 
                       placeholder="Search..." 
-                      uib-typeahead="searchSuggestion as searchSuggestion.value for searchSuggestion in sayt($viewValue)" 
+                      uib-typeahead="searchSuggestion as searchSuggestion.value for searchSuggestion in typeahead.fetch($viewValue)" 
                       typeahead-focus-first = "false"
                       typeahead-no-results="noResults"
-                      typeahead-on-select="onSaytSelect($item, $model, $label)"
-                      ng-keyup="$event.keyCode == 13 ? onSaytEnter(asyncSelected) : null"
+                      typeahead-on-select="typeahead.onSelectItem($item, $model, $label)"
+                      ng-keyup="$event.keyCode == 13 ? typeahead.onEnterKey(asyncSelected) : null"
                       class="form-control">
             </div>
           </div>

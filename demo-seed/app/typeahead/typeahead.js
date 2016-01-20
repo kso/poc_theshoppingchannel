@@ -2,10 +2,12 @@
 
 // taken from the ui.bootstrap example: http://angular-ui.github.io/bootstrap/#/typeahead
 
-angular.module('groupByDemo.typeahead', []).controller('TypeaheadCtrl', ['$scope', '$http', '$location', 'apiService', function($scope, $http, $location, apiService) {
+angular.module('groupByDemo.typeahead', []).controller('TypeaheadCtrl', ['$http', '$location', 'apiService', function($http, $location, apiService) {
+
+  var view_model = this;
 
   // Any function returning a promise object can be used to load values asynchronously
-  $scope.sayt = function(val) {
+  view_model.fetch = function(val) {
     return apiService.sayt(val).then(function(response){
       return response.data.result.searchTerms;
     });
@@ -22,19 +24,19 @@ angular.module('groupByDemo.typeahead', []).controller('TypeaheadCtrl', ['$scope
     $location.path( "/q/" + queryString.split(' ').join('+') );
   }
 
-  $scope.onSaytEnter = function (text) {
+  view_model.onEnterKey = function (text) {
   	redirect(text);
   }
 
-  $scope.onSaytSelect = function ($item, $model, $label) {
-    $scope.$item = $item;
-    $scope.$model = $model;
-    $scope.$label = $label;
+  view_model.onSelectItem = function ($item, $model, $label) {
+    view_model.$item = $item;
+    view_model.$model = $model;
+    view_model.$label = $label;
 
 	redirect($label);
   };
 
-  $scope.modelOptions = {
+  view_model.modelOptions = {
     debounce: {
       default: 500,
       blur: 250
