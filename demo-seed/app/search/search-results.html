@@ -33,10 +33,10 @@
       <div class="col-xs-3">
         <uib-pager   class = "pager"
                      align = "false" 
-                     total-items="totalRecordCount" 
+                     total-items="search.totalRecordCount" 
                      ng-model="currentPage"
                      ng-change="search.search()" 
-                     items-per-page="pageSize">
+                     items-per-page="search.pageSize">
         </uib-pager>
       </div>
     </div>
