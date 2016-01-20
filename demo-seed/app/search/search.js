@@ -4,9 +4,10 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 	.controller('searchCtrl', ['$scope', 'apiService', '$routeParams', function ($scope, apiService, $routeParams) {
 
 		$scope.currentPage = 1;
-		
+
 		var view_model = this;
 
+		view_model.refinements = [];
 		view_model.query = $routeParams.query;
 		view_model.pageSize = 30;
 		view_model.resultSummary =  "";
@@ -16,7 +17,8 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			var parameters = {
 				skip : view_model.pageSize * ($scope.currentPage - 1),
 				pageSize : view_model.pageSize,
-				query : view_model.query
+				query : view_model.query,
+				refinements : view_model.refinements
 			};
 
 		  	apiService.search(parameters).success(function(data){
@@ -30,6 +32,28 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				view_model.resultSummary =  firstResult.toString() + " - " + lastResult.toString() + " of " +  view_model.totalRecordCount.toString() + " Products";
 			});
 		};
+
+		view_model.refine = function(navigation, refinement_value, type) {
+
+			console.log("refine: " + navigation + " -->  " + refinement_value);
+			
+			var refinement = {}
+			refinement.type = type;
+			refinement.navigationName = navigation;
+			
+			switch(type){
+				case "Range":
+					console.log("TODO");
+					break;
+				case "Value":
+					refinement.value = refinement_value;
+					break;
+			}
+
+			view_model.refinements.push( refinement );
+
+			view_model.search();
+		}
 
 		view_model.search();
 

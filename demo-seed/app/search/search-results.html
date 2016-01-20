@@ -12,9 +12,11 @@
       </div>
 
       <ul class="list-group" uib-collapse="isNavCollapsed">
-        <li class="list-group-item refinement" ng-repeat="refinement in nav.refinements | limitTo:10 ">
+        <li class="list-group-item refinement" 
+            ng-repeat="refinement in nav.refinements | limitTo:10 "
+            ng-click="search.refine(nav.name, refinement.value, 'Value')">
           <span class="badge">{{refinement.count}}</span>
-          <a href="/{{nav.displayName}}/{{refinement.value}}">{{refinement.value}}</a>
+          <span>{{refinement.value}}</span>
         </li>
       </ul>
     </div>

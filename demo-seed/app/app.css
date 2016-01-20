@@ -45,11 +45,13 @@ body {
 
 .refinement {
 	padding: 3px;
-	border: none;
+	border-radius: 6px;
+	border-color: transparent;
+	cursor: pointer;
 }
 
-.refinement a {
-	color: black;
+.refinement:hover {
+	background-color: #eee;
 }
 
 .product-container {
