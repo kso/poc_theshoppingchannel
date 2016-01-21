@@ -8,16 +8,12 @@ angular.module('groupByDemo.gbc', [])
 
 		gbcAPI.search = function(searchParametrs) {
 			
-			var dataObj = { 
-				fields: [ "*" ],
-				pageSize : 12,
-				clientKey: this.clientKey
-			};
+			// Set additional properties
+			searchParametrs.fields = [ "*" ];
+			searchParametrs.pageSize = 12;
+			searchParametrs.clientKey = this.clientKey;
 
-			//merge the passed in searchParameters
-			for (var key in searchParametrs) { dataObj[key] = searchParametrs[key]; }
-
-			return $http.post('/api/v1/search', dataObj);
+			return $http.post('/api/v1/search', searchParametrs);
 		};
 
 		gbcAPI.sayt = function(term) {

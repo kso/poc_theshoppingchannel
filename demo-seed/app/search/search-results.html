@@ -35,14 +35,19 @@
   <div class="results-well well col-sm-10 col-xs-12">
     <div class="row">
 
-      <div class="col-xs-9">
+      <div class="col-xs-7">
         <div class="results-title">
           <h2><small>{{search.resultSummary}}</small></h1>
         </div>
         
       </div>
 
-      <div class="col-xs-3">
+        <select ng-model="sort" 
+                ng-init="sort=sortFields[0]" 
+                ng-options="sortField as sortField.display for sortField in sortFields"
+                ng-change="search.search()">
+        </select>
+      <div class="col-xs-5">
         <uib-pager   class = "pager"
                      align = "false" 
                      total-items="search.totalRecordCount" 
