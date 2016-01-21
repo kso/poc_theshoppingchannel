@@ -13,13 +13,34 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 		view_model.pageSize = 30;
 		view_model.resultSummary =  "";
 
+	    $scope.sortFields = [
+	        {'display': 'Relevancy', 			'field': '_relevance', 	'order' : 'Descending'},
+	        {'display': 'Price - Low to High', 	'field': 'price', 		'order' : 'Ascending'},
+	        {'display': 'Price - High to Low', 	'field': 'price', 		'order' : 'Descending'},
+	        {'display': 'Rating', 				'field': 'Qrating', 	'order' : 'Descending'}
+	    ];
+
 		view_model.search = function () {
+
+			var sortParam = {};
+
+			// Don't set sort if it's not initialized, meaning when 
+			//	this function is called. Defaults to relevance, so that
+			//	should be the first parameter always.
+			if(typeof $scope.sort !== 'undefined'){
+				sortParam.field = $scope.sort.field;
+				sortParam.order = $scope.sort.order;
+			}
+			else {
+				sortParam.field = '_relevance';	
+			}
 
 			var parameters = {
 				skip : view_model.pageSize * ($scope.currentPage - 1),
 				pageSize : view_model.pageSize,
 				query : view_model.query,
-				refinements : view_model.refinements
+				refinements : view_model.refinements,
+				sort: sortParam
 			};
 
 		  	apiService.search(parameters).success(function(data){
