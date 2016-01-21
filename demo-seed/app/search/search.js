@@ -29,8 +29,8 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				view_model.navigationList = data.availableNavigation;
 				view_model.selectedNavigation = data.selectedNavigation;
 
-				var firstResult = view_model.pageSize * ($scope.currentPage - 1) + 1
-				var lastResult =  firstResult + view_model.pageSize - 1
+				var firstResult = view_model.pageSize * ($scope.currentPage - 1) + 1;
+				var lastResult =  Math.min( firstResult + view_model.pageSize - 1, view_model.totalRecordCount);
 				view_model.resultSummary =  firstResult.toString() + " - " + lastResult.toString() + " of " +  view_model.totalRecordCount.toString() + " Products";
 			});
 		};
