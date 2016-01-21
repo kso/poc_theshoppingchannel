@@ -21,9 +21,22 @@ var proxyOptions = {
 
 var apiProxy = httpProxy.createProxyServer();
 
+var logPost = function(request){
+    if(request.method !== 'POST')
+        return;
+
+    var body = "";
+    request.on('data', function (chunk) {body += chunk;});
+    request.on('end', function () { console.log('POSTED DATA: ' + body);});
+}
+
+
 // Grab all requests to the server with "/api/".
 server.all("/:type(api|admin)/*", function(req, res) {
     console.log("Request made to /api/ " + req.url );
+
+    //debug code to log search requests
+    logPost(req);
 
     apiProxy.web(req, res, proxyOptions);
 });
