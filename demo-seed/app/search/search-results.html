@@ -60,10 +60,15 @@
     <div class="row">
 
       <div class="product-container col-sm-3 col-xs-6" ng-repeat="result in search.resultList">
-        <a href="/product/{{result.allMeta.ID}}" class="product-thumb">
-          <img class="thumbnail img-responsive" ng-src="{{result.allMeta.ClargeImage}}">
-          <h5>{{result.allMeta.Ctitle}}</h5>
-        </a>
+        <div class="product-thumb-container" style="position:relative">
+          <a href="/product/{{result.allMeta.ID}}" class="product-thumb">
+            <img class="thumbnail img-responsive" ng-src="{{result.allMeta.ClargeImage}}">
+            <h5>{{result.allMeta.Ctitle}}</h5>
+          </a>
+          <div class="hover-btn" ng-click="search.inspect(result.allMeta.ID)">
+            <i class="glyphicon glyphicon-eye-open"></i>
+          </div>
+        </div>
       </div>
 
     </div>

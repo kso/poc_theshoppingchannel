@@ -11,6 +11,7 @@
     "angular-loader": "^1.4.8",
     "html5-boilerplate": "~5.2.0",
     "bootstrap": "^3.3.6",
-    "angular-bootstrap": "^1.0.3"
+    "angular-bootstrap": "^1.0.3",
+    "json-formatter": "^0.4.2"
   }
 }
