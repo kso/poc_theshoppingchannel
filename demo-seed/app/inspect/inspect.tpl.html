@@ -1,12 +1,20 @@
 
 <div>
     <div class="modal-header">
-        <h3 class="modal-title">Record: {{inspect.id}}</h3>
+        <div class="row">
+            <div class="col-lg-8">
+                <h3 class="modal-title">Record: {{inspect.id}}</h3>
+            </div>
+            <div class="col-lg-4">
+                <button style="float:right" class="btn btn-primary" type="button" ng-click="inspect.done()">Close</button>
+            </div>
+        </div>
     </div>
     <div class="modal-body">
-        <json-formatter json="inspect.record" open="2"></json-formatter>
+        <p ng-show="inspect.record === undefined">Loading...</p>
+        <json-formatter ng-show="inspect.record" json="inspect.record" open="2"></json-formatter>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" type="button" ng-click="inspect.done()">OK</button>
+        <button class="btn btn-primary" type="button" ng-click="inspect.done()">Close</button>
     </div>
 </div>

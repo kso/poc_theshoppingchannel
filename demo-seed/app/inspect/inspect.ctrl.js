@@ -7,9 +7,9 @@ angular.module('groupByDemo.inspect', ['ui.bootstrap'])
 			var vm = this;
 			vm.id = id;
 
-			apiService.getProduct(id).success(function(data){
-				console.log(data.records[0]);
-				vm.record = data.records[0];
+			apiService.getProduct(id).then(function(record){
+				console.log(record);
+				vm.record = record;
 			});
 
 			vm.done = function() {
