@@ -91,7 +91,7 @@ body {
      top: 5%;
      right: 10%;
      background-color: transparent;
-     display: block;
+     display: none;
 }
 
 .product-thumb-container:hover .hover-btn {
