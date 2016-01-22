@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module("groupByDemo.search",['ui.bootstrap'])
-	.controller('searchCtrl', ['$scope', 'apiService', '$routeParams', '$filter', 
-			function ($scope, apiService, $routeParams, $filter) {
+	.controller('searchCtrl', ['$scope', '$uibModal', 'apiService', '$routeParams', '$filter', 
+			function ($scope, $uibModal, apiService, $routeParams, $filter) {
 
 		$scope.currentPage = 1;
 
@@ -85,6 +85,21 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			view_model.refinements = $filter('filter')(view_model.refinements, {navigationName: '!'+navigation, value: '!'+refinement_value});	
 			view_model.search();
 		} 
+
+		view_model.inspect = function(product_id){
+
+			console.log(product_id);
+
+			var modalInstance = $uibModal.open({
+			  animation: true,
+			  templateUrl: "/inspect/inspect.tpl.html",
+			  controller: "inspectCtrl as inspect",
+			  size: "lg",
+			  resolve : {
+			  	id : function () { return product_id; }
+			  }
+			});
+		}
 
 		view_model.search();
 

@@ -6,8 +6,10 @@ angular.module("groupByDemo", [
 	'groupByDemo.gbc',
 	'groupByDemo.product',
 	'groupByDemo.typeahead',
-	]).
-config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
+	'groupByDemo.inspect',
+	'jsonFormatter']).
+config(['$routeProvider', '$locationProvider', 'JSONFormatterConfigProvider' ,
+	function($routeProvider, $locationProvider, JSONFormatterConfigProvider){
 	$routeProvider.
 		when("/", {
 			templateUrl: "search/search-results.html", 
@@ -28,4 +30,6 @@ config(['$routeProvider', '$locationProvider', function($routeProvider, $locatio
 
 	// use the HTML5 History API
     $locationProvider.html5Mode(true);
+
+    JSONFormatterConfigProvider.hoverPreviewEnabled = true;
 }]);

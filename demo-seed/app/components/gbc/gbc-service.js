@@ -43,7 +43,10 @@ angular.module('groupByDemo.gbc', [])
 				fields: [ "*" ],
 				clientKey: this.clientKey
 			};
-			return $http.post('/api/v1/search', dataObj);
+			return $http.post('/api/v1/search', dataObj).then(function(response){
+				console.log(response);
+				return response.data.records[0];
+			});
 		};
 
 		return gbcAPI;
