@@ -5,9 +5,8 @@ angular.module('groupByDemo.product', ['ui.bootstrap'])
 		
 		var view_model = this;
 
-		apiService.getProduct($routeParams.id).success(function(data){
-			console.log(data.records[0]);
-			view_model.meta = data.records[0].allMeta;
+		apiService.getProduct($routeParams.id).then(function(record){
+			view_model.meta = record.allMeta;
 		});
 
 	}]);
