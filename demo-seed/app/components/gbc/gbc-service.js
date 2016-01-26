@@ -4,6 +4,7 @@ angular.module('groupByDemo.gbc', [])
 	.factory('apiService', ['$http', function($http){
 		var gbcAPI = {};
 
+		gbcAPI.area = "Test";
 		gbcAPI.clientKey = "269466c6-e7b6-4439-a175-c6d5faa069dd";
 
 		gbcAPI.search = function(searchParametrs) {
@@ -12,6 +13,7 @@ angular.module('groupByDemo.gbc', [])
 			searchParametrs.fields = [ "*" ];
 			searchParametrs.pageSize = 12;
 			searchParametrs.clientKey = this.clientKey;
+			searchParametrs.area = this.area;
 
 			return $http.post('/api/v1/search', searchParametrs);
 		};
@@ -23,7 +25,7 @@ angular.module('groupByDemo.gbc', [])
 			var parameters = {
 				query : term,
 				collection : "default",
-				area : "Production",
+				area : this.area, 
 				searchItems : 10,
 				navigationItems : 4,
 			}
