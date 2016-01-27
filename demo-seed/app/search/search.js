@@ -32,9 +32,14 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 				if(!nav.range) { return; }
 
+				if(nav.displayName === "Rating"){
+					model.rating = true;
+				} else {
+					model.range = true;
+				}
+
 				//keep existing values if a refinement is already applied
 				var currentVal = $filter('filter')(selectedRefinements, { navigationName : nav.name, type : 'Range'});	
-				console.log(currentVal);
 				if(currentVal.length > 0) { return; }
 
 				var lo_bucket = 0;
@@ -97,24 +102,21 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				var lastResult =  Math.min( firstResult + view_model.pageSize - 1, view_model.totalRecordCount);
 				view_model.resultSummary =  firstResult.toString() + " - " + lastResult.toString() + " of " +  view_model.totalRecordCount.toString() + " Products";
 
-				console.log(data);
 				console.log(view_model);
-
 			});
 		};
 
-		view_model.refine = function(navigation, refinement_value, type) {
+		view_model.refine = function(navigation, ref_selected, type) {
 
-			console.log("add refinement: " + navigation + " -->  " + refinement_value);
-			
 			var refinement = {}
 			refinement.type = type;
 			refinement.navigationName = navigation;
 			
 			switch(type){
 				case "Range":
-					refinement.low = refinement_value.low;
-					refinement.high = refinement_value.high;
+					console.log("add refinement: " + navigation + " -->  " + ref_selected.low + "-" + ref_selected.high);
+					refinement.low = ref_selected.low;
+					refinement.high = ref_selected.high;
 
 					//remove any existing values for this refinement
 					view_model.refinements = $filter('filter')(view_model.refinements, function(o) { 
@@ -123,7 +125,8 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 					break;
 				case "Value":
-					refinement.value = refinement_value;
+					console.log("add refinement: " + navigation + " -->  " + ref_selected.value);
+					refinement.value = ref_selected.value;
 					break;
 			}
 
@@ -132,12 +135,30 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			view_model.search();
 		}
 
-		view_model.unrefine = function(navigation, refinement_value) {
+		view_model.unrefine = function(navigation, ref_unselected) {
 
-			console.log("remove refinement: " + navigation + " -->  " + refinement_value);
+
+			console.log("remove value refinement: " + navigation + " -->  " +
+				 (ref_unselected.type === "Value" ? ref_unselected.value : ref_unselected.low + "-" + ref_unselected.high)) ;
+
 
 			view_model.refinements = $filter('filter')(view_model.refinements, function(o) { 
-				return !(o.navigationName === navigation && o.value === refinement_value)
+
+				if(ref_unselected.type !== o.type){
+					return true;
+				}
+
+				if(ref_unselected.type === "Value"){
+					return !(o.navigationName === navigation 
+						&& o.value === ref_unselected.value);
+				}
+
+				if(ref_unselected.type === "Range"){
+					return !(o.navigationName === navigation 
+						&& o.high == ref_unselected.high 
+						&& o.low == ref_unselected.low );
+				}
+
 			});	
 
 			view_model.search();

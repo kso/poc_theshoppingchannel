@@ -9,7 +9,7 @@
     <ul class="list-group">
       <div ng-repeat="selnav in search.selectedNavigation">
         <li class="list-group-item refinement" ng-repeat="selref in selnav.refinements"
-             ng-click="search.unrefine(selnav.name, selref.value)">
+             ng-click="search.unrefine(selnav.name, selref)">
           <span ng-if="!selnav.range">{{selnav.displayName}}: {{selref.value}}</span>
           <span ng-if="selnav.range">{{selnav.displayName}}: {{selref.low}}-{{selref.high}}</span>
           <p class="glyphicon glyphicon-remove"></p>
@@ -27,17 +27,31 @@
        2. Buckets (single or multi select)
        3. Specialized (e.g. Ratings / Customer Review Selector)
        -->
-      <rzslider ng-show="!nav.collapsed" ng-if="nav.raw.range"
+
+      <!-- Reviews selector  -->
+      <ul ng-if="nav.rating" class="list-group" uib-collapse="nav.collapsed">
+        <li class="list-group-item refinement" 
+            ng-repeat="refinement in nav.raw.refinements"
+            ng-click="(search.refinements | filter:{navigationName : nav.raw.name}).length > 0  ? 
+              search.unrefine(nav.raw.name, refinement) : 
+              search.refine(nav.raw.name, refinement, 'Range')">
+          <uib-rating
+            ng-model="refinement.high"
+            readonly='true'></uib-rating> 
+        </li>
+      </ul>
+
+      <rzslider ng-show="!nav.collapsed" ng-if="nav.range"
         rz-slider-model="nav.slider.min"
         rz-slider-high="nav.slider.max"
         rz-slider-options="nav.slider.options"></rzslider>
 
-      <ul ng-if="!nav.raw.range" class="list-group" uib-collapse="nav.collapsed">
+      <ul ng-if="!nav.range && !nav.rating" class="list-group" uib-collapse="nav.collapsed">
         <li class="list-group-item refinement" 
             ng-repeat="refinement in nav.raw.refinements | limitTo:5 "
             ng-click="(search.refinements | filter:{navigationName : nav.raw.name, value: refinement.value}).length > 0  ? 
-              search.unrefine(nav.raw.name, refinement.value) : 
-              search.refine(nav.raw.name, refinement.value, 'Value')">
+              search.unrefine(nav.raw.name, refinement) : 
+              search.refine(nav.raw.name, refinement, 'Value')">
           <span ng-if="nav.raw.or" 
             ng-class="(search.refinements | filter:{navigationName : nav.raw.name, value: refinement.value}).length > 0  ? 
               'glyphicon-check' : 
