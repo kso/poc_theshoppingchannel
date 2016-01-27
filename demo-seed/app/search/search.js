@@ -82,7 +82,10 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 			console.log("remove refinement: " + navigation + " -->  " + refinement_value);
 
-			view_model.refinements = $filter('filter')(view_model.refinements, {navigationName: '!'+navigation, value: '!'+refinement_value});	
+			view_model.refinements = $filter('filter')(view_model.refinements, function(o) { 
+				return !(o.navigationName === navigation && o.value === refinement_value)
+			});	
+
 			view_model.search();
 		} 
 

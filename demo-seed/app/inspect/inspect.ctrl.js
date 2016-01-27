@@ -8,7 +8,6 @@ angular.module('groupByDemo.inspect', ['ui.bootstrap'])
 			vm.id = id;
 
 			apiService.getProduct(id).then(function(record){
-				console.log(record);
 				vm.record = record;
 			});
 
