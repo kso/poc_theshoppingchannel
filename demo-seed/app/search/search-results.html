@@ -17,9 +17,9 @@
       </div>
     </ul>  
     <div class="navigation" ng-repeat="nav in search.navigation">
-      <div ng-click="nav.expanded = !nav.expanded"> 
+      <div ng-click="nav.collapsed = !nav.collapsed"> 
         <span >{{nav.raw.displayName}}</span>
-        <p class="nav-collapse glyphicon" ng-class="nav.expanded ? 'glyphicon-menu-right' : 'glyphicon-menu-down'"></p>
+        <p class="nav-collapse glyphicon" ng-class="nav.collapsed ? 'glyphicon-menu-right' : 'glyphicon-menu-down'"></p>
       </div>
 
       <!-- For range refinements there are a few ways we can interact with them
@@ -27,14 +27,14 @@
        2. Buckets (single or multi select)
        3. Specialized (e.g. Ratings / Customer Review Selector)
        -->
-      <rzslider ng-if="nav.raw.range"
+      <rzslider ng-show="!nav.collapsed" ng-if="nav.raw.range"
         rz-slider-model="nav.slider.min"
         rz-slider-high="nav.slider.max"
         rz-slider-options="nav.slider.options"></rzslider>
 
-      <ul ng-if="!nav.raw.range" class="list-group" uib-collapse="nav.expanded">
+      <ul ng-if="!nav.raw.range" class="list-group" uib-collapse="nav.collapsed">
         <li class="list-group-item refinement" 
-            ng-repeat="refinement in nav.raw.refinements | limitTo:10 "
+            ng-repeat="refinement in nav.raw.refinements | limitTo:5 "
             ng-click="(search.refinements | filter:{navigationName : nav.raw.name, value: refinement.value}).length > 0  ? 
               search.unrefine(nav.raw.name, refinement.value) : 
               search.refine(nav.raw.name, refinement.value, 'Value')">
