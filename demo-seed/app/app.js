@@ -3,7 +3,6 @@
 angular.module("groupByDemo", [
 	'ngRoute',
 	'groupByDemo.search',
-	'groupByDemo.search-filters',
 	'groupByDemo.gbc',
 	'groupByDemo.product',
 	'groupByDemo.typeahead',
