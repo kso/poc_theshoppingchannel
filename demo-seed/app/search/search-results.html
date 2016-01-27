@@ -55,11 +55,6 @@
         
       </div>
 
-        <select ng-model="sort" 
-                ng-init="sort=sortFields[0]" 
-                ng-options="sortField as sortField.display for sortField in sortFields"
-                ng-change="search.search()">
-        </select>
       <div class="col-xs-5">
         <uib-pager   class = "pager"
                      align = "false" 
@@ -68,6 +63,14 @@
                      ng-change="search.search()" 
                      items-per-page="search.pageSize">
         </uib-pager>
+
+        <select class="form-control sort"
+                ng-model="sort" 
+                ng-init="sort=sortFields[0]" 
+                ng-options="sortField as sortField.display for sortField in sortFields"
+                ng-change="search.search()">
+        </select>
+
       </div>
     </div>
     <div class="row">

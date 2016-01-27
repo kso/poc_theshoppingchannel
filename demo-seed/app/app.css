@@ -144,3 +144,8 @@ body {
 .badge{
 	background-color: #ccc;
 }
+
+.sort{
+	width:175px;
+	margin-top:19px;
+}
