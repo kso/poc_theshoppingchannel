@@ -7,7 +7,8 @@ angular.module("groupByDemo", [
 	'groupByDemo.product',
 	'groupByDemo.typeahead',
 	'groupByDemo.inspect',
-	'jsonFormatter']).
+	'jsonFormatter',
+	'rzModule']).
 config(['$routeProvider', '$locationProvider', 'JSONFormatterConfigProvider' ,
 	function($routeProvider, $locationProvider, JSONFormatterConfigProvider){
 	$routeProvider.
