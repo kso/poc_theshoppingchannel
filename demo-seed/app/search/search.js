@@ -20,6 +20,40 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 	        {'display': 'Rating', 				'field': 'Qrating', 	'order' : 'Descending'}
 	    ];
 
+		//augment the navigation with additional info needed to render
+		view_model.addNavRenderInfo = function(availableNavigation){
+
+			//set slider info for range refinments
+			angular.forEach(availableNavigation, function(nav){
+
+				if(!nav.range) { return; }
+
+				var lo_bucket = 0;
+				var hi_bucket = 0;
+				//get the smallest and largest buckets
+				angular.forEach(nav.refinements, function(ref){
+					lo_bucket = Math.min(ref.low, lo_bucket);
+					hi_bucket = Math.max(ref.high, hi_bucket);
+				});
+
+				nav.slider = {
+					min : lo_bucket,  max : hi_bucket,
+					options : { 
+						id : nav.name, 
+						floor: lo_bucket, 
+						ceil: hi_bucket,
+						onEnd: function(id, v1, v2) {
+							console.log(id + " " + v1 + " " + v2);
+						}
+						//	view_model.refine(nav.name, { low : nav.slider.min, high : nav.slider.max }, 'Range') 
+					}
+				} 
+			});
+
+			return availableNavigation;
+
+		}
+
 		view_model.search = function () {
 
 			var sortParam = {};
@@ -44,15 +78,18 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			};
 
 		  	apiService.search(parameters).success(function(data){
-				console.log(data);
 				view_model.totalRecordCount = data.totalRecordCount;
 				view_model.resultList = data.records;
-				view_model.navigationList = data.availableNavigation;
+				view_model.navigationList = view_model.addNavRenderInfo( data.availableNavigation );
 				view_model.selectedNavigation = data.selectedNavigation;
 
 				var firstResult = view_model.pageSize * ($scope.currentPage - 1) + 1;
 				var lastResult =  Math.min( firstResult + view_model.pageSize - 1, view_model.totalRecordCount);
 				view_model.resultSummary =  firstResult.toString() + " - " + lastResult.toString() + " of " +  view_model.totalRecordCount.toString() + " Products";
+
+				console.log(data);
+				console.log(view_model);
+
 			});
 		};
 
@@ -66,7 +103,8 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			
 			switch(type){
 				case "Range":
-					console.log("TODO");
+					refinement.low = refinement_value.low;
+					refinement.high = refinement_value.high;
 					break;
 				case "Value":
 					refinement.value = refinement_value;
