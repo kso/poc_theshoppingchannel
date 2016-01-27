@@ -24,7 +24,10 @@
       <ul class="list-group" uib-collapse="isNavCollapsed">
         <li class="list-group-item refinement" 
             ng-repeat="refinement in nav.refinements | limitTo:10 "
-            ng-click="search.refine(nav.name, refinement.value, 'Value')">
+            ng-click="(search.selectedNavigation | isSelectedRefinement:nav.name:refinement.value) ? search.unrefine(nav.name, refinement.value) : search.refine(nav.name, refinement.value, 'Value')">
+          <span ng-if="nav.or" 
+            ng-class=" (search.selectedNavigation | isSelectedRefinement:nav.name:refinement.value) ? 'glyphicon-check' : 'glyphicon-unchecked'" 
+            class="state-icon glyphicon"></span>
           <span class="badge">{{refinement.count}}</span>
           <span>{{refinement.value}}</span>
         </li>
