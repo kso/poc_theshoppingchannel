@@ -17,9 +17,9 @@
       </div>
     </ul>  
     <div class="navigation" ng-repeat="nav in search.navigationList">
-      <div ng-click="isNavCollapsed = !isNavCollapsed"> 
+      <div ng-click="search.navigationExpanded[nav.displayName] = !search.navigationExpanded[nav.displayName]"> 
         <span >{{nav.displayName}}</span>
-        <p class="nav-collapse glyphicon" ng-class="isNavCollapsed ? 'glyphicon-menu-right' : 'glyphicon-menu-down'"></p>
+        <p class="nav-collapse glyphicon" ng-class="search.navigationExpanded[nav.displayName] ? 'glyphicon-menu-right' : 'glyphicon-menu-down'"></p>
       </div>
 
       <!-- For range refinements there are a few ways we can interact with them
@@ -32,7 +32,7 @@
         rz-slider-high="nav.slider.max"
         rz-slider-options="nav.slider.options"></rzslider>
 
-      <ul ng-if="!nav.range" class="list-group" uib-collapse="isNavCollapsed">
+      <ul ng-if="!nav.range" class="list-group" uib-collapse="search.navigationExpanded[nav.displayName]">
         <li class="list-group-item refinement" 
             ng-repeat="refinement in nav.refinements | limitTo:10 "
             ng-click="(search.refinements | filter:{navigationName : nav.name, value: refinement.value}).length > 0  ? search.unrefine(nav.name, refinement.value) : search.refine(nav.name, refinement.value, 'Value')">

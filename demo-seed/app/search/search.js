@@ -12,6 +12,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 		view_model.query = $routeParams.query;
 		view_model.pageSize = 30;
 		view_model.resultSummary =  "";
+		view_model.navigationExpanded = {};
 
 	    $scope.sortFields = [
 	        {'display': 'Relevancy', 			'field': '_relevance', 	'order' : 'Descending'},
