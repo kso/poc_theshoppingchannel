@@ -59,6 +59,12 @@ body {
 	float: right;
 }
 
+.color-refinement {
+	width: 25px;
+	margin-right: 5px;
+	float: left;
+}
+
 .refinement:hover {
 	background-color: #eee;
 }

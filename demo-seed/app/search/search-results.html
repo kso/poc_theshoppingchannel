@@ -62,6 +62,22 @@
           <span>{{refinement.value}}</span>
         </li>
       </ul>
+
+      <div ng-if="nav.color" uib-collapse="nav.collapsed">
+        <div class="color-refinement" 
+            ng-repeat="refinement in nav.raw.refinements | limitTo:5 "
+            ng-click="(search.refinements | filter:{navigationName : nav.raw.name, value: refinement.value}).length > 0  ? 
+              search.unrefine(nav.raw.name, refinement) : 
+              search.refine(nav.raw.name, refinement, 'Value')"
+            ng-style="{'background-color' : refinement.value}">
+          <span ng-if="nav.raw.or" 
+            ng-class="(search.refinements | filter:{navigationName : nav.raw.name, value: refinement.value}).length > 0  ? 
+              'glyphicon-remove' : 
+              ''" 
+            class="state-icon glyphicon"></span>
+        </div>
+      </div>
+
     </div>
   </div>
 
