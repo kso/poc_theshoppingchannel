@@ -21,7 +21,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 	    ];
 
 		//augment the navigation with additional info needed to render
-		view_model.addNavRenderInfo = function(availableNavigation){
+		view_model.addNavRenderInfo = function(availableNavigation, selectedRefinements){
 
 			//set slider info for range refinments
 			angular.forEach(availableNavigation, function(nav){
@@ -30,22 +30,26 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 				var lo_bucket = 0;
 				var hi_bucket = 0;
-				//get the smallest and largest buckets
+				// get the smallest and largest buckets
 				angular.forEach(nav.refinements, function(ref){
 					lo_bucket = Math.min(ref.low, lo_bucket);
 					hi_bucket = Math.max(ref.high, hi_bucket);
 				});
 
+				var currentVal = $filter('filter')(selectedRefinements, { navigationName : nav.name, type : 'Range'});	
+				console.log(currentVal);
+
 				nav.slider = {
-					min : lo_bucket,  max : hi_bucket,
+					min : currentVal.length > 0 ? currentVal[0].low : lo_bucket,  
+					max : currentVal.length > 0 ? currentVal[0].high : hi_bucket,
 					options : { 
 						id : nav.name, 
 						floor: lo_bucket, 
 						ceil: hi_bucket,
-						onEnd: function(id, v1, v2) {
-							console.log(id + " " + v1 + " " + v2);
+						onEnd: function(id, low, high) {
+							console.log(id + " " + low + " " + high);
+							view_model.refine(id, { low : low, high : high }, 'Range');
 						}
-						//	view_model.refine(nav.name, { low : nav.slider.min, high : nav.slider.max }, 'Range') 
 					}
 				} 
 			});
@@ -80,7 +84,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 		  	apiService.search(parameters).success(function(data){
 				view_model.totalRecordCount = data.totalRecordCount;
 				view_model.resultList = data.records;
-				view_model.navigationList = view_model.addNavRenderInfo( data.availableNavigation );
+				view_model.navigationList = view_model.addNavRenderInfo( data.availableNavigation, view_model.refinements );
 				view_model.selectedNavigation = data.selectedNavigation;
 
 				var firstResult = view_model.pageSize * ($scope.currentPage - 1) + 1;
@@ -105,6 +109,12 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				case "Range":
 					refinement.low = refinement_value.low;
 					refinement.high = refinement_value.high;
+
+					//remove any existing values for this refinement
+					view_model.refinements = $filter('filter')(view_model.refinements, function(o) { 
+						return !(o.navigationName === navigation && o.type === "Range")
+					});	
+
 					break;
 				case "Value":
 					refinement.value = refinement_value;

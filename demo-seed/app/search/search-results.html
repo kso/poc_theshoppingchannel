@@ -10,7 +10,8 @@
       <div ng-repeat="selnav in search.selectedNavigation">
         <li class="list-group-item refinement" ng-repeat="selref in selnav.refinements"
              ng-click="search.unrefine(selnav.name, selref.value)">
-          <span>{{selnav.displayName}}: {{selref.value}}</span>
+          <span ng-if="!selnav.range">{{selnav.displayName}}: {{selref.value}}</span>
+          <span ng-if="selnav.range">{{selnav.displayName}}: {{selref.low}}-{{selref.high}}</span>
           <p class="glyphicon glyphicon-remove"></p>
         </li>
       </div>
