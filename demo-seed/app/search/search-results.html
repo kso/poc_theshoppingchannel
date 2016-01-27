@@ -18,7 +18,7 @@
     <div class="navigation" ng-repeat="nav in search.navigationList">
       <div ng-click="isNavCollapsed = !isNavCollapsed"> 
         <span >{{nav.displayName}}</span>
-        <p ng-attr-class="{{isNavCollapsed && 'glyphicon glyphicon-menu-right' || 'glyphicon glyphicon-menu-down' }}"></p>
+        <p class="nav-collapse glyphicon" ng-class="isNavCollapsed ? 'glyphicon-menu-right' : 'glyphicon-menu-down'"></p>
       </div>
 
       <ul class="list-group" uib-collapse="isNavCollapsed">
