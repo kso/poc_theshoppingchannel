@@ -12,7 +12,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 		view_model.query = $routeParams.query;
 		view_model.pageSize = 30;
 		view_model.resultSummary =  "";
-		view_model.navigationExpanded = {};
+		view_model.navigation = {};
 
 	    $scope.sortFields = [
 	        {'display': 'Relevancy', 			'field': '_relevance', 	'order' : 'Descending'},
@@ -22,12 +22,20 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 	    ];
 
 		//augment the navigation with additional info needed to render
-		view_model.addNavRenderInfo = function(availableNavigation, selectedRefinements){
+		view_model.updateNavModel = function(navModel, navFromSearch, selectedRefinements){
 
-			//set slider info for range refinments
-			angular.forEach(availableNavigation, function(nav){
+			angular.forEach(navFromSearch, function(nav){
+
+				navModel[nav.displayName] = navModel[nav.displayName] || {};
+				var model = navModel[nav.displayName];
+				model.raw = nav;
 
 				if(!nav.range) { return; }
+
+				//keep existing values if a refinement is already applied
+				var currentVal = $filter('filter')(selectedRefinements, { navigationName : nav.name, type : 'Range'});	
+				console.log(currentVal);
+				if(currentVal.length > 0) { return; }
 
 				var lo_bucket = 0;
 				var hi_bucket = 0;
@@ -37,10 +45,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 					hi_bucket = Math.max(ref.high, hi_bucket);
 				});
 
-				var currentVal = $filter('filter')(selectedRefinements, { navigationName : nav.name, type : 'Range'});	
-				console.log(currentVal);
-
-				nav.slider = {
+				model.slider = {
 					min : currentVal.length > 0 ? currentVal[0].low : lo_bucket,  
 					max : currentVal.length > 0 ? currentVal[0].high : hi_bucket,
 					options : { 
@@ -55,7 +60,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				} 
 			});
 
-			return availableNavigation;
+			return navModel;
 
 		}
 
@@ -85,7 +90,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 		  	apiService.search(parameters).success(function(data){
 				view_model.totalRecordCount = data.totalRecordCount;
 				view_model.resultList = data.records;
-				view_model.navigationList = view_model.addNavRenderInfo( data.availableNavigation, view_model.refinements );
+				view_model.navigation = view_model.updateNavModel(view_model.navigation, data.availableNavigation, view_model.refinements );
 				view_model.selectedNavigation = data.selectedNavigation;
 
 				var firstResult = view_model.pageSize * ($scope.currentPage - 1) + 1;
