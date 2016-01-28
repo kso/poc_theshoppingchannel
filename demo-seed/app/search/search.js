@@ -30,6 +30,10 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				var model = navModel[nav.displayName];
 				model.raw = nav;
 
+				if(nav.displayName === "Color"){
+					model.color = true;
+				}
+
 				if(!nav.range) { return; }
 
 				if(nav.displayName === "Rating"){

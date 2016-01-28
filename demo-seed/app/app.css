@@ -59,6 +59,28 @@ body {
 	float: right;
 }
 
+.color-refinement-container {
+	overflow: hidden;
+}
+
+.color-refinement {
+	width: 22px;
+	margin-right: 5px;
+	margin-top: 5px;
+	float: left;
+	border: 1px solid #ddd;
+}
+
+.color-refinement:hover {
+	cursor: pointer;
+}
+
+.color-refinement span {
+	color: #bbb;
+	top: 2px;
+	left: 3px;
+}
+
 .refinement:hover {
 	background-color: #eee;
 }
