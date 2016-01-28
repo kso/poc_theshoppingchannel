@@ -5,6 +5,7 @@
 
 var express = require('express');
 var httpProxy = require('http-proxy');
+var https = require('https');
 
 httpProxy.prototype.onError = function (err) {
     console.log(err);
@@ -14,12 +15,19 @@ var server = express();
 server.set('port', 8000);
 server.use(express.static(__dirname + '/app'));
 
+
+// Improve perforamnce of node-proxy by using a shared agent with keepAlive = true: 
+// https://github.com/nodejitsu/node-http-proxy/issues/614
+// https://github.com/nodejitsu/node-http-proxy/issues/929
+var httpsAgent = new https.Agent({ keepAlive:true, maxSockets:10 });
+
 var proxyOptions = {
     changeOrigin: true,
-    target: 'https://crateandbarreldemo.groupbycloud.com'
+    target: 'https://crateandbarreldemo.groupbycloud.com',
+    //agent: httpsAgent
 };
 
-var apiProxy = httpProxy.createProxyServer();
+var apiProxy = httpProxy.createProxyServer(proxyOptions);
 
 var logPost = function(request){
     if(request.method !== 'POST')
@@ -38,7 +46,14 @@ server.all("/:type(api|admin)/*", function(req, res) {
     //debug code to log search requests
     logPost(req);
 
-    apiProxy.web(req, res, proxyOptions);
+    var start_time = new Date().getTime();
+
+    apiProxy.web(req, res);
+
+    res.on('finish', function() {
+       console.log("The request was proxied in " + (new Date().getTime() - start_time) + "ms");
+    });
+
 });
 
 server.listen(server.get('port'), function() {

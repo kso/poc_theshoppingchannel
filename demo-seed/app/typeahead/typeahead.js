@@ -8,7 +8,9 @@ angular.module('groupByDemo.typeahead', []).controller('TypeaheadCtrl', ['$http'
 
   // Any function returning a promise object can be used to load values asynchronously
   view_model.fetch = function(val) {
+    console.time("sayt");
     return apiService.sayt(val).then(function(response){
+      console.timeEnd("sayt");
       return response.data.result.searchTerms;
     });
   };
