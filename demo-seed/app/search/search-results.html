@@ -47,7 +47,7 @@
         rz-slider-high="nav.slider.max"
         rz-slider-options="nav.slider.options"></rzslider>
 
-      <ul ng-if="!nav.range && !nav.rating" class="list-group" uib-collapse="nav.collapsed">
+      <ul ng-if="!nav.range && !nav.rating && !nav.color" class="list-group" uib-collapse="nav.collapsed">
         <li class="list-group-item refinement" 
             ng-repeat="refinement in nav.raw.refinements | limitTo:5 "
             ng-click="(search.refinements | filter:{navigationName : nav.raw.name, value: refinement.value}).length > 0  ? 
@@ -63,9 +63,9 @@
         </li>
       </ul>
 
-      <div ng-if="nav.color" uib-collapse="nav.collapsed">
+      <div class="color-refinement-container"ng-if="nav.color" uib-collapse="nav.collapsed">
         <div class="color-refinement" 
-            ng-repeat="refinement in nav.raw.refinements | limitTo:5 "
+            ng-repeat="refinement in nav.raw.refinements | limitTo:10 "
             ng-click="(search.refinements | filter:{navigationName : nav.raw.name, value: refinement.value}).length > 0  ? 
               search.unrefine(nav.raw.name, refinement) : 
               search.refine(nav.raw.name, refinement, 'Value')"

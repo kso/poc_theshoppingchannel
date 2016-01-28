@@ -59,10 +59,20 @@ body {
 	float: right;
 }
 
+.color-refinement-container {
+	overflow: hidden;
+}
+
 .color-refinement {
-	width: 20px;
+	width: 22px;
 	margin-right: 5px;
+	margin-top: 5px;
 	float: left;
+	border: 1px solid #ddd;
+}
+
+.color-refinement:hover {
+	cursor: pointer;
 }
 
 .color-refinement span {
