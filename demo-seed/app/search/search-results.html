@@ -34,7 +34,8 @@
             ng-repeat="refinement in nav.raw.refinements"
             ng-click="(search.refinements | filter:{navigationName : nav.raw.name}).length > 0  ? 
               search.unrefine(nav.raw.name, refinement) : 
-              search.refine(nav.raw.name, refinement, 'Range')">
+              search.refine(nav.raw.name, refinement, 'Range')"
+            ng-attr-title="{{refinement.low}}-{{refinement.high}} Stars" >
           <uib-rating
             ng-model="refinement.high"
             readonly='true'></uib-rating> 
@@ -69,7 +70,8 @@
             ng-click="(search.refinements | filter:{navigationName : nav.raw.name, value: refinement.value}).length > 0  ? 
               search.unrefine(nav.raw.name, refinement) : 
               search.refine(nav.raw.name, refinement, 'Value')"
-            ng-style="{'background-color' : refinement.value}">
+            ng-style="{'background-color' : refinement.value}"
+            ng-attr-title="{{refinement.value}}" >
           <span ng-if="nav.raw.or" 
             ng-class="(search.refinements | filter:{navigationName : nav.raw.name, value: refinement.value}).length > 0  ? 
               'glyphicon-remove' : 
