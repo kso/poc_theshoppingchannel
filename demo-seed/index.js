@@ -24,7 +24,7 @@ var httpsAgent = new https.Agent({ keepAlive:true, maxSockets:10 });
 var proxyOptions = {
     changeOrigin: true,
     target: 'https://crateandbarreldemo.groupbycloud.com',
-    //agent: httpsAgent
+    agent: httpsAgent
 };
 
 var apiProxy = httpProxy.createProxyServer(proxyOptions);
