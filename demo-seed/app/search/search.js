@@ -93,10 +93,14 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				pageSize : view_model.pageSize,
 				query : view_model.query,
 				refinements : view_model.refinements,
+				//this helps minimize the payload size
+				fields : ["ID", "ClargeImage", "Ctitle"],
 				sort: sortParam
 			};
 
+  		  	console.time("search");
 		  	apiService.search(parameters).success(function(data){
+		  		console.timeEnd("search");
 				view_model.totalRecordCount = data.totalRecordCount;
 				view_model.resultList = data.records;
 				view_model.navigation = view_model.updateNavModel(view_model.navigation, data.availableNavigation, view_model.refinements );
@@ -106,7 +110,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				var lastResult =  Math.min( firstResult + view_model.pageSize - 1, view_model.totalRecordCount);
 				view_model.resultSummary =  firstResult.toString() + " - " + lastResult.toString() + " of " +  view_model.totalRecordCount.toString() + " Products";
 
-				console.log(view_model);
+				//console.log(view_model);
 			});
 		};
 
