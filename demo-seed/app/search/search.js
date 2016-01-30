@@ -8,11 +8,10 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 		var view_model = this;
 
-		view_model.refinements = [];
 		view_model.query = $routeParams.query;
 		view_model.pageSize = 30;
 		view_model.resultSummary =  "";
-		view_model.navigation = {};
+		view_model.navigation = [];
 
 	    $scope.sortFields = [
 	        {'display': 'Relevancy', 			'field': '_relevance', 	'order' : 'Descending'},
@@ -22,28 +21,34 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 	    ];
 
 		//augment the navigation with additional info needed to render
-		view_model.updateNavModel = function(navModel, navFromSearch, selectedRefinements){
+		view_model.updateNavModel = function(navModel, navFromSearch){
+
+			//reset the navigation objects from search
+			angular.forEach(navModel, function(model){ delete model.raw; });
 
 			angular.forEach(navFromSearch, function(nav){
 
-				navModel[nav.displayName] = navModel[nav.displayName] || {};
-				var model = navModel[nav.displayName];
+				var found = $filter('filter')(navModel, { displayName : nav.displayName});
+				var model =  found.length ? found[0] : navModel[ navModel.push({ selected: [] })-1 ];
+ 
 				model.raw = nav;
+				model.displayName = nav.displayName;
+				model.name = nav.name;
+				model.type = nav.range ? "range" : "value"; //default
 
-				if(nav.displayName === "Color"){
-					model.color = true;
+				switch(nav.displayName){
+					case "Color":
+						model.type = "color";
+						break;
+					case "Rating":
+						model.type = "rating";
+						break;
 				}
 
 				if(!nav.range) { return; }
 
-				if(nav.displayName === "Rating"){
-					model.rating = true;
-				} else {
-					model.range = true;
-				}
-
 				//keep existing values if a refinement is already applied
-				var currentVal = $filter('filter')(selectedRefinements, { navigationName : nav.name, type : 'Range'});	
+				var currentVal = $filter('filter')(model.selected, { navigationName : nav.name, type : 'Range'});	
 				if(currentVal.length > 0) { return; }
 
 				var lo_bucket = 0;
@@ -69,6 +74,12 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				} 
 			});
 
+			//determine whether to show the model or not
+			angular.forEach(navModel, function(model){ 
+				model.visible = model.selected.length > 0 || 'raw' in model ; 
+				console.log(model.visible);
+			});
+
 			return navModel;
 
 		}
@@ -88,11 +99,16 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				sortParam.field = '_relevance';	
 			}
 
+			var refinement_parameter = [];
+			angular.forEach(view_model.navigation, function(nav){
+				refinement_parameter = refinement_parameter.concat(nav.selected);
+			});
+
 			var parameters = {
 				skip : view_model.pageSize * ($scope.currentPage - 1),
 				pageSize : view_model.pageSize,
 				query : view_model.query,
-				refinements : view_model.refinements,
+				refinements : refinement_parameter,
 				//this helps minimize the payload size
 				fields : ["ID", "ClargeImage", "Ctitle"],
 				sort: sortParam
@@ -103,71 +119,77 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 		  		console.timeEnd("search");
 				view_model.totalRecordCount = data.totalRecordCount;
 				view_model.resultList = data.records;
-				view_model.navigation = view_model.updateNavModel(view_model.navigation, data.availableNavigation, view_model.refinements );
+				view_model.navigation = view_model.updateNavModel(view_model.navigation, data.availableNavigation );
 				view_model.selectedNavigation = data.selectedNavigation;
 
 				var firstResult = view_model.pageSize * ($scope.currentPage - 1) + 1;
 				var lastResult =  Math.min( firstResult + view_model.pageSize - 1, view_model.totalRecordCount);
 				view_model.resultSummary =  firstResult.toString() + " - " + lastResult.toString() + " of " +  view_model.totalRecordCount.toString() + " Products";
 
-				//console.log(view_model);
+				console.log(view_model);
 			});
 		};
 
-		view_model.refine = function(navigation, ref_selected, type) {
+		view_model.refine = function(nav_data_name, ref_selected, type) {
 
 			var refinement = {}
 			refinement.type = type;
-			refinement.navigationName = navigation;
+			refinement.navigationName = nav_data_name;
 			
+			var navModel = $filter('filter')(view_model.navigation, { name : nav_data_name } )[0];
+
 			switch(type){
 				case "Range":
-					console.log("add refinement: " + navigation + " -->  " + ref_selected.low + "-" + ref_selected.high);
+					console.log("add refinement: " + nav_data_name + " -->  " + ref_selected.low + "-" + ref_selected.high);
 					refinement.low = ref_selected.low;
 					refinement.high = ref_selected.high;
 
 					//remove any existing values for this refinement
-					view_model.refinements = $filter('filter')(view_model.refinements, function(o) { 
-						return !(o.navigationName === navigation && o.type === "Range")
-					});	
+					navModel.selected = [];
 
 					break;
 				case "Value":
-					console.log("add refinement: " + navigation + " -->  " + ref_selected.value);
+					console.log("add refinement: " + nav_data_name + " -->  " + ref_selected.value);
 					refinement.value = ref_selected.value;
 					break;
 			}
 
-			view_model.refinements.push( refinement );
-
+			navModel.selected.push( refinement ); 
+			console.log(refinement);
 			view_model.search();
 		}
 
-		view_model.unrefine = function(navigation, ref_unselected) {
+		view_model.unrefine = function(nav_data_name, ref_unselected) {
 
-
-			console.log("remove value refinement: " + navigation + " -->  " +
+			console.log("remove value refinement: " + nav_data_name + " -->  " +
 				 (ref_unselected.type === "Value" ? ref_unselected.value : ref_unselected.low + "-" + ref_unselected.high)) ;
 
+			angular.forEach(view_model.navigation, function(nav){
 
-			view_model.refinements = $filter('filter')(view_model.refinements, function(o) { 
+				if(nav.name !== nav_data_name) { return; }
 
-				if(ref_unselected.type !== o.type){
-					return true;
-				}
+				nav.selected = $filter('filter')(nav.selected, function(o) { 
 
-				if(ref_unselected.type === "Value"){
-					return !(o.navigationName === navigation 
-						&& o.value === ref_unselected.value);
-				}
+					if(ref_unselected.type !== o.type){
+						return true;
+					}
 
-				if(ref_unselected.type === "Range"){
-					return !(o.navigationName === navigation 
-						&& o.high == ref_unselected.high 
-						&& o.low == ref_unselected.low );
-				}
+					if(ref_unselected.type === "Value"){
+						console.log(o);
+						return !(o.navigationName === nav_data_name 
+							&& o.value === ref_unselected.value);
+					}
 
-			});	
+					if(ref_unselected.type === "Range"){
+						return !(o.navigationName === nav_data_name 
+							&& o.high == ref_unselected.high 
+							&& o.low == ref_unselected.low );
+					}
+
+				});	
+
+
+			});
 
 			view_model.search();
 		} 
