@@ -85,8 +85,12 @@ body {
 	background-color: #eee;
 }
 
+.product-container:nth-of-type(4n+1){
+  clear:both;
+}
+
 .product-container {
-	height: 250px;
+	height:auto;
 }
 
 .product-thumb {
@@ -107,6 +111,11 @@ body {
 
 .product-thumb > img {
 	border-color: transparent;
+	margin-left:auto;
+	margin-right:auto;
+	max-width: 100%;
+	height: auto;
+	margin-bottom: 10px;
 }
 
 .product-thumb:hover > img {
@@ -116,18 +125,13 @@ body {
 .product-thumb-container .hover-btn {
      position: absolute;
      top: 5%;
-     right: 10%;
+     right: 5%;
      background-color: transparent;
      display: none;
 }
 
 .product-thumb-container:hover .hover-btn {
 	display: block;
-}
-
-.thumbnail {
-	margin-bottom: 10px;
-	max-height: 200px;
 }
 
 .pager {

@@ -110,7 +110,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				query : view_model.query,
 				refinements : refinement_parameter,
 				//this helps minimize the payload size
-				fields : ["ID", "ClargeImage", "Ctitle"],
+				fields : ["ID", "wideImage", "Ctitle"],
 				sort: sortParam
 			};
 

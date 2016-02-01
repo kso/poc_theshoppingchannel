@@ -5,7 +5,7 @@
     <div ng-if="!search.query" class="section-title">Browse All Products</div>
 </div>
 <div class="row">
-  <div class="navigation-well well col-sm-2">
+  <div class="navigation-well well col-lg-2 col-md-3 col-sm-4">
     <div class="navigation" ng-repeat="nav in search.navigation | filter:{ visible : true }">
       <div ng-show="nav.selected.length > 0 || nav.raw" ng-click="nav.collapsed = !nav.collapsed"> 
         <span >{{nav.displayName}}</span>
@@ -81,7 +81,7 @@
     </div>
   </div>
 
-  <div class="results-well well col-sm-10 col-xs-12">
+  <div class="results-well well col-lg-10 col-md-9 col-sm-8 col-xs-12">
     <div class="row">
 
       <div class="col-xs-7">
@@ -111,10 +111,10 @@
     </div>
     <div class="row">
 
-      <div class="product-container col-sm-3 col-xs-6" ng-repeat="result in search.resultList">
+      <div class="product-container col-md-3 col-xs-6 clearfix" ng-repeat="result in search.resultList">
         <div class="product-thumb-container" style="position:relative">
           <a href="/product/{{result.allMeta.ID}}" class="product-thumb">
-            <img class="thumbnail img-responsive" ng-src="{{result.allMeta.ClargeImage}}">
+            <img class="img-responsive" ng-src="{{result.allMeta.wideImage}}">
             <h5>{{result.allMeta.Ctitle}}</h5>
           </a>
           <div class="hover-btn" ng-click="search.inspect(result.allMeta.ID)">
