@@ -1,11 +1,12 @@
 @import url("//fonts.googleapis.com/css?family=Lobster");
 
 body {
-	margin-top: 50px;
+	padding-top: 100px;
 	overflow-y: scroll;
+	color: none;
 }
 
-.section-title, .navbar-brand {
+.section-title {
 	font-family: 'Lobster', cursive;
 	font-weight: bold;
 	line-height: 1.1;
@@ -14,8 +15,66 @@ body {
 	padding: 15px;
 }
 
+.navbar-brand {
+	padding: 0;
+}
+
+.navbar-brand img {
+	height: 45px;
+	padding: 5px 0px 0px 15px;
+}
+
+.header {
+	padding: 10px 30px 10px 20px;
+}
+
+.primary-nav {
+	height: 30px;
+	background-color:white;
+}
+
+.search-box {
+	width: 30%;
+}
+
+.search-box > .search-box-control{
+	border: none;
+	padding-left: 30px;
+	-webkit-transition: width 0.3s;
+	transition: width 0.3s;
+	width: 50%;
+}
+
+.search-box-control:focus::-webkit-input-placeholder{
+	color: black;
+}
+
+.search-box-control:focus{
+	border: none;
+	box-shadow: none;
+	font-weight: 600;
+	color: black;
+	-webkit-transition: width 0.3s;
+	transition: width 0.3s;
+	transition-timing-function: ease-in-out;
+	width: 90%;
+}
+
+.search-box-icon {
+	background-color: transparent;
+	float:left;
+	position:relative;
+	top: 9px;
+	left: 22px;
+}
+
 .results-title {
 	font-family: 'Lobster', cursive;
+}
+
+
+.navbar-menu > .glyphicon {
+	transform: scale(1.5,1);
 }
 
 .results-well {
