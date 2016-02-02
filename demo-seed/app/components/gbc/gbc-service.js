@@ -1,11 +1,14 @@
 'use strict';
 
 angular.module('groupByDemo.gbc', [])
-	.factory('apiService', ['$http', function($http){
-		var gbcAPI = {};
+	.constant('apiConfig', {
+		area : "Test",
+		clientKey : "269466c6-e7b6-4439-a175-c6d5faa069dd",
+		collection : "default"
+	})
+	.factory('apiService', ['$http', 'apiConfig', function($http, apiConfig){
 
-		gbcAPI.area = "Test";
-		gbcAPI.clientKey = "269466c6-e7b6-4439-a175-c6d5faa069dd";
+		var gbcAPI = {};
 
 		gbcAPI.search = function(searchParametrs) {
 			
@@ -13,8 +16,9 @@ angular.module('groupByDemo.gbc', [])
 			var dataObj = {
 				fields: [ "*" ],
 				pageSize : 12,
-				clientKey: this.clientKey,
-				area: this.area
+				clientKey: apiConfig.clientKey,
+				area: apiConfig.area,
+				collection : apiConfig.collection
 			};		
 		
 			//merge the passed in searchParameters		
@@ -30,8 +34,8 @@ angular.module('groupByDemo.gbc', [])
 			var url = base_url + "/api/v1/sayt/search?";
 			var parameters = {
 				query : term,
-				collection : "default",
-				area : this.area, 
+				collection : apiConfig.collection, 
+				area : apiConfig.area, 
 				searchItems : 10,
 				navigationItems : 4,
 			}
@@ -41,7 +45,7 @@ angular.module('groupByDemo.gbc', [])
 		};
 
 		gbcAPI.getCollectionData = function() {
-			var dataObj = { clientKey: this.clientKey };
+			var dataObj = { clientKey: apiConfig.clientKey };
 			return $http.post('/api/v1/collections', dataObj);
 		};
 
@@ -49,7 +53,7 @@ angular.module('groupByDemo.gbc', [])
 			var dataObj = { 
 				refinements: [ { type: "Value", navigationName: "id", value: id } ],
 				fields: [ "*" ],
-				clientKey: this.clientKey
+				clientKey: apiConfig.clientKey
 			};
 			return $http.post('/api/v1/search', dataObj).then(function(response){
 				console.log(response);
