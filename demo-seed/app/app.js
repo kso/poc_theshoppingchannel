@@ -9,7 +9,9 @@ angular.module("groupByDemo", [
 	'groupByDemo.inspect',
 	'groupByDemo.settings',
 	'groupByDemo.homepage',
+	'groupByDemo.shared',
 	'jsonFormatter',
+	'as.sortable',
 	'rzModule']).
 config(['$routeProvider', '$locationProvider', 'JSONFormatterConfigProvider' ,
 	function($routeProvider, $locationProvider, JSONFormatterConfigProvider){

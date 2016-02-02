@@ -1,22 +1,23 @@
 'use strict';
 
 angular.module('groupByDemo.settings', ['ui.bootstrap'])
-	.controller('settingsCtrl', ['$uibModal',
-		function ($uibModal) {
+	.controller('settingsCtrl', ['$uibModal', 'settingsService',
+		function ($uibModal, settingsService) {
 
 		var vm = this;
 
 		vm.sections = {};
-		vm.sections['Primary Nav'] = {
-			"New Arrivals" : "field name",
-			"Home" : "field name",
-			"Women" : "field name",
-			"Men" : "field name"
-		};
+		vm.sections['Primary Nav'] = settingsService['Primary Nav']; 
 		vm.sections['Color Mapping'] = {
 			"Red" : "#F00",
 			"Green" : "#F00",
 			"Blue" : "#F00"
+		};
+
+		vm.dragControlListeners = {
+		    accept: function (sourceItemHandleScope, destSortableScope) { return true; }, //override to determine drag is allowed or not. default is true.
+		    itemMoved: function (event) {} ,
+		    orderChanged: function(event) {}
 		};
 
 		vm.open = function(sections){

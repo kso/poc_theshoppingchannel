@@ -11,7 +11,18 @@
 
         <uib-tabset class="reveal-modal" data-reveal>
             <uib-tab ng-repeat="(name, section) in settings.sections" heading="{{name}}" active="$first">
-                {{section}}
+                <ul data-as-sortable="settings.dragControlListeners" data-ng-model="section">
+                   <li class="settings-card as-sortable-item" data-ng-repeat="(key, value) in section" data-as-sortable-item>
+                      <div class="as-sortable-item-handle" data-as-sortable-item-handle>
+                        <div class="row">
+                        <div class="col-md-4">
+                          <span class="card title">{{key}} : {{value}}
+                           </span>
+                          </div>
+                        </div>
+                      </div>
+                   </li>
+                </ul>
             </uib-tab>
         </tabset>
 
