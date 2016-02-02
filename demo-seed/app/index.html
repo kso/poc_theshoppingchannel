@@ -19,8 +19,10 @@
           </a>
 
         </div>
-        <div ng-controller="TypeaheadCtrl as typeahead">
-          <div class="search-box navbar-form navbar-left" role="search">
+        <div>
+          <div ng-controller="TypeaheadCtrl as typeahead" 
+              class="search-box navbar-form navbar-left" 
+              role="search">
               <div class="search-box-icon">
                 <span class="glyphicon glyphicon-search"></span>
               </div>
@@ -34,7 +36,9 @@
                       ng-keyup="$event.keyCode == 13 ? typeahead.onEnterKey(asyncSelected) : null"
                       class="search-box-control form-control">
           </div>
-          <div class="navbar-menu navbar-text navbar-right" ng-click="">
+          <div ng-controller="settingsCtrl as settings" 
+              class="navbar-menu navbar-text navbar-right" 
+              ng-click="settings.open(settings.sections)">
             <i class="glyphicon glyphicon-menu-hamburger"></i>
           </div>
         </div>
@@ -55,6 +59,8 @@
     <script src="/app.js"></script>
     <script src="/search/search.js"></script>
     <script src="/product/product.js"></script>
+    <script src="/settings/settings.ctrl.js"></script>
+    <script src="/homepage/homepage.ctrl.js"></script>
     <script src="/inspect/inspect.ctrl.js"></script>
     <script src="/typeahead/typeahead.js"></script>
     <script src="/components/gbc/gbc-service.js"></script>

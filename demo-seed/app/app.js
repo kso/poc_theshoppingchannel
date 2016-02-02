@@ -7,15 +7,17 @@ angular.module("groupByDemo", [
 	'groupByDemo.product',
 	'groupByDemo.typeahead',
 	'groupByDemo.inspect',
+	'groupByDemo.settings',
+	'groupByDemo.homepage',
 	'jsonFormatter',
 	'rzModule']).
 config(['$routeProvider', '$locationProvider', 'JSONFormatterConfigProvider' ,
 	function($routeProvider, $locationProvider, JSONFormatterConfigProvider){
 	$routeProvider.
 		when("/", {
-			templateUrl: "search/search-results.html", 
-			controller: "searchCtrl",
-			controllerAs: "search"
+			templateUrl: "homepage/homepage.tpl.html", 
+			controller: "homepageCtrl",
+			controllerAs: "homepage"
 		}).
 		when("/q/:query", {
 			templateUrl: "search/search-results.html", 

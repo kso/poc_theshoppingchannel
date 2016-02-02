@@ -6,6 +6,11 @@ body {
 	color: none;
 }
 
+body.modal-open {
+	overflow-y: scroll;
+}
+
+
 .section-title {
 	font-family: 'Lobster', cursive;
 	font-weight: bold;
@@ -254,3 +259,7 @@ rzslider .rz-pointer.rz-active:after {
 rzslider .rz-bar.rz-selection {
   	background: #585858;
  }
+
+.settings-modal {
+	top:100px;
+} 
