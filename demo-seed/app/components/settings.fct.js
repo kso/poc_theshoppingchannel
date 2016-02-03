@@ -4,10 +4,10 @@ angular.module('groupByDemo.shared', [])
 		var settings = {};
 
 		settings['Primary Nav'] = [
-			{ "New Arrivals" : "field name" },
-			{ "Home" : "field name" },
-			{ "Women" : "field name"},
-			{ "Men" : "field name"}
+			{ name: "New Arrivals", field_name : "field name" },
+			{ name: "Home" , field_name : "field name" },
+			{ name: "Women" , field_name : "field name"},
+			{ name: "Men" , field_name :"field name"}
 		];
 
 		return settings;

@@ -10,6 +10,7 @@ angular.module("groupByDemo", [
 	'groupByDemo.settings',
 	'groupByDemo.homepage',
 	'groupByDemo.shared',
+	'groupByDemo.primarynav',
 	'jsonFormatter',
 	'as.sortable',
 	'rzModule']).

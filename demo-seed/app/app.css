@@ -33,9 +33,15 @@ body.modal-open {
 	padding: 10px 30px 10px 20px;
 }
 
-.primary-nav {
+.primary-nav-container {
 	height: 30px;
 	background-color:white;
+}
+
+.primary-nav {
+	float:left;
+	padding: 2px 20px 2px 20px;
+	border: 1px black solid;
 }
 
 .search-box {
