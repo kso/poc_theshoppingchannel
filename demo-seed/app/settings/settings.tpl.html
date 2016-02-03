@@ -9,23 +9,19 @@
     </div>
     <div class="modal-body">
 
-        <uib-tabset class="reveal-modal" data-reveal>
+        <uib-tabset class="reveal-modal clearfix" data-reveal>
             <uib-tab ng-repeat="(name, section) in settings.sections" heading="{{name}}" active="$first">
-                <ul data-as-sortable="settings.dragControlListeners" data-ng-model="section">
+                <div class="col-md-6">
+                <ul class="settings-card-list" data-as-sortable="settings.dragControlListeners" data-ng-model="section">
                    <li class="settings-card as-sortable-item" data-ng-repeat="(key, value) in section" data-as-sortable-item>
                       <div class="as-sortable-item-handle" data-as-sortable-item-handle>
-                        <div class="row">
-                        <div class="col-md-4">
-                          <span class="card title">{{key}} : {{value}}
-                           </span>
-                          </div>
-                        </div>
+                          <span class="card title">{{key}} : {{value}}</span>
                       </div>
                    </li>
                 </ul>
+                </div>
             </uib-tab>
-        </tabset>
-
+        </uib-tabset>
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" type="button" ng-click="settings.done()">Close</button>
