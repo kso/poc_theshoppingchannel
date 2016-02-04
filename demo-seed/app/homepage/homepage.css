@@ -1,8 +1,20 @@
 
 
 .homepage-tile {
+	position: relative;
 	padding: 10px 3px 10px 3px;
 }
 
-.homepage-tile > img {
+.homepage-tile-content-container {
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	height: 100%;
+    width: 100%;
+}
+
+.homepage-tile-content {
+	position: relative;
+	height: 100%;
+	width: 100%;
 }

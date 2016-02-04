@@ -4,10 +4,38 @@ angular.module('groupByDemo.shared', [])
 		var settings = {};
 
 		settings['Primary Nav'] = [
-			{ name: "New Arrivals", field_name : "field name" },
-			{ name: "Home" , field_name : "field name" },
-			{ name: "Women" , field_name : "field name"},
-			{ name: "Men" , field_name :"field name"}
+			{ name: "Kitchen", sub_nav: 
+				[
+					{ section_name: "Cookware & Bakeware" },
+					{ section_name: "Cutlery" },
+					{ section_name: "Appliances & Electrics" },
+					{ section_name: "Kitchen & Accessories" }
+				]
+			},
+			{ name: "Decor & Pillows", sub_nav: 
+				[
+					{ section_name: "Cookware & Bakeware" },
+					{ section_name: "Cutlery" },
+					{ section_name: "Appliances & Electrics" },
+					{ section_name: "Kitchen & Accessories" }
+				]
+			},
+			{ name: "Lighting", sub_nav: 
+				[
+					{ section_name: "Cookware & Bakeware" },
+					{ section_name: "Cutlery" },
+					{ section_name: "Appliances & Electrics" },
+					{ section_name: "Kitchen & Accessories" }
+				]
+			},
+			{ name: "Bed & Bath", sub_nav: 
+				[
+					{ section_name: "Cookware & Bakeware" },
+					{ section_name: "Cutlery" },
+					{ section_name: "Appliances & Electrics" },
+					{ section_name: "Kitchen & Accessories" }
+				]
+			}
 		];
 
 		return settings;

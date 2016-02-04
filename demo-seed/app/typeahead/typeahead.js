@@ -2,7 +2,7 @@
 
 // taken from the ui.bootstrap example: http://angular-ui.github.io/bootstrap/#/typeahead
 
-angular.module('groupByDemo.typeahead', []).controller('TypeaheadCtrl', ['$http', '$location', 'apiService', function($http, $location, apiService) {
+angular.module('groupByDemo.typeahead', []).controller('TypeaheadCtrl', ['$location', 'apiService', function($location, apiService) {
 
   var view_model = this;
 

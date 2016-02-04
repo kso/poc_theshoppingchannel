@@ -36,12 +36,15 @@ body.modal-open {
 .primary-nav-container {
 	height: 30px;
 	background-color:white;
+	text-align: center;
 }
 
 .primary-nav {
-	float:left;
 	padding: 2px 20px 2px 20px;
 	border: 1px black solid;
+	display: inline-block;
+	font-size: 20px;
+	font-weight: bold;
 }
 
 .search-box {
