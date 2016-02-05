@@ -24,7 +24,7 @@ angular.module('groupByDemo.primarynav', [])
 				navigationName : nav.navigationName ? nav.navigationName : defaults.menuNavigationName, 
 				value : nav.value
 			};
-			parameters.includedNavigations = defaults.menuNavigationName;  
+			parameters.includedNavigations = defaults.subMenuNavigationName;  
 			parameters.refinements = [ refinement ];
 
 		  	apiService.search(parameters).success(function(data){
@@ -35,7 +35,7 @@ angular.module('groupByDemo.primarynav', [])
 
 				angular.forEach(menu_items, function(item){ 
 					menu.items.push({ 
-						name : item.value,
+						name : item.displayName ? item.displayName : item.value,
 						path : "#" //TODO
 					});
 				});
@@ -52,8 +52,6 @@ angular.module('groupByDemo.primarynav', [])
 
 		//do the searches for each menu to populate nav with data
 		angular.forEach(settingsService['Nav Menu'], function(nav){ 
-
-			console.log(nav.displayName);
 
 			var menu = {};
 			menu.name = nav.displayName;

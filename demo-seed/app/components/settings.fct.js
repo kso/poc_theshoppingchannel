@@ -16,7 +16,7 @@ angular.module('groupByDemo.shared', [])
 					{ value: "Cookware & Bakeware" },
 					{ value: "Cutlery" },
 					{ value: "Kitchen Appliances & Electrics", displayName: "Appliances & Electrics" },
-					{ value: "Kitchen Accessories" }
+					{ value: "Kitchen Accessories", displayName: "Accessories" }
 				]
 			},
 			{ displayName: "Decor & Pillows", submenu: 
