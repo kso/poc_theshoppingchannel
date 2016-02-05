@@ -9,7 +9,7 @@ angular.module('groupByDemo.homepage', [])
 				pageSize : 0,
 				query : "",
 				customUrlParams: [ { key: "page", value: "home" } ] ,
-				fields : ["ID"],
+				fields : "",
 			};
 
   		  	console.time("search");

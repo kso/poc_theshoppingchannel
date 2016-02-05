@@ -39,13 +39,22 @@ body.modal-open {
 }
 
 .menu-bar-nav {
+	margin-top: 5px;
 	display: inline-block;	
 }
 
-.menu-bar-menu {
+.menu-bar-toggle {
 	float: left;
-	font-size: 20px;
+}
+
+.menu-bar-toggle > span {
+	font-size: 16px;
+	line-height: 30px;
 	font-weight: bold;
+}
+
+.menu-bar-nav:hover {
+	background: url(http://images.crateandbarrel.com/is/image/Crate/crate_nav_arrow?fmt=png-alpha) no-repeat center bottom;
 }
 
 .menu-bar-delimiter {

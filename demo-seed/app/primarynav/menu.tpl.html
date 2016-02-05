@@ -1,0 +1,11 @@
+
+	<ul class="dropdown-menu primary-nav-menu">
+		<li class="category-menu" role="menuitem" ng-repeat="category in nav.items">
+			<a href="{{category.path}}"> {{category.name}} </a>
+			<ul>
+				<li class="sub-category-menu" role="menuitem" ng-repeat="subcat in category.items">
+					<a href="{{subcat.path}}"> {{subcat.name}} </a>
+				</li>
+			</ul>
+		</li>
+	</ul>

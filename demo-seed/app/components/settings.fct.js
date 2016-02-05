@@ -3,37 +3,39 @@ angular.module('groupByDemo.shared', [])
 	.factory('settingsService', function(){
 		var settings = {};
 
-		settings['Primary Nav'] = [
-			{ name: "Kitchen", sub_nav: 
+
+		settings['Nav Menu Defaults'] = {
+			menuNavigationName : "QtopRatedType",
+			subMenuNavigationName : "Qtype",
+			menuSize : 5
+
+		}
+		settings['Nav Menu'] = [
+			{ displayName: "Kitchen", submenu: 
 				[
-					{ section_name: "Cookware & Bakeware" },
-					{ section_name: "Cutlery" },
-					{ section_name: "Appliances & Electrics" },
-					{ section_name: "Kitchen & Accessories" }
+					{ value: "Cookware & Bakeware" },
+					{ value: "Cutlery" },
+					{ value: "Kitchen Appliances & Electrics", displayName: "Appliances & Electrics" },
+					{ value: "Kitchen Accessories" }
 				]
 			},
-			{ name: "Decor & Pillows", sub_nav: 
+			{ displayName: "Decor & Pillows", submenu: 
 				[
-					{ section_name: "Cookware & Bakeware" },
-					{ section_name: "Cutlery" },
-					{ section_name: "Appliances & Electrics" },
-					{ section_name: "Kitchen & Accessories" }
+					{ value: "Pillows & Throws" },
+					{ value: "Candle Holders & Vases" },
+					{ value: "Wall Decor & Mirrors" },
+					{ value: "Home Accessories" }
 				]
 			},
-			{ name: "Lighting", sub_nav: 
-				[
-					{ section_name: "Cookware & Bakeware" },
-					{ section_name: "Cutlery" },
-					{ section_name: "Appliances & Electrics" },
-					{ section_name: "Kitchen & Accessories" }
-				]
+			{ navigationName: "QtopRatedType", 
+				value: "Lighting", 
+				displayName: "Lighting", 
+				menuField: "Qtype",
 			},
-			{ name: "Bed & Bath", sub_nav: 
+			{ displayName: "Bed & Bath", submenu: 
 				[
-					{ section_name: "Cookware & Bakeware" },
-					{ section_name: "Cutlery" },
-					{ section_name: "Appliances & Electrics" },
-					{ section_name: "Kitchen & Accessories" }
+					{ value: "Bedding" },
+					{ value: "Bath" },
 				]
 			}
 		];
