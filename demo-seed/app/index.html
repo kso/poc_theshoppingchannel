@@ -47,9 +47,14 @@
           </div>
         </div>
       </div>
-      <div class="primary-nav-container container-fluid" ng-controller="primaryNavCtrl as primarynav">
-        <div class="primary-nav" ng-repeat="nav in primarynav.navs">
-        {{nav.name}}
+      <div class="menu-bar container-fluid" ng-controller="primaryNavCtrl as primarynav">
+          <div class="menu-bar-nav" ng-repeat="nav in primarynav.navs">
+            <div class="menu-bar-menu">
+              {{nav.name}}
+            </div>
+            <div ng-if="!$last" class="menu-bar-delimiter">
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -33,18 +33,26 @@ body.modal-open {
 	padding: 10px 30px 10px 20px;
 }
 
-.primary-nav-container {
-	height: 30px;
+.menu-bar {
 	background-color:white;
-	text-align: center;
+	text-align: center;	
 }
 
-.primary-nav {
-	padding: 2px 20px 2px 20px;
-	border: 1px black solid;
-	display: inline-block;
+.menu-bar-nav {
+	display: inline-block;	
+}
+
+.menu-bar-menu {
+	float: left;
 	font-size: 20px;
 	font-weight: bold;
+}
+
+.menu-bar-delimiter {
+	float: left;
+	border-left: 1px solid black;
+    margin: 5px 15px 0 15px;
+    padding-bottom: 20px !important;
 }
 
 .search-box {
