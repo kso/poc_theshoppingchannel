@@ -11,6 +11,14 @@ angular.module('groupByDemo.shared', [])
 
 		}
 		settings['Nav Menu'] = [
+			{ displayName: "Dining & Entertaining", submenu: 
+				[
+					{ value: "Dinnerware" },
+					{ value: "Flatware" },
+					{ value: "Drinkware" },
+					{ value: "Serveware" }
+				]
+			},
 			{ displayName: "Kitchen", submenu: 
 				[
 					{ value: "Cookware & Bakeware" },
@@ -37,7 +45,14 @@ angular.module('groupByDemo.shared', [])
 					{ value: "Bedding" },
 					{ value: "Bath" },
 				]
-			}
+			},
+			{ displayName: "Outdoor", submenu: 
+				[
+					{ value: "Outdoor Entertaining", displayName: "Entertaining" },
+					{ value: "Outdoor Accessories", displayName: "Accessories" },
+					{ value: "Outdoor Dining Furniture", displayName: "Dining" }
+				]
+			},			
 		];
 
 		return settings;
