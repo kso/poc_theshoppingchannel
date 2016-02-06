@@ -32,7 +32,7 @@ angular.module('groupByDemo.settings', ['ui.bootstrap'])
 			  	sections : function () { return sections; }
 			  }
 			});
-		}
+		};
 
 
 	}]).controller('settingsModalCtrl', ['$uibModalInstance', 'sections', 
@@ -43,7 +43,7 @@ angular.module('groupByDemo.settings', ['ui.bootstrap'])
 
 			vm.done = function() {
 				$uibModalInstance.dismiss('cancel');
-			}
+			};
 
 			console.log(vm);
 

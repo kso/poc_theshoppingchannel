@@ -38,7 +38,7 @@ angular.module('groupByDemo.gbc', [])
 				area : apiConfig.area, 
 				searchItems : 10,
 				navigationItems : 4,
-			}
+			};
 
 			return $http.get( url, { params: parameters } );
 

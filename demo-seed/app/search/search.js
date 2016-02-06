@@ -71,7 +71,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 							view_model.refine(id, { low : low, high : high }, 'Range');
 						}
 					}
-				} 
+				}; 
 			});
 
 			//determine whether to show the model or not
@@ -82,7 +82,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 			return navModel;
 
-		}
+		};
 
 		view_model.search = function () {
 
@@ -132,7 +132,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 		view_model.refine = function(nav_data_name, ref_selected, type) {
 
-			var refinement = {}
+			var refinement = {};
 			refinement.type = type;
 			refinement.navigationName = nav_data_name;
 			
@@ -157,7 +157,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			navModel.selected.push( refinement ); 
 			console.log(refinement);
 			view_model.search();
-		}
+		};
 
 		view_model.unrefine = function(nav_data_name, ref_unselected) {
 
@@ -192,7 +192,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			});
 
 			view_model.search();
-		} 
+		}; 
 
 		view_model.inspect = function(product_id){
 
@@ -207,8 +207,8 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			  	id : function () { return product_id; }
 			  }
 			});
-		}
+		};
 
 		view_model.search();
 
-	}])
+	}]);

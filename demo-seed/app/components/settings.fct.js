@@ -1,15 +1,15 @@
+'use strict';
 
 angular.module('groupByDemo.shared', [])
 	.factory('settingsService', function(){
 		var settings = {};
-
 
 		settings['Nav Menu Defaults'] = {
 			menuNavigationName : "QtopRatedType",
 			subMenuNavigationName : "Qtype",
 			menuSize : 5
 
-		}
+		};
 		settings['Nav Menu'] = [
 			{ displayName: "Dining & Entertaining", submenu: 
 				[

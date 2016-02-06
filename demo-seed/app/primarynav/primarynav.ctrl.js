@@ -44,7 +44,7 @@ angular.module('groupByDemo.primarynav', [])
 			});
 
 		  	return menu;
-		}
+		};
 
 		vm.navs = [];
 

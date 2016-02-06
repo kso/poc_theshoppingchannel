@@ -24,11 +24,11 @@ angular.module('groupByDemo.typeahead', []).controller('TypeaheadCtrl', ['$locat
 	    return;
     } 
     $location.path( "/q/" + queryString.split(' ').join('+') );
-  }
+  };
 
   view_model.onEnterKey = function (text) {
   	redirect(text);
-  }
+  };
 
   view_model.onSelectItem = function ($item, $model, $label) {
     view_model.$item = $item;
