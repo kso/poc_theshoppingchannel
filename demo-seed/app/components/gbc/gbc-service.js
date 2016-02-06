@@ -40,7 +40,7 @@ angular.module('groupByDemo.gbc', [])
 		};
 
 		gbcAPI.getCollectionData = function() {
-			var dataObj = { clientKey: apiConfig.clientKey };
+			var dataObj = { clientKey: settingsService.search.clientKey };
 			return $http.post('/api/v1/collections', dataObj);
 		};
 
