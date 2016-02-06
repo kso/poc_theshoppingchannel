@@ -5,6 +5,8 @@ angular.module('groupByDemo.homepage', [])
 
 			var vm = this;
 
+			vm.zonemapping = ["TL","TM","TR","BL","BM","BR"];
+
 			var parameters = {
 				pageSize : 0,
 				query : "",
