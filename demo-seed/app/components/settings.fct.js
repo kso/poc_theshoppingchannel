@@ -59,8 +59,14 @@ angular.module('groupByDemo.shared', [])
 					{ value: "Outdoor Accessories", displayName: "Accessories" },
 					{ value: "Outdoor Dining Furniture", displayName: "Dining" }
 				]
-			},			
+			},	
 		];
+
+		settings['Color Mapping'] = {
+			"Red" : "#F00",
+			"Green" : "#F00",
+			"Blue" : "#F00"
+		};
 
 		return settings;
 	});

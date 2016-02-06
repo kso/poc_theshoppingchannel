@@ -6,13 +6,7 @@ angular.module('groupByDemo.settings', ['ui.bootstrap'])
 
 		var vm = this;
 
-		vm.sections = {};
-		vm.sections['Primary Nav'] = settingsService['Primary Nav']; 
-		vm.sections['Color Mapping'] = {
-			"Red" : "#F00",
-			"Green" : "#F00",
-			"Blue" : "#F00"
-		};
+		vm.sections = settingsService;
 
 		vm.dragControlListeners = {
 		    accept: function (sourceItemHandleScope, destSortableScope) { return true; }, //override to determine drag is allowed or not. default is true.
