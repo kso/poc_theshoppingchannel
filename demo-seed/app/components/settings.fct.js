@@ -4,6 +4,12 @@ angular.module('groupByDemo.shared', [])
 	.factory('settingsService', function(){
 		var settings = {};
 
+		settings.api = {
+			clientKey : "269466c6-e7b6-4439-a175-c6d5faa069dd",
+			collection : "default",
+			area : "Test"
+		};
+
 		settings['Nav Menu Defaults'] = {
 			menuNavigationName : "QtopRatedType",
 			subMenuNavigationName : "Qtype",
