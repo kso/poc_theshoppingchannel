@@ -1,15 +1,14 @@
 'use strict';
 
 angular.module("groupByDemo.search",['ui.bootstrap'])
-	.controller('searchCtrl', ['$scope', '$uibModal', 'apiService', '$routeParams', '$filter', 
-			function ($scope, $uibModal, apiService, $routeParams, $filter) {
+	.controller('searchCtrl', ['$scope', '$uibModal', 'apiService', '$routeParams', '$filter', 'settingsService',
+			function ($scope, $uibModal, apiService, $routeParams, $filter, settingsService) {
 
 		$scope.currentPage = 1;
 
 		var view_model = this;
 
 		view_model.query = $routeParams.query;
-		view_model.pageSize = 30;
 		view_model.resultSummary =  "";
 		view_model.navigation = [];
 
@@ -19,6 +18,10 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 	        {'display': 'Price - High to Low', 	'field': 'price', 		'order' : 'Descending'},
 	        {'display': 'Rating', 				'field': 'Qrating', 	'order' : 'Descending'}
 	    ];
+
+	    view_model.getPageSize = function(){
+			return settingsService.search.pageSize;
+	    };
 
 		//augment the navigation with additional info needed to render
 		view_model.updateNavModel = function(navModel, navFromSearch){
@@ -105,8 +108,8 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			});
 
 			var parameters = {
-				skip : view_model.pageSize * ($scope.currentPage - 1),
-				pageSize : view_model.pageSize,
+				skip : view_model.getPageSize() * ($scope.currentPage - 1),
+				pageSize : view_model.getPageSize(),
 				query : view_model.query,
 				refinements : refinement_parameter,
 				//this helps minimize the payload size
@@ -122,8 +125,8 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				view_model.navigation = view_model.updateNavModel(view_model.navigation, data.availableNavigation );
 				view_model.selectedNavigation = data.selectedNavigation;
 
-				var firstResult = view_model.pageSize * ($scope.currentPage - 1) + 1;
-				var lastResult =  Math.min( firstResult + view_model.pageSize - 1, view_model.totalRecordCount);
+				var firstResult = view_model.getPageSize() * ($scope.currentPage - 1) + 1;
+				var lastResult =  Math.min( firstResult + view_model.getPageSize() - 1, view_model.totalRecordCount);
 				view_model.resultSummary =  firstResult.toString() + " - " + lastResult.toString() + " of " +  view_model.totalRecordCount.toString() + " Products";
 
 				console.log(view_model);

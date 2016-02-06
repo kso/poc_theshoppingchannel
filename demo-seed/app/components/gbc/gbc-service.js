@@ -10,10 +10,10 @@ angular.module('groupByDemo.gbc', [])
 			//defautl values that are used if not set in searchParameters
 			var dataObj = {
 				fields: [ "*" ],
-				pageSize : 12,
-				clientKey: settingsService.api.clientKey,
-				area: settingsService.api.area,
-				collection : settingsService.api.collection
+				pageSize : settingsService.search.pageSize,
+				clientKey: settingsService.search.clientKey,
+				area: settingsService.search.area,
+				collection : settingsService.search.collection
 			};		
 		
 			//merge the passed in searchParameters		
@@ -29,8 +29,8 @@ angular.module('groupByDemo.gbc', [])
 			var url = base_url + "/api/v1/sayt/search?";
 			var parameters = {
 				query : term,
-				collection : settingsService.api.collection, 
-				area : settingsService.api.area, 
+				collection : settingsService.search.collection, 
+				area : settingsService.search.area, 
 				searchItems : 10,
 				navigationItems : 4,
 			};
@@ -48,7 +48,7 @@ angular.module('groupByDemo.gbc', [])
 			var dataObj = { 
 				refinements: [ { type: "Value", navigationName: "id", value: id } ],
 				fields: [ "*" ],
-				clientKey: settingsService.api.clientKey
+				clientKey: settingsService.search.clientKey
 			};
 			return $http.post('/api/v1/search', dataObj).then(function(response){
 				console.log(response);

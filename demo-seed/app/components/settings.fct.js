@@ -4,10 +4,11 @@ angular.module('groupByDemo.shared', [])
 	.factory('settingsService', function(){
 		var settings = {};
 
-		settings.api = {
+		settings.search = {
 			clientKey : "269466c6-e7b6-4439-a175-c6d5faa069dd",
 			collection : "default",
-			area : "Test"
+			area : "Test",
+			pageSize : 50
 		};
 
 		settings['Nav Menu Defaults'] = {

@@ -97,7 +97,7 @@
                      total-items="search.totalRecordCount" 
                      ng-model="currentPage"
                      ng-change="search.search()" 
-                     items-per-page="search.pageSize">
+                     items-per-page="search.getPageSize()">
         </uib-pager>
 
         <select class="form-control sort"
