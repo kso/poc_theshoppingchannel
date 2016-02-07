@@ -18,7 +18,7 @@ config(['$routeProvider', '$locationProvider', 'JSONFormatterConfigProvider' ,
 	function($routeProvider, $locationProvider, JSONFormatterConfigProvider){
 	$routeProvider.
 		when("/", {
-			templateUrl: "homepage/homepage.tpl.html", 
+			templateUrl: "templates/homepage/homepage.tpl.html", 
 			controller: "homepageCtrl",
 			controllerAs: "homepage"
 		}).

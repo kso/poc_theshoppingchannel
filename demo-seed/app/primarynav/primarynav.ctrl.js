@@ -69,6 +69,4 @@ angular.module('groupByDemo.primarynav', [])
 
 		});
 
-		console.log(vm.navs);
-
 	}]);

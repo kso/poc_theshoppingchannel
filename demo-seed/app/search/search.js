@@ -80,7 +80,6 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			//determine whether to show the model or not
 			angular.forEach(navModel, function(model){ 
 				model.visible = model.selected.length > 0 || 'raw' in model ; 
-				console.log(model.visible);
 			});
 
 			return navModel;
