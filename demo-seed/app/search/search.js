@@ -8,7 +8,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 		var view_model = this;
 
-		view_model.query = $routeParams.query;
+		view_model.query = $routeParams.query.split('+').join(' ');
 		view_model.resultSummary =  "";
 		view_model.navigation = [];
 
@@ -123,6 +123,12 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				view_model.resultList = data.records;
 				view_model.navigation = view_model.updateNavModel(view_model.navigation, data.availableNavigation );
 				view_model.selectedNavigation = data.selectedNavigation;
+
+				view_model.template = undefined;
+				if(data.template.name !== 'default') {
+					view_model.template = data.template;
+					console.log("Loading template:" + data.template.name);
+				}
 
 				var firstResult = view_model.getPageSize() * ($scope.currentPage - 1) + 1;
 				var lastResult =  Math.min( firstResult + view_model.getPageSize() - 1, view_model.totalRecordCount);

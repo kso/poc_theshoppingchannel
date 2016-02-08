@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('groupByDemo.shared', [])
+angular.module('groupByDemo.util.settings', [])
 	.factory('settingsService', function(){
 		var settings = {};
 
