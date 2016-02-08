@@ -1,32 +1,26 @@
 'use strict';
 
-angular.module('groupByDemo.homepage', [])
+angular.module('groupByDemo.templates', [])
 	.controller('homepageCtrl', [ 'apiService', function(apiService){
 
-			var vm = this;
+		var vm = this;
 
-			vm.zonemapping = ["TL","TM","TR","BL","BM","BR"];
+		vm.zonemapping = ["TL","TM","TR","BL","BM","BR"];
 
-			var parameters = {
-				pageSize : 0,
-				query : "",
-				customUrlParams: [ { key: "page", value: "home" } ] ,
-				fields : "",
-			};
+		var parameters = {
+			pageSize : 0,
+			query : "",
+			customUrlParams: [ { key: "page", value: "home" } ] ,
+			fields : "",
+		};
 
-  		  	console.time("search");
-		  	apiService.search(parameters).success(function(data){
-		  		console.timeEnd("search");
+		  	console.time("search");
+	  	apiService.search(parameters).success(function(data){
+	  		console.timeEnd("search");
 
-		  		vm.content = data.template.zones;
+	  		vm.content = data.template.zones;
 
+			console.log(data);
+		});
 
-
-				console.log(data);
-			});
-
-	}]).filter("sanitize", ['$sce', function($sce) {
-  		return function(htmlCode){
-   		 return $sce.trustAsHtml(htmlCode);
-  		};
-  	}]);
+	}]);
