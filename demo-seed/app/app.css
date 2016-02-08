@@ -120,8 +120,13 @@ body.modal-open {
 	background-color: transparent;
 }
 
+.navigation:first-of-type {
+	border: none;
+	padding: 0 0 10px 0;
+}
+
 .navigation {
-	border-top: 1px solid black;
+	border-top: 2px solid #ccc;
 	padding: 10px 0 10px 0;
 }
 
@@ -130,6 +135,10 @@ body.modal-open {
 	font-weight: bold;
 	line-height: 1.1;
 	font-size: 20px;
+}
+
+.navigation > div > ul {
+	margin-bottom: 0px;
 }
 
 .navigation .nav-collapse {
