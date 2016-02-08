@@ -8,13 +8,16 @@ angular.module('groupByDemo.templates')
 
 		vm.mapTemplateName = function( commandCenterName ) {
 
-			if(commandCenterName = "Product Spotlight"){
+			if(commandCenterName === "Product Spotlight"){
 				return "featureditems";
+			}
+
+			if(commandCenterName === "No Results"){
+				return "noresults";
 			}
 
 			return commandCenterName;
 
-		}
-		console.log("loading langing page ctrl");
+		};
 
 	}]);

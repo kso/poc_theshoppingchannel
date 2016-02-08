@@ -1,5 +1,13 @@
-<div class="row">
-	<span>{{search | json}}</span>
-	<img src="">
-	<img src="">
+<div class="search-template landing-page row">
+	<div ng-if="(search.template.zones['copy'].richContent | sanitize) !== ''" 
+		class = "col-md-12"
+		ng-bind-html="search.template.zones['copy'].richContent | sanitize"></div>
+	<div class="col-md-12 ">
+		<img ng-if="(search.template.zones['image1'].content) !== ''"
+		class="landing-page-img landing-page-top img-responsive" src="{{search.template.zones['image1'].content}}">
+	</div>
+	<div class="col-md-12">	
+		<img <img ng-if="(search.template.zones['image2'].content) !== ''"
+		class="landing-page-img landing-page-bottom img-responsive" src="{{search.template.zones['image2'].content}}">
+	</div>
 </div>

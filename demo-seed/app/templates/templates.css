@@ -1,0 +1,23 @@
+
+.search-template {
+	margin: 0;
+}
+
+.landing-page-top{
+	max-height: 75px;
+}
+
+.landing-page-bottom{
+	max-height: 350px;
+}
+
+.landing-page-img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.featureditem {
+	background-color: #F7F7F7;
+	border: solid black 4px;
+}
