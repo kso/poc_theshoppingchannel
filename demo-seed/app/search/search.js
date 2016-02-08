@@ -124,6 +124,12 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				view_model.navigation = view_model.updateNavModel(view_model.navigation, data.availableNavigation );
 				view_model.selectedNavigation = data.selectedNavigation;
 
+				view_model.template = undefined;
+				if(data.template.name !== 'default') {
+					view_model.template = data.template;
+					console.log("Loading template:" + data.template.name);
+				}
+
 				var firstResult = view_model.getPageSize() * ($scope.currentPage - 1) + 1;
 				var lastResult =  Math.min( firstResult + view_model.getPageSize() - 1, view_model.totalRecordCount);
 				view_model.resultSummary =  firstResult.toString() + " - " + lastResult.toString() + " of " +  view_model.totalRecordCount.toString() + " Products";

@@ -19,67 +19,73 @@
        -->
 
       <!-- Reviews selector  -->
-      <ul ng-if="nav.type === 'rating'" class="list-group" uib-collapse="nav.collapsed">
-        <li class="list-group-item refinement" 
-            ng-repeat="refinement in nav.raw.refinements"
-            ng-click="(nav.selected | filter:{navigationName : nav.name}).length > 0  ? 
-              search.unrefine(nav.name, refinement) : 
-              search.refine(nav.name, refinement, 'Range')"
-            ng-attr-title="{{refinement.low}}-{{refinement.high}} Stars" >
-          <uib-rating
-            ng-model="refinement.high"
-            readonly='true'></uib-rating> 
-          <p ng-if="(nav.selected | filter:{navigationName : nav.name, high: refinement.high}).length > 0" class="glyphicon glyphicon-remove"></p>
-          <span ng-if="!(nav.selected | filter:{navigationName : nav.name, high: refinement.high}).length > 0" class="badge">{{refinement.count}}</span>
-        </li>
-      </ul>
+      <div ng-switch on="nav.type">
+        <ul ng-switch-when="rating" class="list-group" uib-collapse="nav.collapsed">
+          <li class="list-group-item refinement" 
+              ng-repeat="refinement in nav.raw.refinements"
+              ng-click="(nav.selected | filter:{navigationName : nav.name}).length > 0  ? 
+                search.unrefine(nav.name, refinement) : 
+                search.refine(nav.name, refinement, 'Range')"
+              ng-attr-title="{{refinement.low}}-{{refinement.high}} Stars" >
+            <uib-rating
+              ng-model="refinement.high"
+              readonly='true'></uib-rating> 
+            <p ng-if="(nav.selected | filter:{navigationName : nav.name, high: refinement.high}).length > 0" class="glyphicon glyphicon-remove"></p>
+            <span ng-if="!(nav.selected | filter:{navigationName : nav.name, high: refinement.high}).length > 0" class="badge">{{refinement.count}}</span>
+          </li>
+        </ul>
 
-      <rzslider ng-if="nav.type === 'range'" ng-show="!nav.collapsed" 
-        rz-slider-model="nav.slider.min"
-        rz-slider-high="nav.slider.max"
-        rz-slider-options="nav.slider.options"></rzslider>
+        <rzslider ng-switch-when="range" ng-show="!nav.collapsed" 
+          rz-slider-model="nav.slider.min"
+          rz-slider-high="nav.slider.max"
+          rz-slider-options="nav.slider.options"></rzslider>
 
-      <ul ng-if="nav.type === 'value'" class="list-group" uib-collapse="nav.collapsed">
-        <li class="list-group-item refinement" 
-            ng-if="!nav.raw.or"
-            ng-repeat="refinement in nav.selected"
-            ng-click="search.unrefine(nav.name, refinement)">
-          <p class="glyphicon glyphicon-remove"></p>
-          <span>{{refinement.value}}</span>
-        </li>
-        <li class="list-group-item refinement" 
-            ng-repeat="refinement in nav.raw.refinements | limitTo:5 "
-            ng-click="(nav.selected | filter:{navigationName : nav.name, value: refinement.value}).length > 0  ? 
-              search.unrefine(nav.name, refinement) : 
-              search.refine(nav.name, refinement, 'Value')">
-          <span ng-if="nav.raw.or" 
-            ng-class="(nav.selected | filter:{navigationName : nav.name, value: refinement.value}).length > 0  ? 
-              'glyphicon-check' : 
-              'glyphicon-unchecked'" 
-            class="state-icon glyphicon"></span>
-          <span class="badge">{{refinement.count}}</span>
-          <span>{{refinement.value}}</span>
-        </li>
-      </ul>
+        <ul ng-switch-when="value" class="list-group" uib-collapse="nav.collapsed">
+          <li class="list-group-item refinement" 
+              ng-if="!nav.raw.or"
+              ng-repeat="refinement in nav.selected"
+              ng-click="search.unrefine(nav.name, refinement)">
+            <p class="glyphicon glyphicon-remove"></p>
+            <span>{{refinement.value}}</span>
+          </li>
+          <li class="list-group-item refinement" 
+              ng-repeat="refinement in nav.raw.refinements | limitTo:5 "
+              ng-click="(nav.selected | filter:{navigationName : nav.name, value: refinement.value}).length > 0  ? 
+                search.unrefine(nav.name, refinement) : 
+                search.refine(nav.name, refinement, 'Value')">
+            <span ng-if="nav.raw.or" 
+              ng-class="(nav.selected | filter:{navigationName : nav.name, value: refinement.value}).length > 0  ? 
+                'glyphicon-check' : 
+                'glyphicon-unchecked'" 
+              class="state-icon glyphicon"></span>
+            <span class="badge">{{refinement.count}}</span>
+            <span>{{refinement.value}}</span>
+          </li>
+        </ul>
 
-      <div ng-if="nav.type === 'color'" class="color-refinement-container" uib-collapse="nav.collapsed">
-        <div class="color-refinement" 
-            ng-repeat="refinement in nav.raw.refinements | limitTo:10 "
-            ng-click="(nav.selected | filter:{navigationName : nav.name, value: refinement.value}).length > 0  ? 
-              search.unrefine(nav.name, refinement) : 
-              search.refine(nav.name, refinement, 'Value')"
-            ng-style="{'background-color' : refinement.value}"
-            ng-attr-title="{{refinement.value}}" >
-          <span ng-if="nav.raw.or" 
-            ng-class="(nav.selected | filter:{navigationName : nav.name, value: refinement.value}).length > 0  ? 
-              'glyphicon-remove' : 
-              ''" 
-            class="state-icon glyphicon"></span>
-        </div>
+        <div ng-switch-when="color" class="color-refinement-container" uib-collapse="nav.collapsed">
+          <div class="color-refinement" 
+              ng-repeat="refinement in nav.raw.refinements | limitTo:10 "
+              ng-click="(nav.selected | filter:{navigationName : nav.name, value: refinement.value}).length > 0  ? 
+                search.unrefine(nav.name, refinement) : 
+                search.refine(nav.name, refinement, 'Value')"
+              ng-style="{'background-color' : refinement.value}"
+              ng-attr-title="{{refinement.value}}" >
+            <span ng-if="nav.raw.or" 
+              ng-class="(nav.selected | filter:{navigationName : nav.name, value: refinement.value}).length > 0  ? 
+                'glyphicon-remove' : 
+                ''" 
+              class="state-icon glyphicon"></span>
+          </div>
+        </div>      
       </div>
+
 
     </div>
   </div>
+
+    <div ng-if="search.template" ng-include="'/templates/template.tpl.html'" ng-controller="templateCtrl as template">
+    </div>
 
   <div class="results-well well col-lg-10 col-md-9 col-sm-8 col-xs-12">
     <div class="row">
