@@ -2,7 +2,7 @@
 
 // taken from the ui.bootstrap example: http://angular-ui.github.io/bootstrap/#/typeahead
 
-angular.module('groupByDemo.typeahead', []).controller('TypeaheadCtrl', ['$http', '$location', 'apiService', function($http, $location, apiService) {
+angular.module('groupByDemo.typeahead', []).controller('TypeaheadCtrl', ['$location', 'apiService', function($location, apiService) {
 
   var view_model = this;
 
@@ -24,11 +24,11 @@ angular.module('groupByDemo.typeahead', []).controller('TypeaheadCtrl', ['$http'
 	    return;
     } 
     $location.path( "/q/" + queryString.split(' ').join('+') );
-  }
+  };
 
   view_model.onEnterKey = function (text) {
   	redirect(text);
-  }
+  };
 
   view_model.onSelectItem = function ($item, $model, $label) {
     view_model.$item = $item;

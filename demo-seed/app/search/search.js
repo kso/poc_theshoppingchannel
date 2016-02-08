@@ -1,15 +1,14 @@
 'use strict';
 
 angular.module("groupByDemo.search",['ui.bootstrap'])
-	.controller('searchCtrl', ['$scope', '$uibModal', 'apiService', '$routeParams', '$filter', 
-			function ($scope, $uibModal, apiService, $routeParams, $filter) {
+	.controller('searchCtrl', ['$scope', '$uibModal', 'apiService', '$routeParams', '$filter', 'settingsService',
+			function ($scope, $uibModal, apiService, $routeParams, $filter, settingsService) {
 
 		$scope.currentPage = 1;
 
 		var view_model = this;
 
 		view_model.query = $routeParams.query;
-		view_model.pageSize = 30;
 		view_model.resultSummary =  "";
 		view_model.navigation = [];
 
@@ -19,6 +18,10 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 	        {'display': 'Price - High to Low', 	'field': 'price', 		'order' : 'Descending'},
 	        {'display': 'Rating', 				'field': 'Qrating', 	'order' : 'Descending'}
 	    ];
+
+	    view_model.getPageSize = function(){
+			return settingsService.search.pageSize;
+	    };
 
 		//augment the navigation with additional info needed to render
 		view_model.updateNavModel = function(navModel, navFromSearch){
@@ -71,18 +74,17 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 							view_model.refine(id, { low : low, high : high }, 'Range');
 						}
 					}
-				} 
+				}; 
 			});
 
 			//determine whether to show the model or not
 			angular.forEach(navModel, function(model){ 
 				model.visible = model.selected.length > 0 || 'raw' in model ; 
-				console.log(model.visible);
 			});
 
 			return navModel;
 
-		}
+		};
 
 		view_model.search = function () {
 
@@ -105,12 +107,12 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			});
 
 			var parameters = {
-				skip : view_model.pageSize * ($scope.currentPage - 1),
-				pageSize : view_model.pageSize,
+				skip : view_model.getPageSize() * ($scope.currentPage - 1),
+				pageSize : view_model.getPageSize(),
 				query : view_model.query,
 				refinements : refinement_parameter,
 				//this helps minimize the payload size
-				fields : ["ID", "ClargeImage", "Ctitle"],
+				fields : ["ID", "wideImage", "Ctitle"],
 				sort: sortParam
 			};
 
@@ -122,8 +124,8 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				view_model.navigation = view_model.updateNavModel(view_model.navigation, data.availableNavigation );
 				view_model.selectedNavigation = data.selectedNavigation;
 
-				var firstResult = view_model.pageSize * ($scope.currentPage - 1) + 1;
-				var lastResult =  Math.min( firstResult + view_model.pageSize - 1, view_model.totalRecordCount);
+				var firstResult = view_model.getPageSize() * ($scope.currentPage - 1) + 1;
+				var lastResult =  Math.min( firstResult + view_model.getPageSize() - 1, view_model.totalRecordCount);
 				view_model.resultSummary =  firstResult.toString() + " - " + lastResult.toString() + " of " +  view_model.totalRecordCount.toString() + " Products";
 
 				console.log(view_model);
@@ -132,7 +134,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 		view_model.refine = function(nav_data_name, ref_selected, type) {
 
-			var refinement = {}
+			var refinement = {};
 			refinement.type = type;
 			refinement.navigationName = nav_data_name;
 			
@@ -157,7 +159,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			navModel.selected.push( refinement ); 
 			console.log(refinement);
 			view_model.search();
-		}
+		};
 
 		view_model.unrefine = function(nav_data_name, ref_unselected) {
 
@@ -192,7 +194,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			});
 
 			view_model.search();
-		} 
+		}; 
 
 		view_model.inspect = function(product_id){
 
@@ -207,8 +209,8 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			  	id : function () { return product_id; }
 			  }
 			});
-		}
+		};
 
 		view_model.search();
 
-	}])
+	}]);

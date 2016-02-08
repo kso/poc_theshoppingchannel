@@ -3,22 +3,34 @@
   <head>
     <meta charset="utf-8">
     <title>GroupBy Demo App</title>
+    <base href="/" />
     <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="/bower_components/json-formatter/dist/json-formatter.css">
     <link rel="stylesheet" type="text/css" href="/bower_components/angularjs-slider/dist/rzslider.css">
+    <link rel="stylesheet" type="text/css" href="/bower_components/ng-sortable/dist/ng-sortable.css">
+    <link rel="stylesheet" type="text/css" href="/bower_components/ng-sortable/dist/ng-sortable.style.css">
     <link rel="stylesheet" type="text/css" href="/app.css">
-    <base href="/" />
+    <link rel="stylesheet" type="text/css" href="/settings/settings.css">
+    <link rel="stylesheet" type="text/css" href="/templates/homepage/homepage.css">
+    <link rel="stylesheet" type="text/css" href="/primarynav/menu.css">
   </head>
 
   <body>
     <div class="navbar navbar-fixed-top navbar-inverse">
-      <div class="container">
-        <a href="/" class="navbar-brand">
-          <span class="glyphicon glyphicon-shopping-cart"></span> GroupBy Demo
-        </a>
-        <div ng-controller="TypeaheadCtrl as typeahead">
-          <div class="navbar-form navbar-right" role="search">
-            <div class="form-group">
+      <div class="header container-fluid">
+        <div class="navbar-header">
+          <a href="/" class="navbar-brand">
+            <img src="http://www.loveisours.com/im/logo-cnb.png" >
+          </a>
+
+        </div>
+        <div>
+          <div ng-controller="TypeaheadCtrl as typeahead" 
+              class="search-box navbar-form navbar-left" 
+              role="search">
+              <div class="search-box-icon">
+                <span class="glyphicon glyphicon-search"></span>
+              </div>
               <input  type="text" 
                       ng-model="asyncSelected" 
                       placeholder="Search..." 
@@ -27,22 +39,35 @@
                       typeahead-no-results="noResults"
                       typeahead-on-select="typeahead.onSelectItem($item, $model, $label)"
                       ng-keyup="$event.keyCode == 13 ? typeahead.onEnterKey(asyncSelected) : null"
-                      class="form-control">
+                      class="search-box-control form-control">
+          </div>
+          <div ng-controller="settingsCtrl as settings" 
+              class="navbar-menu navbar-text navbar-right" 
+              ng-click="settings.open(settings.sections)">
+            <i class="glyphicon glyphicon-menu-hamburger"></i>
+          </div>
+        </div>
+      </div>
+      <div class="menu-bar container-fluid" ng-controller="primaryNavCtrl as primarynav">
+          <div uib-dropdown class="menu-bar-nav" 
+            ng-repeat="nav in primarynav.navs"
+            is-open="nav.menuopen"
+            ng-mouseenter="nav.menuopen = true"
+            ng-mouseleave="nav.menuopen = false">
+            <div uib-dropdown-toggle 
+              class="menu-bar-toggle">
+                <span>{{nav.name}}</span>
+              <div uib-dropdown-menu template-url="/primarynav/menu.tpl.html">
+              </div>
             </div>
-          </div>
-          <div class="navbar-text navbar-right">
-            <span class="glyphicon glyphicon-search"></span>
-          </div>
-          <div ng-show="noResults" class="navbar-text navbar-right ">
-            <div class="text-danger">
-              <i class="glyphicon glyphicon-remove"></i>No Results Found
+            <div ng-if="!$last" class="menu-bar-delimiter">
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="container">
+    <div class="container-fluid">
       <ng-view></ng-view>
     </div>
 
@@ -51,11 +76,16 @@
     <script src="/bower_components/angular-route/angular-route.js"></script>
     <script src="/bower_components/angularjs-slider/dist/rzslider.js"></script>
     <script src="/bower_components/json-formatter/dist/json-formatter.js"></script>
+    <script src="/bower_components/ng-sortable/dist/ng-sortable.min.js"></script>
     <script src="/app.js"></script>
     <script src="/search/search.js"></script>
     <script src="/product/product.js"></script>
+    <script src="/settings/settings.ctrl.js"></script>
+    <script src="/templates/homepage/homepage.ctrl.js"></script>
     <script src="/inspect/inspect.ctrl.js"></script>
     <script src="/typeahead/typeahead.js"></script>
+    <script src="/components/settings.fct.js"></script>
+    <script src="/primarynav/primarynav.ctrl.js"></script>
     <script src="/components/gbc/gbc-service.js"></script>
 </body>
 </html>

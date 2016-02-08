@@ -13,7 +13,7 @@ angular.module('groupByDemo.inspect', ['ui.bootstrap'])
 
 			vm.done = function() {
 				$uibModalInstance.dismiss('cancel');
-			}
+			};
 
 			console.log(vm);
 
