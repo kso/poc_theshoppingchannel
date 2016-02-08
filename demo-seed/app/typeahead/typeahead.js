@@ -19,7 +19,7 @@ angular.module('groupByDemo.typeahead', []).controller('TypeaheadCtrl', ['$locat
 
   	var queryString = typeof label === 'object' ? label.value : label;
 
-    if(!queryString || queryString === "all"){
+    if(!queryString){
 	    $location.path( "/" );
 	    return;
     } 

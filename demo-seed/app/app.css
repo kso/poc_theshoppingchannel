@@ -1,7 +1,7 @@
 @import url("//fonts.googleapis.com/css?family=Lobster");
 
 body {
-	padding-top: 100px;
+	padding-top: 110px;
 	overflow-y: scroll;
 }
 
@@ -108,6 +108,7 @@ body.modal-open {
 }
 
 .results-well {
+	padding-top: 0px;
 	border-width: 1px 0px 0px 0px;
 	border-radius: 0;
 	background-color: transparent;
@@ -183,6 +184,10 @@ body.modal-open {
 	background-color: #eee;
 }
 
+.settings-button {
+	padding-left: 10px;
+}
+
 .product-container:nth-of-type(4n+1){
   clear:both;
 }
@@ -218,6 +223,20 @@ body.modal-open {
 
 .product-thumb:hover > img {
 	border-color: #ddd;
+}
+
+.product-thumb-container .product-add-to-cart {
+	display: none;
+    position: absolute;
+    bottom: 20%;
+    left:0; 
+    right:0;
+    width:50%;
+    margin: 0 auto;
+}
+
+.product-thumb-container:hover .product-add-to-cart {
+	display:block;
 }
 
 .product-thumb-container .hover-btn {

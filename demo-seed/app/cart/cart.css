@@ -1,0 +1,31 @@
+
+.cart-button {
+	background-color:black;
+	border-color:black;
+}
+
+.cart-icon {
+}
+
+.cart-text-summary {
+}
+
+.cart-summary{
+	padding-top: 5px;
+	color: white;
+}
+
+.cart-summary:hover {
+	background-color: white;
+	color: black;
+}
+
+.cart-summary:hover #cart-icon {
+   stroke: black;
+   fill: black;
+ }
+
+#cart-icon {
+   stroke: white;
+   fill: white;
+ }

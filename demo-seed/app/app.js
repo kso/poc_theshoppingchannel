@@ -14,6 +14,7 @@ angular.module("groupByDemo", [
 	'groupByDemo.primarynav',
 	'jsonFormatter',
 	'as.sortable',
+	'ngCart',
 	'rzModule']).
 config(['$routeProvider', '$locationProvider', 'JSONFormatterConfigProvider' ,
 	function($routeProvider, $locationProvider, JSONFormatterConfigProvider){
