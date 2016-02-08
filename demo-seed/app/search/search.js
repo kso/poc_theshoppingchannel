@@ -8,7 +8,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 		var view_model = this;
 
-		view_model.query = $routeParams.query;
+		view_model.query = $routeParams.query.split('+').join(' ');
 		view_model.resultSummary =  "";
 		view_model.navigation = [];
 
