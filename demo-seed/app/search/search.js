@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module("groupByDemo.search",['ui.bootstrap'])
-	.controller('searchCtrl', ['$scope', '$uibModal', 'apiService', '$routeParams', '$filter', 'settingsService',
-			function ($scope, $uibModal, apiService, $routeParams, $filter, settingsService) {
+	.controller('searchCtrl', ['$scope', '$uibModal', 'apiService', '$stateParams', '$filter', 'settingsService',
+			function ($scope, $uibModal, apiService, $stateParams, $filter, settingsService) {
 
 		$scope.currentPage = 1;
 
 		var view_model = this;
 
-		view_model.query = $routeParams.query.split('+').join(' ');
+		view_model.query = $stateParams.query.split('+').join(' ');
 		if(view_model.query === "all"){
 			view_model.query = "";
 		}

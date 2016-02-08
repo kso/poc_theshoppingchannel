@@ -186,6 +186,7 @@ body.modal-open {
 
 .settings-button {
 	padding-left: 10px;
+	cursor: pointer;
 }
 
 .product-container:nth-of-type(4n+1){
