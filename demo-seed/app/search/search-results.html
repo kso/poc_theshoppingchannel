@@ -125,6 +125,7 @@
             <img class="img-responsive" ng-src="{{result.allMeta.wideImage}}">
             <h5>{{result.allMeta.Ctitle}} - {{result.allMeta.price | currency}}</h5>
           </a>
+          <img ng-if="result.allMeta.on_sale" class="sale-badge img-responsive" src="http://wac.aee8.edgecastcdn.net/80AEE8/p/p/baseballwarehouse/images/product-badges/on-sale-badge-left.png">
           <div class="hover-btn" ng-click="search.inspect(result.allMeta.ID)">
             <i class="glyphicon glyphicon-eye-open"></i>
           </div>

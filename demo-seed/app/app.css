@@ -197,6 +197,13 @@ body.modal-open {
 	height:auto;
 }
 
+.sale-badge {
+	position: absolute;
+	top:0;
+	left:0;
+	max-width: 30%;
+}
+
 .product-thumb {
 	text-align: center;
 	color: grey;
