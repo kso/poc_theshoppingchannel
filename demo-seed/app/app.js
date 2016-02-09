@@ -17,6 +17,7 @@ angular.module("groupByDemo", [
 	'as.sortable',
 	'ui.router',
 	'ngCart',
+	'braintree-angular',
 	'rzModule']).
 config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'JSONFormatterConfigProvider' ,
 	function($stateProvider, $urlRouterProvider, $locationProvider, JSONFormatterConfigProvider){

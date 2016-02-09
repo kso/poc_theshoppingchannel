@@ -1,4 +1,15 @@
 
+<div class="row">
+    <h1>Choose a payment method</h1>
+    <p class="help-block">{{ errors }}</p><br>
+    <div class="col-md-6">
+    <form>
+        <braintree-dropin options="paymentOptions">Loading...</braintree-dropin>
+        <input type="submit" value="Purchase" />
+    </form>
+    </div>
+</div>
+
 <div ng-if="service=='http' || service == 'log'">
     <button class="btn btn-primary" ng-click="checkout()" ng-disabled="!ngCart.getTotalItems()" ng-transclude>Checkout</button>
 </div>

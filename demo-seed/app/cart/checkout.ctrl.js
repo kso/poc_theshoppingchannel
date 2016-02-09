@@ -1,6 +1,7 @@
 'use strict';
 
 angular.module('groupByDemo.cart', ['ui.router'])
+	.constant('clientTokenPath', '/api/braintree/client_token')
 	.controller('checkoutCtrl', [ '$http', '$state', 'ngCart', 
 		function( $http, $state, ngCart ){
 
