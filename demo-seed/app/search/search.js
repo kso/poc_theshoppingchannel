@@ -115,7 +115,8 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				pageSize : view_model.getPageSize(),
 				query : view_model.query,
 				refinements : refinement_parameter,
-				sort: sortParam
+				sort: sortParam,
+				fields: settingsService.search.fields
 			};
 
   		  	console.time("search");

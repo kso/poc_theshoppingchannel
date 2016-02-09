@@ -9,7 +9,7 @@ angular.module('groupByDemo.util.settings', [])
 			collection : "productsonsale",
 			area : "Test",
 			pageSize : 50,
-			fields : ["ID", "wideImage", "Ctitle"]
+			fields : ["ID", "wideImage", "Ctitle", "price" , "on_sale"]
 		};
 
 		settings['Nav Menu Defaults'] = {
