@@ -33,7 +33,7 @@ angular.module('groupByDemo.gbc', [])
 				area : settingsService.search.area, 
 				searchItems : 5,
 				navigationItems : 4,
-				productItems: 4
+				productItems: 3
 			};
 
 			return $http.get( url, { params: parameters } );

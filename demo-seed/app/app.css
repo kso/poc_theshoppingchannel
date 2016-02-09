@@ -324,5 +324,31 @@ rzslider .rz-bar.rz-selection {
 
 .saytItem {
 	list-style-type: none;
+}
+
+.saytLink {
 	color: black;
+}
+
+.saytImage {
+    display: block;
+    max-width: 120px;
+    max-height: 185px;
+    margin-bottom: 5px;
+}
+
+.saytProductTitle {
+    font-size: 11px;
+    padding-right: 10px;
+}
+
+.saytHeader {
+	border-bottom-style: solid;
+	border-width: 1px;
+	margin-left: -10px;
+	margin-right: 10px;
+}
+
+.saytDropdown {
+	width: 500px;
 }

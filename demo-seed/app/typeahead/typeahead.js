@@ -56,7 +56,7 @@ angular.module('groupByDemo.typeahead', [])
           if (product.allMeta){
               var newProd = {};
               newProd.value = product.allMeta.title;
-              newProd.url = '/product/';// + product.allMeta.id;
+              newProd.url = '/product/' + product.allMeta.ID;
               newProd.type = 'products';
               newProd.price = product.allMeta.price;
               newProd.image = product.allMeta.image_url;
