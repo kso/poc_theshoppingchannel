@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module("groupByDemo.search",['ui.bootstrap'])
-	.controller('searchCtrl', ['$scope', '$uibModal', 'apiService', '$stateParams', '$filter', 'settingsService',
-			function ($scope, $uibModal, apiService, $stateParams, $filter, settingsService) {
+	.controller('searchCtrl', ['$scope', '$uibModal', 'apiService', '$stateParams', '$filter', 'settingsService', 'personalizationService',
+			function ($scope, $uibModal, apiService, $stateParams, $filter, settingsService, personalizationService) {
 
 		$scope.currentPage = 1;
 
@@ -15,6 +15,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 		view_model.resultSummary =  "";
 		view_model.navigation = [];
+		view_model.personalize = settingsService.Options.Personalization;
 
 	    $scope.sortFields = [
 	        {'display': 'Relevancy', 			'field': '_relevance', 	'order' : 'Descending'},
@@ -22,6 +23,21 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 	        {'display': 'Price - High to Low', 	'field': 'price', 		'order' : 'Descending'},
 	        {'display': 'Rating', 				'field': 'Qrating', 	'order' : 'Descending'}
 	    ];
+
+		$scope.$watch( function( scope ) {
+				var hasChanged = settingsService.Options.Personalization !== view_model.personalize;
+				var isValid = settingsService.Options.Personalization === "on" || settingsService.Options.Personalization === "off";
+				return hasChanged && isValid;
+			},
+			function(newValue, oldValue) {
+
+				if(oldValue)
+					return;
+
+				view_model.personalize = settingsService.Options.Personalization;
+				view_model.search();
+
+			});
 
 	    view_model.getPageSize = function(){
 			return settingsService.search.pageSize;
@@ -119,6 +135,11 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				fields: settingsService.search.fields
 			};
 
+			console.log("personalization is : " + settingsService.Options.Personalization);
+			if(settingsService.Options.Personalization === "on"){
+				parameters.biasing = personalizationService.applyProfile();
+			}
+
   		  	console.time("search");
 		  	apiService.search(parameters).success(function(data){
 		  		console.timeEnd("search");
@@ -165,8 +186,11 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 					break;
 			}
 
+			if(nav_data_name === "CBrand"){
+				personalizationService.recordEvent( nav_data_name, ref_selected.value);
+			}
+
 			navModel.selected.push( refinement ); 
-			console.log(refinement);
 			view_model.search();
 		};
 

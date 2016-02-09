@@ -11,11 +11,30 @@
 
         <uib-tabset class="reveal-modal clearfix" data-reveal>
             <uib-tab ng-repeat="(name, section) in settings.sections" heading="{{name}}" active="$first">
-                <div class="col-md-6">
+                <div class="col-md-12">
                 <ul class="settings-card-list" data-as-sortable="settings.dragControlListeners" data-ng-model="section">
                    <li class="settings-card as-sortable-item" data-ng-repeat="(key, value) in section" data-as-sortable-item>
-                      <div class="as-sortable-item-handle" data-as-sortable-item-handle>
-                          <span class="card title">{{key}} : {{value}}</span>
+                      <div ng-if="key ==='Personalization'" class="form-group row as-sortable-item-handle" data-as-sortable-item-handle>
+                            <div class="col-md-3 card-key"><span>{{key}}</span></div> 
+                            <div class="col-md-4 card-value">
+                                <label>
+                                <input  class="form-control" name="value" type="radio" 
+                                       value="on" ng-model="settings.sections[name][key]"/>
+                                On</label>
+                            </div>
+                            <div class="col-md-4 card-value">
+                                <label>
+                                <input  class="form-control" name="value" type="radio" 
+                                       value="off" ng-model="settings.sections[name][key]"/>
+                                Off</label>                                       
+                            </div> 
+                      </div>
+                      <div ng-if="key !=='Personalization'" class="form-group row as-sortable-item-handle" data-as-sortable-item-handle>
+                            <div class="col-md-3 card-key"><span>{{key}}</span></div> 
+                            <div class="col-md-9 card-value">
+                                <input class="form-control" name="value" type="value" 
+                                       placeholder="" ng-model="settings.sections[name][key]"/>
+                            </div> 
                       </div>
                    </li>
                 </ul>

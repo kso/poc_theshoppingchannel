@@ -13,10 +13,12 @@ angular.module("groupByDemo", [
 	'groupByDemo.util.filters',
 	'groupByDemo.primarynav',
 	'groupByDemo.cart',
+	'groupByDemo.personalization',
 	'jsonFormatter',
 	'as.sortable',
 	'ui.router',
 	'ngCart',
+	'ngCookies',
 	'braintree-angular',
 	'rzModule']).
 config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'JSONFormatterConfigProvider' ,
