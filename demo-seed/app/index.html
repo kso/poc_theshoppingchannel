@@ -38,11 +38,12 @@
                       ng-model="asyncSelected" 
                       placeholder="Search..." 
                       uib-typeahead="searchSuggestion as searchSuggestion.value for searchSuggestion in typeahead.fetch($viewValue)" 
+                      typeahead-popup-template-url="saytTemplate.html"
                       typeahead-focus-first = "false"
                       typeahead-no-results="noResults"
                       typeahead-on-select="typeahead.onSelectItem($item, $model, $label)"
                       ng-keyup="$event.keyCode == 13 ? typeahead.onEnterKey(asyncSelected) : null"
-                      class="search-box-control form-control">
+                      class="search-box-control form-control">            
           </div>
           <div ng-controller="settingsCtrl as settings" 
               class="settings-button navbar-menu navbar-text navbar-right" 

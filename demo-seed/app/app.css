@@ -317,3 +317,12 @@ rzslider .rz-bar.rz-selection {
 .settings-modal {
 	top:100px;
 } 
+
+.saytList {
+	padding-left: 20px;
+} 
+
+.saytItem {
+	list-style-type: none;
+	color: black;
+}

@@ -2,7 +2,8 @@
 
 // taken from the ui.bootstrap example: http://angular-ui.github.io/bootstrap/#/typeahead
 
-angular.module('groupByDemo.typeahead', []).controller('TypeaheadCtrl', ['$location', 'apiService', function($location, apiService) {
+angular.module('groupByDemo.typeahead', [])
+.controller('TypeaheadCtrl', ['$location', 'apiService', function($location, apiService) {
 
   var view_model = this;
 
@@ -11,7 +12,62 @@ angular.module('groupByDemo.typeahead', []).controller('TypeaheadCtrl', ['$locat
     console.time("sayt");
     return apiService.sayt(val).then(function(response){
       console.timeEnd("sayt");
-      return response.data.result.searchTerms;
+      
+      // The uib-typeahead expects data in arrays, so we need to restructure.
+      //  The SAYT template takes nested arrays into consideration
+      var arrayResponse = [];
+      
+      // Search suggestions
+      if (response.data.result){
+        for (var ii=response.data.result.searchTerms.length;ii--;){
+            var item = response.data.result.searchTerms[ii];
+            item.url = '/q/' + item.value.replace(' ','+');
+            item.type = 'searchTerms';
+          }
+        arrayResponse.push(response.data.result.searchTerms);
+      }
+  
+      // Navigations
+      if (response.data.result.navigations){
+        var navigations = [];
+        for (var ii=response.data.result.navigations.length;ii--;){
+          var navigation = response.data.result.navigations[ii];
+          if (navigation.values){
+            for (var jj=navigation.values.length;jj--;){
+              var item = navigation.values[jj];
+
+              var newNav = {};
+              newNav.value = item;
+              newNav.field = navigation.name;
+              newNav.url = '';
+              newNav.type = 'navigations';
+              navigations.push(newNav);
+            }
+          }
+        }
+        arrayResponse.push(navigations);
+      }
+
+      // Products
+      if (response.data.result.products){
+        var products = [];
+        for (var ii=response.data.result.products.length;ii--;){
+          var product = response.data.result.products[ii];
+          if (product.allMeta){
+              var newProd = {};
+              newProd.value = product.allMeta.title;
+              newProd.url = '/product/';// + product.allMeta.id;
+              newProd.type = 'products';
+              newProd.price = product.allMeta.price;
+              newProd.image = product.allMeta.image_url;
+              products.push(newProd);
+          }
+        }
+        arrayResponse.push(products);
+      }
+
+      return arrayResponse;
+
     });
   };
 
