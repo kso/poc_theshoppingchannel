@@ -48,7 +48,9 @@ angular.module('groupByDemo.gbc', [])
 			var dataObj = { 
 				refinements: [ { type: "Value", navigationName: "id", value: id } ],
 				fields: [ "*" ],
-				clientKey: settingsService.search.clientKey
+				clientKey: settingsService.search.clientKey,
+				collection : settingsService.search.collection, 
+				area : settingsService.search.area, 
 			};
 			return $http.post('/api/v1/search', dataObj).then(function(response){
 				console.log(response);
