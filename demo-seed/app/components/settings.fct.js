@@ -8,7 +8,8 @@ angular.module('groupByDemo.util.settings', [])
 			clientKey : "269466c6-e7b6-4439-a175-c6d5faa069dd",
 			collection : "default",
 			area : "Test",
-			pageSize : 50
+			pageSize : 50,
+			fields : ["ID", "wideImage", "Ctitle"]
 		};
 
 		settings['Nav Menu Defaults'] = {

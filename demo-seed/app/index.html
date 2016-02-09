@@ -11,16 +11,18 @@
     <link rel="stylesheet" type="text/css" href="/bower_components/ng-sortable/dist/ng-sortable.style.css">
     <link rel="stylesheet" type="text/css" href="/app.css">
     <link rel="stylesheet" type="text/css" href="/settings/settings.css">
+    <link rel="stylesheet" type="text/css" href="/cart/cart.css">
     <link rel="stylesheet" type="text/css" href="/templates/templates.css">
     <link rel="stylesheet" type="text/css" href="/templates/homepage/homepage.css">
     <link rel="stylesheet" type="text/css" href="/primarynav/menu.css">
   </head>
 
   <body>
+    <div ui-view></div>
     <div class="navbar navbar-fixed-top navbar-inverse">
       <div class="header container-fluid">
         <div class="navbar-header">
-          <a href="/" class="navbar-brand">
+          <a ui-sref="home" class="navbar-brand">
             <img src="http://www.loveisours.com/im/logo-cnb.png" >
           </a>
 
@@ -43,9 +45,14 @@
                       class="search-box-control form-control">
           </div>
           <div ng-controller="settingsCtrl as settings" 
-              class="navbar-menu navbar-text navbar-right" 
+              class="settings-button navbar-menu navbar-text navbar-right" 
               ng-click="settings.open(settings.sections)">
             <i class="glyphicon glyphicon-menu-hamburger"></i>
+          </div>
+          <div class="navbar-right">
+            <a ui-sref="checkout">
+              <ngcart-summary template-url="/cart/summary.tpl.html"></ngcart-summary>
+            </a>
           </div>
         </div>
       </div>
@@ -78,6 +85,9 @@
     <script src="/bower_components/angularjs-slider/dist/rzslider.js"></script>
     <script src="/bower_components/json-formatter/dist/json-formatter.js"></script>
     <script src="/bower_components/ng-sortable/dist/ng-sortable.min.js"></script>
+    <script src="/bower_components/ngcart/dist/ngCart.js"></script>
+    <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="/bower_components/braintree-angular/dist/braintree-angular.js"></script>
     <script src="/app.js"></script>
     <script src="/search/search.js"></script>
     <script src="/product/product.js"></script>
@@ -90,5 +100,6 @@
     <script src="/primarynav/primarynav.ctrl.js"></script>
     <script src="/components/gbc/gbc-service.js"></script>
     <script src="/components/filters.js"></script> 
+    <script src="/cart/checkout.ctrl.js"></script> 
 </body>
 </html>

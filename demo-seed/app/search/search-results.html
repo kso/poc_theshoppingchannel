@@ -97,7 +97,6 @@
           <div class="results-title">
             <h2><small>{{search.resultSummary}}</small></h2>
           </div>
-          
         </div>
 
         <div class="col-xs-5">
@@ -120,15 +119,17 @@
       </div>
     </div>
     <div class="row">
-
       <div class="product-container col-md-3 col-xs-6 clearfix" ng-repeat="result in search.resultList">
         <div class="product-thumb-container" style="position:relative">
           <a href="/product/{{result.allMeta.ID}}" class="product-thumb">
             <img class="img-responsive" ng-src="{{result.allMeta.wideImage}}">
-            <h5>{{result.allMeta.Ctitle}}</h5>
+            <h5>{{result.allMeta.Ctitle}} - {{result.allMeta.price | currency}}</h5>
           </a>
           <div class="hover-btn" ng-click="search.inspect(result.allMeta.ID)">
             <i class="glyphicon glyphicon-eye-open"></i>
+          </div>
+          <div class="product-add-to-cart">
+            <ngcart-addtocart id="{{result.allMeta.ID}}" quantity="1" quantity-max="9" name="{{result.allMeta.Ctitle}}" price="{{result.allMeta.price}}" template-url="/cart/addtocart.tpl.html" data="product">Add to Cart</ngcart-addtocart>
           </div>
         </div>
       </div>
