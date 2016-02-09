@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('groupByDemo.util.settings', [])
-	.factory('settingsService', function(){
-		var settings = {};
+	.service('settingsService', function(){
+
+		var settings = this;
 
 		settings.search = {
 			clientKey : "269466c6-e7b6-4439-a175-c6d5faa069dd",
@@ -62,6 +63,10 @@ angular.module('groupByDemo.util.settings', [])
 				]
 			},	
 		];
+		settings.Options = {
+			Personalization : "on"
+		};
+
 
 		settings['Color Mapping'] = {
 			"Red" : "#F00",
