@@ -128,10 +128,12 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 			var searchQuery = view_model.query;
 
+			// Automatic Price refiment
 			var overPattern = /over\s*.[0-9]*/i;
 			var underPattern = /under\s*.[0-9]*/i;
 			var numberPattern = /[0-9]+/;
 
+			// Plates under $15
 			if (underPattern.test(searchQuery)){
 				var refineIndex = searchQuery.search(underPattern);
 				var refineValueIndex = searchQuery.search(numberPattern);
@@ -144,6 +146,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				priceRefinement.low = 0;
 				priceRefinement.high = parseInt(refineValue);
 				refinement_parameter = refinement_parameter.concat(priceRefinement);
+			// Tables over $1500
 			} else if (overPattern.test(searchQuery)){
 				var refineIndex = searchQuery.search(overPattern);
 				var refineValueIndex = searchQuery.search(numberPattern);
@@ -156,6 +159,29 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				priceRefinement.low = parseInt(refineValue);
 				priceRefinement.high = 99999;
 				refinement_parameter = refinement_parameter.concat(priceRefinement);
+			}
+
+			// Cheap, lowprice, low price - Sort on price
+			var cheapTerms = ['cheap', 'low price', 'lowprice'];
+			for(var ii = 0; ii < cheapTerms.length; ii++){
+				if (searchQuery.toLowerCase().indexOf(cheapTerms[ii]) > -1) {
+					searchQuery = searchQuery.replace(cheapTerms[ii], '').trim();
+
+					sortParam = {};
+					sortParam.field = 'price';
+					sortParam.order = 'Ascending';
+				}
+			}
+			// Expensive - Sort on price
+			var expensiveTerms = ['expensive', 'overpriced', 'pricey'];
+			for(var ii = 0; ii < expensiveTerms.length; ii++){
+				if (searchQuery.toLowerCase().indexOf(expensiveTerms[ii]) > -1) {
+					searchQuery = searchQuery.replace(expensiveTerms[ii], '').trim();
+
+					sortParam = {};
+					sortParam.field = 'price';
+					sortParam.order = 'Descending';
+				}
 			}
 
 			var parameters = {
