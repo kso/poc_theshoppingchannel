@@ -149,7 +149,6 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				priceRefinement.high = parseInt(refineValue);
 				refinement_parameter = refinement_parameter.concat(priceRefinement);
 
-				view_model.refine();
 			// Tables over $1500
 			} else if (overPattern.test(searchQuery)){
 				var refineIndex = searchQuery.search(overPattern);
@@ -164,7 +163,6 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				priceRefinement.high = 99999;
 				refinement_parameter = refinement_parameter.concat(priceRefinement);
 
-				//view_model.refine("price", "Range", );
 			}
 
 			// Cheap, lowprice, low price - Sort on price
@@ -229,7 +227,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			});
 		};
 
-		view_model.refine = function(nav_data_name, ref_selected, type, reload_search) {
+		view_model.refine = function(nav_data_name, ref_selected, type) {
 
 			var refinement = {};
 			refinement.type = type;
@@ -259,9 +257,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 			navModel.selected.push( refinement ); 
 
-			if(reload_search){
-				view_model.search();
-			}
+			view_model.search();
 		};
 
 		view_model.unrefine = function(nav_data_name, ref_unselected) {
