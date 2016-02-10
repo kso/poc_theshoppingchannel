@@ -1,8 +1,10 @@
 'use strict';
 
 angular.module("groupByDemo.search",['ui.bootstrap'])
-	.controller('searchCtrl', ['$scope', '$uibModal', 'apiService', '$stateParams', '$filter', 'settingsService', 'personalizationService',
-			function ($scope, $uibModal, apiService, $stateParams, $filter, settingsService, personalizationService) {
+	.controller('searchCtrl', ['$scope', '$uibModal', 'apiService', '$stateParams', '$filter', 
+			'settingsService', 'personalizationService', 'semanticSearchService',
+			function ($scope, $uibModal, apiService, $stateParams, $filter, 
+				settingsService, personalizationService, semanticSearchService) {
 
 		$scope.currentPage = 1;
 
@@ -108,7 +110,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 		};
 
-		view_model.search = function () {
+		view_model.getSort = function(queryString) {
 
 			var sortParam = {};
 
@@ -123,86 +125,65 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				sortParam.field = '_relevance';	
 			}
 
+			sortParam = semanticSearchService.interpretSort(queryString, sortParam );
+
+			return sortParam;
+
+		};
+
+		view_model.interpretSearch = function( queryString ){
+
+			var sortInterpretation = view_model.getSort(queryString);
+			var filterInterpretation = semanticSearchService.interpretFilter( sortInterpretation.query );
+
+			var interpretation = {};
+			interpretation.sort = sortInterpretation.sort;
+			interpretation.query = filterInterpretation.query;
+
+			interpretation.refinements = filterInterpretation.refinements;
+
+			return interpretation;
+
+		};
+
+		view_model.personalize = function(parameters){
+
+			console.log("personalization is : " + settingsService.Options.Personalization);
+
+			if(settingsService.Options.Personalization !== "on")
+				return parameters;
+
+			var query_time_bias = personalizationService.applyProfile();
+			if(query_time_bias === null)
+				return parameters;
+
+			parameters.biasing = query_time_bias;
+			return parameters;
+		};
+
+		view_model.search = function () {
+
 			var refinement_parameter = [];
 			angular.forEach(view_model.navigation, function(nav){
 				refinement_parameter = refinement_parameter.concat(nav.selected);
 			});
 
-			var searchQuery = view_model.query;
-
-			// Automatic Price refiment
-			var overPattern = / over\s*.[0-9]*/i;
-			var underPattern = / under\s*.[0-9]*/i;
-			var numberPattern = /[0-9]+/;
-
-			// Plates under $15
-			if (underPattern.test(searchQuery)){
-				var refineIndex = searchQuery.search(underPattern);
-				var refineValueIndex = searchQuery.search(numberPattern);
-				var refineValue = searchQuery.substring(refineValueIndex);
-				searchQuery = searchQuery.substring(0,refineIndex).trim();
-
-				var priceRefinement = {};
-				priceRefinement.type = "Range";
-				priceRefinement.navigationName = "price";
-				priceRefinement.low = 0;
-				priceRefinement.high = parseInt(refineValue);
-				refinement_parameter = refinement_parameter.concat(priceRefinement);
-
-			// Tables over $1500
-			} else if (overPattern.test(searchQuery)){
-				var refineIndex = searchQuery.search(overPattern);
-				var refineValueIndex = searchQuery.search(numberPattern);
-				var refineValue = searchQuery.substring(refineValueIndex);
-				searchQuery = searchQuery.substring(0,refineIndex).trim();
-
-				var priceRefinement = {};
-				priceRefinement.type = "Range";
-				priceRefinement.navigationName = "price";
-				priceRefinement.low = parseInt(refineValue);
-				priceRefinement.high = 99999;
-				refinement_parameter = refinement_parameter.concat(priceRefinement);
-
-			}
-
-			// Cheap, lowprice, low price - Sort on price
-			var cheapTerms = ['cheap', 'low price', 'lowprice'];
-			for(var ii = 0; ii < cheapTerms.length; ii++){
-				if (searchQuery.toLowerCase().indexOf(cheapTerms[ii]) > -1) {
-					searchQuery = searchQuery.replace(cheapTerms[ii], '').trim();
-
-					sortParam = {};
-					sortParam.field = 'price';
-					sortParam.order = 'Ascending';
-				}
-			}
-			// Expensive - Sort on price
-			var expensiveTerms = ['expensive', 'overpriced', 'pricey'];
-			for(var ii = 0; ii < expensiveTerms.length; ii++){
-				if (searchQuery.toLowerCase().indexOf(expensiveTerms[ii]) > -1) {
-					searchQuery = searchQuery.replace(expensiveTerms[ii], '').trim();
-
-					sortParam = {};
-					sortParam.field = 'price';
-					sortParam.order = 'Descending';
-				}
-			}
+			//semantic translation of the search
+			var interpretation = view_model.interpretSearch(view_model.query);
+			var sort = interpretation.sort;
+			var query = interpretation.query; 
+			refinement_parameter = refinement_parameter.concat(interpretation.refinements);
 
 			var parameters = {
 				skip : view_model.getPageSize() * ($scope.currentPage - 1),
 				pageSize : view_model.getPageSize(),
-				query : searchQuery,
+				query : query,
 				refinements : refinement_parameter,
-				sort: sortParam,
+				sort: sort,
 				fields: settingsService.search.fields
 			};
 
-			console.log("personalization is : " + settingsService.Options.Personalization);
-			if(settingsService.Options.Personalization === "on"){
-				var query_time_bias = personalizationService.applyProfile();
-				if(query_time_bias != null)
-					parameters.biasing = query_time_bias;
-			}
+			parameters = view_model.personalize(parameters);
 
   		  	console.time("search");
 		  	apiService.search(parameters).success(function(data){
