@@ -3,6 +3,7 @@
 <div class="row">
     <div ng-if="search.query" class="section-title">Search Results for: {{search.query}}</div>
     <div ng-if="!search.query" class="section-title">Browse All Products</div>
+    <div class="section-recommendations" ng-include="'/recommendations/search.tpl.html'" ng-controller="recommendationsCtrl as recommendations"></div>
 </div>
 <div class="row">
   <div ng-show="search.totalRecordCount > 0"
