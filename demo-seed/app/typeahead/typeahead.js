@@ -18,7 +18,7 @@ angular.module('groupByDemo.typeahead', [])
       var arrayResponse = [];
       
       // Search suggestions
-      if (response.data.result){
+      if (response.data.result && response.data.result.searchTerms){
         for (var ii=response.data.result.searchTerms.length;ii--;){
             var item = response.data.result.searchTerms[ii];
             item.url = '/q/' + item.value.replace(' ','+');
