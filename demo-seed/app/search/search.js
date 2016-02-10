@@ -126,10 +126,42 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				refinement_parameter = refinement_parameter.concat(nav.selected);
 			});
 
+			var searchQuery = view_model.query;
+
+			var overPattern = /over\s*.[0-9]*/i;
+			var underPattern = /under\s*.[0-9]*/i;
+			var numberPattern = /[0-9]+/;
+
+			if (underPattern.test(searchQuery)){
+				var refineIndex = searchQuery.search(underPattern);
+				var refineValueIndex = searchQuery.search(numberPattern);
+				var refineValue = searchQuery.substring(refineValueIndex);
+				searchQuery = searchQuery.substring(0,refineIndex).trim();
+
+				var priceRefinement = {};
+				priceRefinement.type = "Range";
+				priceRefinement.navigationName = "price";
+				priceRefinement.low = 0;
+				priceRefinement.high = parseInt(refineValue);
+				refinement_parameter = refinement_parameter.concat(priceRefinement);
+			} else if (overPattern.test(searchQuery)){
+				var refineIndex = searchQuery.search(overPattern);
+				var refineValueIndex = searchQuery.search(numberPattern);
+				var refineValue = searchQuery.substring(refineValueIndex);
+				searchQuery = searchQuery.substring(0,refineIndex).trim();
+
+				var priceRefinement = {};
+				priceRefinement.type = "Range";
+				priceRefinement.navigationName = "price";
+				priceRefinement.low = parseInt(refineValue);
+				priceRefinement.high = 99999;
+				refinement_parameter = refinement_parameter.concat(priceRefinement);
+			}
+
 			var parameters = {
 				skip : view_model.getPageSize() * ($scope.currentPage - 1),
 				pageSize : view_model.getPageSize(),
-				query : view_model.query,
+				query : searchQuery,
 				refinements : refinement_parameter,
 				sort: sortParam,
 				fields: settingsService.search.fields
