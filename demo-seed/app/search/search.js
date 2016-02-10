@@ -82,6 +82,8 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 					hi_bucket = Math.max(ref.high, hi_bucket);
 				});
 
+				console.log(lo_bucket + " " + hi_bucket);
+
 				model.slider = {
 					min : currentVal.length > 0 ? currentVal[0].low : lo_bucket,  
 					max : currentVal.length > 0 ? currentVal[0].high : hi_bucket,
@@ -146,6 +148,8 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				priceRefinement.low = 0;
 				priceRefinement.high = parseInt(refineValue);
 				refinement_parameter = refinement_parameter.concat(priceRefinement);
+
+				view_model.refine();
 			// Tables over $1500
 			} else if (overPattern.test(searchQuery)){
 				var refineIndex = searchQuery.search(overPattern);
@@ -159,6 +163,8 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				priceRefinement.low = parseInt(refineValue);
 				priceRefinement.high = 99999;
 				refinement_parameter = refinement_parameter.concat(priceRefinement);
+
+				//view_model.refine("price", "Range", );
 			}
 
 			// Cheap, lowprice, low price - Sort on price
@@ -195,12 +201,15 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 			console.log("personalization is : " + settingsService.Options.Personalization);
 			if(settingsService.Options.Personalization === "on"){
-				parameters.biasing = personalizationService.applyProfile();
+				var query_time_bias = personalizationService.applyProfile();
+				if(query_time_bias != null)
+					parameters.biasing = query_time_bias;
 			}
 
   		  	console.time("search");
 		  	apiService.search(parameters).success(function(data){
 		  		console.timeEnd("search");
+		  		console.log(data);
 				view_model.totalRecordCount = data.totalRecordCount;
 				view_model.resultList = data.records;
 				view_model.navigation = view_model.updateNavModel(view_model.navigation, data.availableNavigation );
@@ -220,7 +229,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			});
 		};
 
-		view_model.refine = function(nav_data_name, ref_selected, type) {
+		view_model.refine = function(nav_data_name, ref_selected, type, reload_search) {
 
 			var refinement = {};
 			refinement.type = type;
@@ -249,7 +258,10 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			}
 
 			navModel.selected.push( refinement ); 
-			view_model.search();
+
+			if(reload_search){
+				view_model.search();
+			}
 		};
 
 		view_model.unrefine = function(nav_data_name, ref_unselected) {

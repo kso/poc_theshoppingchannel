@@ -28,6 +28,10 @@ angular.module("groupByDemo.gbc.personalization",['ngCookies'])
 
 			var max_strength = 0;
 			var affinityProfile = $cookies.getObject("profile");
+
+			if(affinityProfile === undefined)
+				return null;
+
 			angular.forEach(affinityProfile, function(affinity, name){
 				angular.forEach(affinity, function(strength, content){
 					profile.biases.push( { 
