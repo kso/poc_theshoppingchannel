@@ -31,8 +31,9 @@ angular.module('groupByDemo.gbc', [])
 				query : term,
 				collection : settingsService.search.collection, 
 				area : settingsService.search.area, 
-				searchItems : 10,
+				searchItems : 5,
 				navigationItems : 4,
+				productItems: 3
 			};
 
 			return $http.get( url, { params: parameters } );

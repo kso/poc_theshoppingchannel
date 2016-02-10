@@ -1,0 +1,38 @@
+<ul class="dropdown-menu saytDropdown" ng-show="isOpen() && !moveInProgress" ng-style="{top: position().top+'px', left: position().left+'px'}" role="listbox" aria-hidden="{{!isOpen()}}">
+    <li ng-repeat="match in matches track by $index" ng-class="{active: isActive($index) }" ng-mouseenter="selectActive($index)" role="option" id="{{::match.id}}">
+
+		<ul class="saytList" role="listbox">
+		    <li class="saytItem" ng-repeat="m in match.model track by $index" ng-mouseenter="selectActive($index)" role="option">
+
+				<div ng-if="m.type == 'navigations' && $index == 0">
+					<div ng-if="m.field == 'CBrand'">
+						<p class="message saytHeader">Brand</p>
+					</div>
+				</div>
+				<div ng-if="m.type == 'products' && $index == 0">
+					<p class="message saytHeader">Top Matches</p>
+				</div>
+
+				<div ng-if="m.type == 'products'">
+					<div class="col-md-4 menu-no-padding">
+						<a href="{{m.url}}">
+							<img class="img-responsive menu-preview-image saytImage" ng-src="{{m.image}}" src="{{m.image}}"/>
+						</a>
+						<a class="saytLink saytProductTitle" href="{{m.url}}"
+						   tabindex="-1"
+						   ng-bind-html="m.value | uibTypeaheadHighlight:query"
+						   ng-attr-title="{{m.value}}"></a>
+					 </div>
+				</div>
+				<div ng-if="m.type != 'products'">
+					<a class="saytLink" href="{{m.url}}"
+					   tabindex="-1"
+					   ng-bind-html="m.value | uibTypeaheadHighlight:query"
+					   ng-attr-title="{{m.value}}"></a>
+				</div>
+
+
+		    </li>
+		</ul>
+    </li>
+</ul>
