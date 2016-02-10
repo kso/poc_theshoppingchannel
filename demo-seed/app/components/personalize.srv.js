@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module("groupByDemo.personalization",['ngCookies'])
+angular.module("groupByDemo.gbc.personalization",['ngCookies'])
 	.service('personalizationService', ['$cookies', function ($cookies) {
 
 		var service = this; 

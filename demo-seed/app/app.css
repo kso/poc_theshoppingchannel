@@ -17,6 +17,12 @@ body.modal-open {
 	font-size: 26px;
 	margin-top: 0px;
 	padding: 15px;
+	float: left;
+}
+
+.section-recommendations {
+	overflow: auto;
+	text-align: center;
 }
 
 .navbar-brand {

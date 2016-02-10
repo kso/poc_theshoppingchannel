@@ -1,0 +1,43 @@
+
+.recommendations-set{
+	padding-top: 12px;
+	font-size: 12px;
+	font-weight: bold;
+	font-family: Arial;
+	display: inline-block;
+}
+
+.recommendations-label{
+	padding: 8px;
+	float:left;
+}
+
+.recommendation {
+	float:left;
+	padding: 0 8px 0 8px;
+}
+
+.recommendation > a {
+	padding: 8px;
+	margin: 1px;
+	border: solid #ccc 1px;
+	line-height: 250%;
+	color: #333;
+	background: #fff;
+	-webkit-transition: all 0.2s ease;
+	-moz-transition: all 0.2s ease;
+	-o-transition: all 0.2s ease;
+	transition: all 0.2s ease;
+}
+
+.recommendation:hover > a {
+    cursor: pointer;
+    text-decoration: none;
+    border: solid transparent 1px;
+    color: #fff;
+    background: #333;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
