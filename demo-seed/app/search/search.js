@@ -131,8 +131,8 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			var searchQuery = view_model.query;
 
 			// Automatic Price refiment
-			var overPattern = /over\s*.[0-9]*/i;
-			var underPattern = /under\s*.[0-9]*/i;
+			var overPattern = / over\s*.[0-9]*/i;
+			var underPattern = / under\s*.[0-9]*/i;
 			var numberPattern = /[0-9]+/;
 
 			// Plates under $15
