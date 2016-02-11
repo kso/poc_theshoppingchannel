@@ -17,18 +17,13 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 		view_model.resultSummary =  "";
 		view_model.navigation = [];
-		view_model.personalize = settingsService.Options.Personalization;
+		view_model.personalizationEnabled = settingsService.Personalization.Status;
 
-	    $scope.sortFields = [
-	        {'display': 'Relevancy', 			'field': '_relevance', 	'order' : 'Descending'},
-	        {'display': 'Price - Low to High', 	'field': 'price', 		'order' : 'Ascending'},
-	        {'display': 'Price - High to Low', 	'field': 'price', 		'order' : 'Descending'},
-	        {'display': 'Rating', 				'field': 'Qrating', 	'order' : 'Descending'}
-	    ];
+	    $scope.sortFields = settingsService.Sorting;
 
 		$scope.$watch( function( scope ) {
-				var hasChanged = settingsService.Options.Personalization !== view_model.personalize;
-				var isValid = settingsService.Options.Personalization === "on" || settingsService.Options.Personalization === "off";
+				var hasChanged = settingsService.Personalization.Status !== view_model.personalizationEnabled;
+				var isValid = settingsService.Personalization.Status === "on" || settingsService.Personalization.Status === "off";
 				return hasChanged && isValid;
 			},
 			function(newValue, oldValue) {
@@ -36,7 +31,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				if(oldValue)
 					return;
 
-				view_model.personalize = settingsService.Options.Personalization;
+				view_model.personalizationEnabled = settingsService.Personalization.Status;
 				view_model.search();
 
 			});
@@ -83,8 +78,6 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 					lo_bucket = Math.min(ref.low, lo_bucket);
 					hi_bucket = Math.max(ref.high, hi_bucket);
 				});
-
-				console.log(lo_bucket + " " + hi_bucket);
 
 				model.slider = {
 					min : currentVal.length > 0 ? currentVal[0].low : lo_bucket,  
@@ -148,9 +141,9 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 		view_model.personalize = function(parameters){
 
-			console.log("personalization is : " + settingsService.Options.Personalization);
+			console.log("personalization is : " + settingsService.Personalization.Status);
 
-			if(settingsService.Options.Personalization !== "on")
+			if(settingsService.Personalization.Status !== "on")
 				return parameters;
 
 			var query_time_bias = personalizationService.applyProfile();
@@ -195,7 +188,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				view_model.selectedNavigation = data.selectedNavigation;
 
 				view_model.template = undefined;
-				if(data.template.name !== 'default') {
+				if("template" in data && data.template.name !== 'default') {
 					view_model.template = data.template;
 					console.log("Loading template:" + data.template.name);
 				}
@@ -232,7 +225,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 					break;
 			}
 
-			if(nav_data_name === "CBrand"){
+			if(settingsService.Personalization.Fields.indexOf[nav_data_name] !== 1){
 				personalizationService.recordEvent( nav_data_name, ref_selected.value);
 			}
 

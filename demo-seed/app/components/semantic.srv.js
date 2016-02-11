@@ -13,7 +13,7 @@ angular.module("groupByDemo.gbc.semantic",[])
 			//	- popularity
 			//	- new/old
 
-			return service.priceOrderPattern(searchTerm);
+			return service.priceOrderPattern(searchTerm, sortParam);
 		};
 
 		//converts a search query into query + refinement
@@ -23,7 +23,7 @@ angular.module("groupByDemo.gbc.semantic",[])
 			//	- category/taxonomy match filter
 			return service.priceOverUnderPattern(searchQuery);
 
-		}
+		};
 
 		service.priceOrderPattern = function( searchQuery, sortParam ){
 

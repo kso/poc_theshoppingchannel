@@ -63,10 +63,16 @@ angular.module('groupByDemo.util.settings', [])
 				]
 			},	
 		];
-		settings.Options = {
-			Personalization : "on"
+		settings.Personalization = {
+			Status : "on"
 		};
 
+		settings.Sorting = [
+	        {'display': 'Relevancy', 			'field': '_relevance', 	'order' : 'Descending'},
+	        {'display': 'Price - Low to High', 	'field': 'price', 		'order' : 'Ascending'},
+	        {'display': 'Price - High to Low', 	'field': 'price', 		'order' : 'Descending'},
+	        {'display': 'Rating', 				'field': 'Qrating', 	'order' : 'Descending'}
+	    ];
 
 		settings['Color Mapping'] = {
 			"Red" : "#F00",
