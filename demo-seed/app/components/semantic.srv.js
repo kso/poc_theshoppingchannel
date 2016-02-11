@@ -69,7 +69,7 @@ angular.module("groupByDemo.gbc.semantic",[])
 			if(!under && !over)
 				return { refinements : refinement_parameter, query : searchQuery };
 
-			var refineIndex = searchQuery.search(underPattern);
+			var refineIndex = searchQuery.search(under ? underPattern: overPattern);
 			var refineValueIndex = searchQuery.search(numberPattern);
 			var refineValue = searchQuery.substring(refineValueIndex);
 			searchQuery = searchQuery.substring(0,refineIndex).trim();
