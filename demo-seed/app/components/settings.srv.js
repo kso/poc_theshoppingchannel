@@ -64,7 +64,8 @@ angular.module('groupByDemo.util.settings', [])
 			},	
 		];
 		settings.Personalization = {
-			Status : "on"
+			Status : "on",
+			Fields : ["CBrand"]
 		};
 
 		settings.Sorting = [
