@@ -6,6 +6,7 @@ angular.module("groupByDemo", [
 	'groupByDemo.gbc',
 	'groupByDemo.gbc.personalization',
 	'groupByDemo.gbc.recommendation',
+	'groupByDemo.gbc.semantic',
 	'groupByDemo.product',
 	'groupByDemo.typeahead',
 	'groupByDemo.inspect',
@@ -16,7 +17,6 @@ angular.module("groupByDemo", [
 	'groupByDemo.primarynav',
 	'groupByDemo.recommendations',
 	'groupByDemo.cart',
-
 	'jsonFormatter',
 	'as.sortable',
 	'ui.router',

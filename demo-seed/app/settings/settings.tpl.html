@@ -14,7 +14,7 @@
                 <div class="col-md-12">
                 <ul class="settings-card-list" data-as-sortable="settings.dragControlListeners" data-ng-model="section">
                    <li class="settings-card as-sortable-item" data-ng-repeat="(key, value) in section" data-as-sortable-item>
-                      <div ng-if="key ==='Personalization'" class="form-group row as-sortable-item-handle" data-as-sortable-item-handle>
+                      <div ng-if="name === 'Personalization' && key ==='Status'" class="form-group row as-sortable-item-handle" data-as-sortable-item-handle>
                             <div class="col-md-3 card-key"><span>{{key}}</span></div> 
                             <div class="col-md-4 card-value">
                                 <label>
@@ -29,7 +29,7 @@
                                 Off</label>                                       
                             </div> 
                       </div>
-                      <div ng-if="key !=='Personalization'" class="form-group row as-sortable-item-handle" data-as-sortable-item-handle>
+                      <div ng-if="key !=='Status' && name !== 'Personalization'" class="form-group row as-sortable-item-handle" data-as-sortable-item-handle>
                             <div class="col-md-3 card-key"><span>{{key}}</span></div> 
                             <div class="col-md-9 card-value">
                                 <input class="form-control" name="value" type="value" 
