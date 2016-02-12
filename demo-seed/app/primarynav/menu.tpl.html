@@ -1,27 +1,28 @@
 
 	<ul class="row dropdown-menu primary-nav-menu" ng-class="($index < primarynav.navs.length/2)? 'pull-left': 'pull-right'">
 		<div class="col-md-8 menu-no-padding">
-			<li class="col-md-6 category-menu" role="menuitem" ng-repeat="category in nav.items">
+			<li class="col-md-6 category-menu" role="menuitem" 
+				ng-repeat="category in nav.items"
+				ng-mouseenter="primarynav.updateImagesForCategory(category)">
 				<a href="{{category.path}}"> {{category.name}} </a>
 				<ul>
-					<li class="sub-category-menu" role="menuitem" ng-repeat="subcat in category.items">
+					<li class="sub-category-menu" role="menuitem" 
+						ng-repeat="subcat in category.items"
+						ng-mouseenter="primarynav.updateImagesForCategory(subcat)">
 						<a href="{{subcat.path}}"> {{subcat.name}} </a>
 					</li>
 				</ul>
 			</li>
 		</div>
 		<div class="col-md-4 menu-no-padding">
-			<div class="col-md-6 menu-no-padding">
-				<img class="img-responsive menu-preview-image" src="http://images.crateandbarrel.com/is/image/Crate/RouletteWhiteCup8ozSHF15/$api$&wid=100&hei=75/1510060910/roulette-cup.jpg">
-				<img class="img-responsive menu-preview-image" src="http://images.crateandbarrel.com/is/image/Crate/MarinOrangeBowl6inSHF15/$api$&wid=100&hei=75/1510071300/marin-orange-bowl.jpg">
-				<img class="img-responsive menu-preview-image" src="http://images.crateandbarrel.com/is/image/Crate/Vintage40WattFlmntBlbS14/$api$&wid=100&hei=75/1312121624/vintage-40w-filament-light-bulb.jpg">
-				<img class="img-responsive menu-preview-image" src="http://images.crateandbarrel.com/is/image/Crate/KitchnaidDiamondVortex5SpdBlndrAquaSkyF15/$api$&wid=100&hei=75/1508031401/kitchenaid-5-speed-aqua-sky-diamond-vortex-blender.jpg">
-			</div>
-			<div class="col-md-6 menu-no-padding">
-				<img class="img-responsive menu-preview-image" src="http://images.crateandbarrel.com/is/image/Crate/AdriftBowlS15/$api$&wid=100&hei=75/1411031500/adrift-bowl.jpg">
-				<img class="img-responsive menu-preview-image" src="http://images.crateandbarrel.com/is/image/Crate/SilverMorningS14/$api$&wid=100&hei=75/1508261310/silver-morning-print.jpg">
-				<img class="img-responsive menu-preview-image" src="http://images.crateandbarrel.com/is/image/Crate/UtilityTrayWhiteCSF14/$api$&wid=100&hei=75/1403241300/white-utility-tray.jpg">
-				<img class="img-responsive menu-preview-image" src="http://images.crateandbarrel.com/is/image/Crate/RoundCkPnsS38in9in10AV2F15/$api$&wid=100&hei=75/1504301010/6-17-nesting-cake-pans-set-of-three.jpg">
+
+			<div class="col-md-12 menu-no-padding">
+				<div class="menu-preview-image-container" ng-repeat="preview in primarynav.preview track by preview.id">
+					<img 	class="animate-show img-responsive menu-preview-image" 
+							ng-src="{{preview.product.record ? preview.product.record.allMeta.image_url : 'http://mineblocks.com/1/wiki/images/5/59/Empty.png' }}" image-change alt="" />
+					<img 	class="animate-show img-responsive menu-preview-image previous-image" 
+							ng-src="{{preview.product.oldrecord ? preview.product.oldrecord.allMeta.image_url : 'http://mineblocks.com/1/wiki/images/5/59/Empty.png' }}" image-change alt="" />
+				</div>
 			</div>
 		</div>
 	</ul>

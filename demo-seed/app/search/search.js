@@ -225,7 +225,8 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 					break;
 			}
 
-			if(settingsService.Personalization.Fields.indexOf(nav_data_name) !== 1){
+			if(settingsService.Personalization.Fields.indexOf(nav_data_name) !== -1){
+				console.log(settingsService.Personalization.Fields.indexOf(nav_data_name));
 				personalizationService.recordEvent( nav_data_name, ref_selected.value);
 			}
 

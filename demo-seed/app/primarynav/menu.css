@@ -65,5 +65,29 @@
 }
 
 .menu-preview-image {
-	padding-top:5px;
+	float:left;
+	padding: 5px 5px 0 0;
+	max-width:50%;
+}
+
+.menu-preview-image-container {
+	position: relative;
+}
+
+.previous-image {
+  	position: absolute;
+  	z-index: -1; 
+  	top: 0;
+}
+
+.animate-show.ng-hide-fade{
+	opacity: 0;
+	transition: 0s all linear;
+	-webkit-transition: 0s all linear;
+}
+     
+.animate-show.ng-show{
+	opacity: 1;
+	transition: 1s all linear;
+	-webkit-transition: 1s all linear;
 }

@@ -120,7 +120,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="product-container col-md-3 col-xs-6 clearfix" ng-repeat="result in search.resultList">
+      <div class="product-container col-md-3 col-xs-6 clearfix" ng-repeat="result in search.resultList track by result._id">
         <div class="product-thumb-container" style="position:relative">
           <a href="/product/{{result.allMeta.ID}}" class="product-thumb">
             <img class="img-responsive" ng-src="{{result.allMeta.wideImage}}">

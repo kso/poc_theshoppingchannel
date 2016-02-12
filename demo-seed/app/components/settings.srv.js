@@ -10,15 +10,20 @@ angular.module('groupByDemo.util.settings', [])
 			collection : "productsonsale",
 			area : "Test",
 			pageSize : 50,
-			fields : ["ID", "wideImage", "Ctitle", "price" , "on_sale"]
+			fields : ["ID", "wideImage", "Ctitle", "price" , "on_sale"],
+			saytURL : "http://crateandbarreldemo.groupbycloud.com",
+			saytKeywords : 5,
+			saytNavigation : 4,
+			saytProducts : 3
 		};
 
 		settings['Nav Menu Defaults'] = {
 			menuNavigationName : "QtopRatedType",
 			subMenuNavigationName : "Qtype",
-			menuSize : 5
-
+			menuSize : 5,
+			numberOfPreviewImages : 8
 		};
+
 		settings['Nav Menu'] = [
 			{ displayName: "Dining & Entertaining", submenu: 
 				[

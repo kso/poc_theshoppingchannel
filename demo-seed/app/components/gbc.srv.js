@@ -7,7 +7,7 @@ angular.module('groupByDemo.gbc', [])
 
 		gbcAPI.search = function(searchParametrs) {
 			
-			//defautl values that are used if not set in searchParameters
+			//default values that are used if not set in searchParameters
 			var dataObj = {
 				fields: [ "*" ],
 				pageSize : settingsService.search.pageSize,
@@ -23,17 +23,35 @@ angular.module('groupByDemo.gbc', [])
 
 		};
 
+		gbcAPI.saytProduct = function(searchParametrs) {
+
+			//default values that are used if not set in searchParameters
+			var url = settingsService.search.saytURL + "/api/v1/sayt/products?";
+			var parameters = {
+				query : '',
+				collection : settingsService.search.collection, 
+				area : settingsService.search.area, 
+				productItems: settingsService['Nav Menu Defaults'].numberOfPreviewImages
+			};
+
+			//merge the passed in searchParameters		
+			for (var key in searchParametrs) { parameters[key] = searchParametrs[key]; }		
+
+			return $http.get( url, { params: parameters } );
+
+		};
+
 		gbcAPI.sayt = function(term) {
 
-			var base_url = "http://crateandbarreldemo.groupbycloud.com";
+			var base_url = settingsService.search.saytURL;
 			var url = base_url + "/api/v1/sayt/search?";
 			var parameters = {
 				query : term,
 				collection : settingsService.search.collection, 
 				area : settingsService.search.area, 
-				searchItems : 5,
-				navigationItems : 4,
-				productItems: 3
+				searchItems : settingsService.search.saytKeywords,
+				navigationItems : settingsService.search.saytNavigation,
+				productItems: settingsService.search.saytProducts
 			};
 
 			return $http.get( url, { params: parameters } );
