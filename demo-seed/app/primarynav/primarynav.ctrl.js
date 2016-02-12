@@ -25,10 +25,21 @@ angular.module('groupByDemo.primarynav', [])
 		for (var i = 0; i < n; i++)
 		    vm.preview.push({ id : i , product : {} });
 
-		vm.updateImagesForCategory = function( category ){
+		vm.updateImagesForCategory = function( category, subCategory ){
+
+
+			var refinementParameter = "";
+			if(category){
+				refinementParameter = refinementParameter + category.field_name + "=" + category.value
+			}
+			if(subCategory){
+				refinementParameter = refinementParameter +
+					(category ? "~" : "") + 
+					subCategory.field_name + "=" + subCategory.value;
+			}
 
 			var parameters = {
-				refinements : category.field_name + "=" + category.name
+				refinements : refinementParameter
 			};
 
 			apiService.saytProduct(parameters).success(function(data){
@@ -58,6 +69,7 @@ angular.module('groupByDemo.primarynav', [])
 			var defaults = settingsService['Nav Menu Defaults'];
 
 			menu.name = nav.displayName ? nav.displayName : nav.value;
+			menu.value  = nav.value ? nav.value : nav.displayName;
 			menu.field_name = nav.navigationName ? nav.navigationName : defaults.menuNavigationName;
 
 			var parameters = {
@@ -86,6 +98,7 @@ angular.module('groupByDemo.primarynav', [])
 				angular.forEach(menu_items, function(item){ 
 					menu.items.push({ 
 						name : item.displayName ? item.displayName : item.value,
+						value : item.value ? item.value : item.displayName,
 						path : "#", //TODO
 						field_name : data.availableNavigation[0].name
 					});
@@ -126,10 +139,9 @@ angular.module('groupByDemo.primarynav', [])
 	            	$timeout(function() {
 		                element.removeClass("ng-hide-fade");
 		                element.addClass("ng-show");
-		            }, 500);
+		            }, 100);
 	            });
 	            attrs.$observe("ngSrc", function () {
-	            	console.log("src change");
 	                element.removeClass("ng-show");
 	                element.addClass("ng-hide-fade");
 	            });

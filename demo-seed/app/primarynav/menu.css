@@ -67,11 +67,12 @@
 .menu-preview-image {
 	float:left;
 	padding: 5px 5px 0 0;
-	max-width:50%;
 }
 
 .menu-preview-image-container {
 	position: relative;
+	float: left;
+	max-width:50%;
 }
 
 .previous-image {
@@ -88,6 +89,6 @@
      
 .animate-show.ng-show{
 	opacity: 1;
-	transition: 1s all linear;
-	-webkit-transition: 1s all linear;
+	transition: 0.1s all linear;
+	-webkit-transition: 0.1s all linear;
 }

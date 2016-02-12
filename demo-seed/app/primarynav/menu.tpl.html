@@ -2,14 +2,14 @@
 	<ul class="row dropdown-menu primary-nav-menu" ng-class="($index < primarynav.navs.length/2)? 'pull-left': 'pull-right'">
 		<div class="col-md-8 menu-no-padding">
 			<li class="col-md-6 category-menu" role="menuitem" 
-				ng-repeat="category in nav.items"
-				ng-mouseenter="primarynav.updateImagesForCategory(category)">
-				<a href="{{category.path}}"> {{category.name}} </a>
+				ng-repeat="category in nav.items">
+				<a href="{{category.path}}"
+					ng-mouseenter="primarynav.updateImagesForCategory(category, null)"> {{category.name}} </a>
 				<ul>
 					<li class="sub-category-menu" role="menuitem" 
-						ng-repeat="subcat in category.items"
-						ng-mouseenter="primarynav.updateImagesForCategory(subcat)">
-						<a href="{{subcat.path}}"> {{subcat.name}} </a>
+						ng-repeat="subcat in category.items">
+						<a 	href="{{subcat.path}}"
+							ng-mouseenter="primarynav.updateImagesForCategory(category, subcat)"> {{subcat.name}} </a>
 					</li>
 				</ul>
 			</li>
@@ -18,10 +18,10 @@
 
 			<div class="col-md-12 menu-no-padding">
 				<div class="menu-preview-image-container" ng-repeat="preview in primarynav.preview track by preview.id">
+					<img 	class="animate-show img-responsive menu-preview-image previous-image" 
+							ng-src="{{preview.product.oldrecord ? preview.product.oldrecord.allMeta.image_url : 'http://mineblocks.com/1/wiki/images/5/59/Empty.png' }}" alt="" />
 					<img 	class="animate-show img-responsive menu-preview-image" 
 							ng-src="{{preview.product.record ? preview.product.record.allMeta.image_url : 'http://mineblocks.com/1/wiki/images/5/59/Empty.png' }}" image-change alt="" />
-					<img 	class="animate-show img-responsive menu-preview-image previous-image" 
-							ng-src="{{preview.product.oldrecord ? preview.product.oldrecord.allMeta.image_url : 'http://mineblocks.com/1/wiki/images/5/59/Empty.png' }}" image-change alt="" />
 				</div>
 			</div>
 		</div>
