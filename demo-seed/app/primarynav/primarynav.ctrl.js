@@ -25,8 +25,18 @@ angular.module('groupByDemo.primarynav', [])
 		for (var i = 0; i < n; i++)
 		    vm.preview.push({ id : i , product : {} });
 
-		vm.updateImagesForCategory = function( category, subCategory ){
 
+		vm.clearPreviewImages = function() {
+			var n = settingsService['Nav Menu Defaults'].numberOfPreviewImages;
+			for (var i = 0; i < n; i++) {
+				delete vm.preview[i].product.record;
+				delete vm.preview[i].product.oldrecord;
+			}
+		};
+
+		vm.updateImagesForCategory = function( category, subCategory, searchTerm ){
+
+			var parameters = {};
 
 			var refinementParameter = "";
 			if(category){
@@ -38,9 +48,13 @@ angular.module('groupByDemo.primarynav', [])
 					subCategory.field_name + "=" + subCategory.value;
 			}
 
-			var parameters = {
-				refinements : refinementParameter
-			};
+			if(refinementParameter.length > 0){
+				parameters.refinements = refinementParameter;
+			}
+
+			if(searchTerm){
+				parameters.query = searchTerm;
+			}
 
 			apiService.saytProduct(parameters).success(function(data){
 
@@ -118,6 +132,7 @@ angular.module('groupByDemo.primarynav', [])
 			var menu = {};
 			menu.name = nav.displayName;
 			menu.items = [];
+			menu.searchTerm = nav.searchTerm;
 
 			vm.navs.push( menu );
 

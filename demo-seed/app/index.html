@@ -63,8 +63,8 @@
           <div uib-dropdown class="menu-bar-nav" 
             ng-repeat="nav in primarynav.navs"
             is-open="nav.menuopen"
-            ng-mouseenter="nav.menuopen = true"
-            ng-mouseleave="nav.menuopen = false">
+            ng-mouseenter="nav.menuopen = true; primarynav.updateImagesForCategory(null, null, nav.searchTerm)"
+            ng-mouseleave="nav.menuopen = false; primarynav.clearPreviewImages()">
             <div uib-dropdown-toggle 
               class="menu-bar-toggle">
                 <span>{{nav.name}}</span>
