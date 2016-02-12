@@ -10,17 +10,22 @@ angular.module('groupByDemo.util.settings', [])
 			collection : "productsonsale",
 			area : "Test",
 			pageSize : 50,
-			fields : ["ID", "wideImage", "Ctitle", "price" , "on_sale"]
+			fields : ["ID", "wideImage", "Ctitle", "price" , "on_sale"],
+			saytURL : "http://crateandbarreldemo.groupbycloud.com",
+			saytKeywords : 5,
+			saytNavigation : 4,
+			saytProducts : 3
 		};
 
 		settings['Nav Menu Defaults'] = {
 			menuNavigationName : "QtopRatedType",
 			subMenuNavigationName : "Qtype",
-			menuSize : 5
-
+			menuSize : 5,
+			numberOfPreviewImages : 8
 		};
+
 		settings['Nav Menu'] = [
-			{ displayName: "Dining & Entertaining", submenu: 
+			{ displayName: "Dining & Entertaining", searchTerm: "dining", submenu: 
 				[
 					{ value: "Dinnerware" },
 					{ value: "Flatware" },
@@ -28,7 +33,7 @@ angular.module('groupByDemo.util.settings', [])
 					{ value: "Serveware" }
 				]
 			},
-			{ displayName: "Kitchen", submenu: 
+			{ displayName: "Kitchen", searchTerm: "Kitchen",  submenu: 
 				[
 					{ value: "Cookware & Bakeware" },
 					{ value: "Cutlery" },
@@ -36,7 +41,7 @@ angular.module('groupByDemo.util.settings', [])
 					{ value: "Kitchen Accessories", displayName: "Accessories" }
 				]
 			},
-			{ displayName: "Decor & Pillows", submenu: 
+			{ displayName: "Decor & Pillows", searchTerm: "decor", submenu: 
 				[
 					{ value: "Pillows & Throws" },
 					{ value: "Candle Holders & Vases" },
@@ -44,18 +49,18 @@ angular.module('groupByDemo.util.settings', [])
 					{ value: "Home Accessories" }
 				]
 			},
-			{ navigationName: "QtopRatedType", 
+			{ navigationName: "QtopRatedType", searchTerm: "lighting",
 				value: "Lighting", 
 				displayName: "Lighting", 
 				menuField: "Qtype",
 			},
-			{ displayName: "Bed & Bath", submenu: 
+			{ displayName: "Bed & Bath", searchTerm: "bedroom", submenu: 
 				[
 					{ value: "Bedding" },
 					{ value: "Bath" },
 				]
 			},
-			{ displayName: "Outdoor", submenu: 
+			{ displayName: "Outdoor", searchTerm: "grill", submenu: 
 				[
 					{ value: "Outdoor Entertaining", displayName: "Entertaining" },
 					{ value: "Outdoor Accessories", displayName: "Accessories" },

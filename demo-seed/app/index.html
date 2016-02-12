@@ -63,8 +63,8 @@
           <div uib-dropdown class="menu-bar-nav" 
             ng-repeat="nav in primarynav.navs"
             is-open="nav.menuopen"
-            ng-mouseenter="nav.menuopen = true"
-            ng-mouseleave="nav.menuopen = false">
+            ng-mouseenter="nav.menuopen = true; primarynav.updateImagesForCategory(null, null, nav.searchTerm)"
+            ng-mouseleave="nav.menuopen = false; primarynav.clearPreviewImages()">
             <div uib-dropdown-toggle 
               class="menu-bar-toggle">
                 <span>{{nav.name}}</span>
@@ -83,6 +83,7 @@
     </div>
 
     <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-animate/angular-animate.js"></script>
     <script src="/bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="/bower_components/angular-route/angular-route.js"></script>

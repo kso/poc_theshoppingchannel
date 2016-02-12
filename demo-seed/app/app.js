@@ -2,6 +2,7 @@
 
 angular.module("groupByDemo", [
 	'ngRoute',
+	'ngAnimate',
 	'groupByDemo.search',
 	'groupByDemo.gbc',
 	'groupByDemo.gbc.personalization',
