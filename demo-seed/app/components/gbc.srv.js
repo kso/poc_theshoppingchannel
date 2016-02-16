@@ -31,13 +31,14 @@ angular.module('groupByDemo.gbc', [])
 				query : '',
 				collection : settingsService.search.collection, 
 				area : settingsService.search.area, 
-				productItems: settingsService['Nav Menu Defaults'].numberOfPreviewImages
+				productItems: settingsService['Nav Menu Defaults'].numberOfPreviewImages,
+				callback : 'JSON_CALLBACK'
 			};
 
 			//merge the passed in searchParameters		
 			for (var key in searchParametrs) { parameters[key] = searchParametrs[key]; }		
 
-			return $http.get( url, { params: parameters } );
+			return $http.jsonp( url, { params: parameters } );
 
 		};
 
@@ -51,10 +52,11 @@ angular.module('groupByDemo.gbc', [])
 				area : settingsService.search.area, 
 				searchItems : settingsService.search.saytKeywords,
 				navigationItems : settingsService.search.saytNavigation,
-				productItems: settingsService.search.saytProducts
+				productItems: settingsService.search.saytProducts,
+				callback : 'JSON_CALLBACK'
 			};
 
-			return $http.get( url, { params: parameters } );
+			return $http.jsonp( url, { params: parameters } );
 
 		};
 
