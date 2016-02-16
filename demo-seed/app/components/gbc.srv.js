@@ -19,7 +19,7 @@ angular.module('groupByDemo.gbc', [])
 			//merge the passed in searchParameters		
 			for (var key in searchParametrs) { dataObj[key] = searchParametrs[key]; }		
   		  
-			return $http.post('/api/v1/search', dataObj);
+			return $http.post('api/v1/search', dataObj);
 
 		};
 
@@ -60,7 +60,7 @@ angular.module('groupByDemo.gbc', [])
 
 		gbcAPI.getCollectionData = function() {
 			var dataObj = { clientKey: settingsService.search.clientKey };
-			return $http.post('/api/v1/collections', dataObj);
+			return $http.post('api/v1/collections', dataObj);
 		};
 
 		gbcAPI.getProduct = function(id) {
@@ -71,7 +71,7 @@ angular.module('groupByDemo.gbc', [])
 				collection : settingsService.search.collection, 
 				area : settingsService.search.area, 
 			};
-			return $http.post('/api/v1/search', dataObj).then(function(response){
+			return $http.post('api/v1/search', dataObj).then(function(response){
 				console.log(response);
 				return response.data.records[0];
 			});

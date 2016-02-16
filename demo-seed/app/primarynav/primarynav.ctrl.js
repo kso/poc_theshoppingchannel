@@ -71,8 +71,6 @@ angular.module('groupByDemo.primarynav', [])
 
 		vm.buildMenuFromSearch = function(nav){
 
-			console.log("building menu for:" + nav.displayName + " " + nav.value);
-
 			var menu = {};
 			var defaults = settingsService['Nav Menu Defaults'];
 
