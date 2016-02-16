@@ -3,19 +3,19 @@
   <head>
     <meta charset="utf-8">
     <title>GroupBy Demo App</title>
-    <base href="/" />
-    <link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="/bower_components/json-formatter/dist/json-formatter.css">
-    <link rel="stylesheet" type="text/css" href="/bower_components/angularjs-slider/dist/rzslider.css">
-    <link rel="stylesheet" type="text/css" href="/bower_components/ng-sortable/dist/ng-sortable.css">
-    <link rel="stylesheet" type="text/css" href="/bower_components/ng-sortable/dist/ng-sortable.style.css">
-    <link rel="stylesheet" type="text/css" href="/app.css">
-    <link rel="stylesheet" type="text/css" href="/settings/settings.css">
-    <link rel="stylesheet" type="text/css" href="/cart/cart.css">
-    <link rel="stylesheet" type="text/css" href="/templates/templates.css">
-    <link rel="stylesheet" type="text/css" href="/templates/homepage/homepage.css">
-    <link rel="stylesheet" type="text/css" href="/primarynav/menu.css">
-    <link rel="stylesheet" type="text/css" href="/recommendations/recommendations.css">
+    <base href="/cb/" />
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/json-formatter/dist/json-formatter.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/angularjs-slider/dist/rzslider.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/ng-sortable/dist/ng-sortable.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/ng-sortable/dist/ng-sortable.style.css">
+    <link rel="stylesheet" type="text/css" href="app.css">
+    <link rel="stylesheet" type="text/css" href="settings/settings.css">
+    <link rel="stylesheet" type="text/css" href="cart/cart.css">
+    <link rel="stylesheet" type="text/css" href="templates/templates.css">
+    <link rel="stylesheet" type="text/css" href="templates/homepage/homepage.css">
+    <link rel="stylesheet" type="text/css" href="primarynav/menu.css">
+    <link rel="stylesheet" type="text/css" href="recommendations/recommendations.css">
   </head>
 
   <body>
@@ -40,7 +40,7 @@
                       ng-model="asyncSelected" 
                       placeholder="Search..." 
                       uib-typeahead="searchSuggestion as searchSuggestion.value for searchSuggestion in typeahead.fetch($viewValue)" 
-                      typeahead-popup-template-url="/typeahead/sayt.tpl.html"
+                      typeahead-popup-template-url="typeahead/sayt.tpl.html"
                       typeahead-focus-first = "false"
                       typeahead-no-results="noResults"
                       typeahead-on-select="typeahead.onSelectItem($item, $model, $label)"
@@ -54,26 +54,23 @@
           </div>
           <div class="navbar-right">
             <a ui-sref="checkout">
-              <ngcart-summary template-url="/cart/summary.tpl.html"></ngcart-summary>
+              <ngcart-summary template-url="cart/summary.tpl.html"></ngcart-summary>
             </a>
           </div>
         </div>
       </div>
       <div class="menu-bar container-fluid" ng-controller="primaryNavCtrl as primarynav">
-          <div uib-dropdown class="menu-bar-nav" 
-            ng-repeat="nav in primarynav.navs"
-            is-open="nav.menuopen"
-            ng-mouseenter="nav.menuopen = true; primarynav.updateImagesForCategory(null, null, nav.searchTerm)"
-            ng-mouseleave="nav.menuopen = false; primarynav.clearPreviewImages()">
+        <div uib-dropdown class="menu-bar-nav" 
+          ng-repeat="nav in primarynav.navs"
+          is-open="nav.menuopen"
+          ng-mouseenter="nav.menuopen = true; primarynav.updateImagesForCategory(null, null, nav.searchTerm)"
+          ng-mouseleave="nav.menuopen = false; primarynav.clearPreviewImages()">
             <div uib-dropdown-toggle 
               class="menu-bar-toggle">
                 <span>{{nav.name}}</span>
-              <div uib-dropdown-menu template-url="/primarynav/menu.tpl.html">
-              </div>
+              <div uib-dropdown-menu template-url="primarynav/menu.tpl.html"></div>
             </div>
-            <div ng-if="!$last" class="menu-bar-delimiter">
-            </div>
-          </div>
+            <div ng-if="!$last" class="menu-bar-delimiter"></div>
         </div>
       </div>
     </div>
@@ -82,33 +79,33 @@
       <ng-view></ng-view>
     </div>
 
-    <script src="/bower_components/angular/angular.js"></script>
-    <script src="/bower_components/angular-animate/angular-animate.js"></script>
-    <script src="/bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="/bower_components/angular-route/angular-route.js"></script>
-    <script src="/bower_components/angularjs-slider/dist/rzslider.js"></script>
-    <script src="/bower_components/json-formatter/dist/json-formatter.js"></script>
-    <script src="/bower_components/ng-sortable/dist/ng-sortable.min.js"></script>
-    <script src="/bower_components/ngcart/dist/ngCart.js"></script>
-    <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="/bower_components/braintree-angular/dist/braintree-angular.js"></script>
-    <script src="/app.js"></script>
-    <script src="/search/search.js"></script>
-    <script src="/product/product.js"></script>
-    <script src="/settings/settings.ctrl.js"></script>
-    <script src="/templates/homepage/homepage.ctrl.js"></script>
-    <script src="/templates/template.ctrl.js"></script>
-    <script src="/inspect/inspect.ctrl.js"></script>
-    <script src="/typeahead/typeahead.js"></script>
-    <script src="/components/settings.srv.js"></script>
-    <script src="/primarynav/primarynav.ctrl.js"></script>
-    <script src="/recommendations/recommendations.ctrl.js"></script>
-    <script src="/components/gbc.srv.js"></script>
-    <script src="/components/personalize.srv.js"></script>
-    <script src="/components/recommend.srv.js"></script>
-    <script src="/components/semantic.srv.js"></script>
-    <script src="/components/filters.js"></script> 
-    <script src="/cart/checkout.ctrl.js"></script> 
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angularjs-slider/dist/rzslider.js"></script>
+    <script src="bower_components/json-formatter/dist/json-formatter.js"></script>
+    <script src="bower_components/ng-sortable/dist/ng-sortable.min.js"></script>
+    <script src="bower_components/ngcart/dist/ngCart.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/braintree-angular/dist/braintree-angular.js"></script>
+    <script src="app.js"></script>
+    <script src="search/search.js"></script>
+    <script src="product/product.js"></script>
+    <script src="settings/settings.ctrl.js"></script>
+    <script src="templates/homepage/homepage.ctrl.js"></script>
+    <script src="templates/template.ctrl.js"></script>
+    <script src="inspect/inspect.ctrl.js"></script>
+    <script src="typeahead/typeahead.js"></script>
+    <script src="components/settings.srv.js"></script>
+    <script src="primarynav/primarynav.ctrl.js"></script>
+    <script src="recommendations/recommendations.ctrl.js"></script>
+    <script src="components/gbc.srv.js"></script>
+    <script src="components/personalize.srv.js"></script>
+    <script src="components/recommend.srv.js"></script>
+    <script src="components/semantic.srv.js"></script>
+    <script src="components/filters.js"></script> 
+    <script src="cart/checkout.ctrl.js"></script> 
 </body>
 </html>

@@ -3,7 +3,7 @@
 <div class="row">
     <div ng-if="search.query" class="section-title">Search Results for: {{search.query}}</div>
     <div ng-if="!search.query" class="section-title">Browse All Products</div>
-    <div class="section-recommendations" ng-include="'/recommendations/search.tpl.html'" ng-controller="recommendationsCtrl as recommendations"></div>
+    <div class="section-recommendations" ng-include="'recommendations/search.tpl.html'" ng-controller="recommendationsCtrl as recommendations"></div>
 </div>
 <div class="row">
   <div ng-show="search.totalRecordCount > 0"
@@ -90,7 +90,7 @@
     ng-class="search.totalRecordCount == 0 ? 'col-xs-12' :'col-lg-10 col-md-9 col-sm-8 col-xs-12'">
     <div class="row">
 
-      <div ng-if="search.template" ng-include="'/templates/template.tpl.html'" ng-controller="templateCtrl as template">
+      <div ng-if="search.template" ng-include="'templates/template.tpl.html'" ng-controller="templateCtrl as template">
       </div>
 
       <div ng-show="search.totalRecordCount > 0">
@@ -122,7 +122,7 @@
     <div class="row">
       <div class="product-container col-md-3 col-xs-6 clearfix" ng-repeat="result in search.resultList track by result._id">
         <div class="product-thumb-container" style="position:relative">
-          <a href="/product/{{result.allMeta.ID}}" class="product-thumb">
+          <a href="product/{{result.allMeta.ID}}" class="product-thumb">
             <img class="img-responsive" ng-src="{{result.allMeta.wideImage}}">
             <h5>{{result.allMeta.title}} - {{result.allMeta.price | currency}}</h5>
           </a>
@@ -131,7 +131,7 @@
             <i class="glyphicon glyphicon-eye-open"></i>
           </div>
           <div class="product-add-to-cart">
-            <ngcart-addtocart id="{{result.allMeta.ID}}" quantity="1" quantity-max="9" name="{{result.allMeta.Ctitle}}" price="{{result.allMeta.price}}" template-url="/cart/addtocart.tpl.html" data="product">Add to Cart</ngcart-addtocart>
+            <ngcart-addtocart id="{{result.allMeta.ID}}" quantity="1" quantity-max="9" name="{{result.allMeta.Ctitle}}" price="{{result.allMeta.price}}" template-url="cart/addtocart.tpl.html" data="product">Add to Cart</ngcart-addtocart>
           </div>
         </div>
       </div>

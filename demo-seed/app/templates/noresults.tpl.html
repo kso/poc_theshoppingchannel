@@ -4,7 +4,7 @@
 		ng-bind-html="search.template.zones['Header'].richContent | sanitize"></div>
 	<div class="col-md-4" ng-repeat="result in search.template.zones['Products'].records | limitTo:6">
         <div class="product-thumb-container" style="position:relative">
-          <a href="/product/{{result.allMeta.ID}}" class="product-thumb">
+          <a href="product/{{result.allMeta.ID}}" class="product-thumb">
             <img class="img-responsive" ng-src="{{result.allMeta.wideImage}}">
             <h5>{{result.allMeta.Ctitle}}</h5>
           </a>
