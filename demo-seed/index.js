@@ -1,3 +1,4 @@
+'use strict';
 
 // Solution for forwarding from http to https taken from:
 // http://stackoverflow.com/questions/15801014/how-to-use-node-http-proxy-for-http-to-https-routing
@@ -11,9 +12,11 @@ httpProxy.prototype.onError = function (err) {
     console.log(err);
 };
 
+
+var appName = "/cb/";
 var server = express();
 server.set('port', 8000);
-server.use(express.static(__dirname + '/app'));
+server.use(appName, express.static(__dirname + '/app'));
 
 
 // Improve perforamnce of node-proxy by using a shared agent with keepAlive = true: 
@@ -30,18 +33,26 @@ var proxyOptions = {
 var apiProxy = httpProxy.createProxyServer(proxyOptions);
 
 var logPost = function(request){
-    if(request.method !== 'POST')
+    if(request.method !== 'POST')   
         return;
 
     var body = "";
     request.on('data', function (chunk) {body += chunk;});
     request.on('end', function () { console.log('POSTED DATA: ' + body);});
-}
+};
 
 
 // Grab all requests to the server with "/api/".
-server.all("/:type(api|admin)/*", function(req, res) {
-    console.log("Request made to /api/ " + req.url );
+server.all(appName + ":type(api|admin)/*", function(req, res) {
+
+    //remove the application path from start of url
+    var re = /^\/[^\/]+(.*)$/;
+    var matches = req.url.match(re);
+
+    if(matches[1]){
+        req.url = matches[1];
+    }
+    console.log("Request made to " + req.url );
 
     //debug code to log search requests
     logPost(req);

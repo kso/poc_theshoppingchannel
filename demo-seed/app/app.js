@@ -30,7 +30,7 @@ config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'JSONFormat
 
     $stateProvider.state('checkout', {
  		url: '/checkout',
-  		templateUrl: '/cart/checkout.tpl.html',
+  		templateUrl: 'cart/checkout.tpl.html',
   		controller: 'checkoutCtrl',
   		controllerAs: 'checkout'
 	}).

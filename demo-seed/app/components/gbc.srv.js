@@ -19,7 +19,7 @@ angular.module('groupByDemo.gbc', [])
 			//merge the passed in searchParameters		
 			for (var key in searchParametrs) { dataObj[key] = searchParametrs[key]; }		
   		  
-			return $http.post('/api/v1/search', dataObj);
+			return $http.post('api/v1/search', dataObj);
 
 		};
 
@@ -31,13 +31,14 @@ angular.module('groupByDemo.gbc', [])
 				query : '',
 				collection : settingsService.search.collection, 
 				area : settingsService.search.area, 
-				productItems: settingsService['Nav Menu Defaults'].numberOfPreviewImages
+				productItems: settingsService['Nav Menu Defaults'].numberOfPreviewImages,
+				callback : 'JSON_CALLBACK'
 			};
 
 			//merge the passed in searchParameters		
 			for (var key in searchParametrs) { parameters[key] = searchParametrs[key]; }		
 
-			return $http.get( url, { params: parameters } );
+			return $http.jsonp( url, { params: parameters } );
 
 		};
 
@@ -51,16 +52,17 @@ angular.module('groupByDemo.gbc', [])
 				area : settingsService.search.area, 
 				searchItems : settingsService.search.saytKeywords,
 				navigationItems : settingsService.search.saytNavigation,
-				productItems: settingsService.search.saytProducts
+				productItems: settingsService.search.saytProducts,
+				callback : 'JSON_CALLBACK'
 			};
 
-			return $http.get( url, { params: parameters } );
+			return $http.jsonp( url, { params: parameters } );
 
 		};
 
 		gbcAPI.getCollectionData = function() {
 			var dataObj = { clientKey: settingsService.search.clientKey };
-			return $http.post('/api/v1/collections', dataObj);
+			return $http.post('api/v1/collections', dataObj);
 		};
 
 		gbcAPI.getProduct = function(id) {
@@ -71,7 +73,7 @@ angular.module('groupByDemo.gbc', [])
 				collection : settingsService.search.collection, 
 				area : settingsService.search.area, 
 			};
-			return $http.post('/api/v1/search', dataObj).then(function(response){
+			return $http.post('api/v1/search', dataObj).then(function(response){
 				console.log(response);
 				return response.data.records[0];
 			});

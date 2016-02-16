@@ -6,6 +6,8 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			function ($scope, $uibModal, apiService, $stateParams, $filter, 
 				settingsService, personalizationService, semanticSearchService) {
 
+		console.log("loading search controller");
+
 		$scope.currentPage = 1;
 
 		var view_model = this;
@@ -29,6 +31,11 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			function(newValue, oldValue) {
 
 				if(oldValue)
+					return;
+
+				//callback sometimes fires when controller is initialized
+				var hasChanged = settingsService.Personalization.Status !== view_model.personalizationEnabled;
+				if(!hasChanged) 
 					return;
 
 				view_model.personalizationEnabled = settingsService.Personalization.Status;
@@ -275,7 +282,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 			var modalInstance = $uibModal.open({
 			  animation: true,
-			  templateUrl: "/inspect/inspect.tpl.html",
+			  templateUrl: "inspect/inspect.tpl.html",
 			  controller: "inspectCtrl as inspect",
 			  size: "lg",
 			  resolve : {

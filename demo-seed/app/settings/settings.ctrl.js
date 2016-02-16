@@ -4,6 +4,9 @@ angular.module('groupByDemo.settings', ['ui.bootstrap'])
 	.controller('settingsCtrl', ['$uibModal', 'settingsService',
 		function ($uibModal, settingsService) {
 
+
+		console.log("loading settings controller");
+
 		var vm = this;
 
 		vm.sections = settingsService;
@@ -18,7 +21,7 @@ angular.module('groupByDemo.settings', ['ui.bootstrap'])
 			console.log("opening modal");
 			var modalInstance = $uibModal.open({
 			  animation: true,
-			  templateUrl: "/settings/settings.tpl.html",
+			  templateUrl: "settings/settings.tpl.html",
 			  controller: "settingsModalCtrl as settings",
 			  size: "lg",
 			  windowClass : "settings-modal",

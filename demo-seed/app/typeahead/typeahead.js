@@ -21,7 +21,7 @@ angular.module('groupByDemo.typeahead', [])
       if (response.data.result && response.data.result.searchTerms){
         for (var ii=response.data.result.searchTerms.length;ii--;){
             var item = response.data.result.searchTerms[ii];
-            item.url = '/q/' + item.value.replace(' ','+');
+            item.url = 'q/' + item.value.replace(' ','+');
             item.type = 'searchTerms';
           }
         arrayResponse.push(response.data.result.searchTerms);
@@ -56,7 +56,7 @@ angular.module('groupByDemo.typeahead', [])
           if (product.allMeta){
               var newProd = {};
               newProd.value = product.allMeta.title;
-              newProd.url = '/product/' + product.allMeta.ID;
+              newProd.url = 'product/' + product.allMeta.ID;
               newProd.type = 'products';
               newProd.price = product.allMeta.price;
               newProd.image = product.allMeta.image_url;
@@ -79,7 +79,7 @@ angular.module('groupByDemo.typeahead', [])
 	    $location.path( "/" );
 	    return;
     } 
-    $location.path( "/q/" + queryString.split(' ').join('+') );
+    $location.path( "q/" + queryString.split(' ').join('+') );
   };
 
   view_model.onEnterKey = function (text) {
