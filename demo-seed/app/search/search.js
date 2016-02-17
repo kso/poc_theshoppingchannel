@@ -153,7 +153,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			if(settingsService.Personalization.Status !== "on")
 				return parameters;
 
-			var query_time_bias = personalizationService.applyProfile(view_model.query);
+			var query_time_bias = personalizationService.applyProfile(view_model.query, view_model.getSelectedNavigation(view_model.navigation));
 			if(query_time_bias === null)
 				return parameters;
 
@@ -161,12 +161,26 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			return parameters;
 		};
 
+		//returns deep cloned version of selected navigation, sorted alphabetically
+		view_model.getSelectedNavigation = function( navigationModel ){
+
+			var selectedNavigation = [];
+			angular.forEach(navigationModel, function(nav){
+				angular.forEach(nav.selected, function(sel){
+					var copy = angular.copy(sel);
+					selectedNavigation.push(copy);
+				});
+			});
+
+			//sort first by navigation name, then value (for multi-select refinements)
+			selectedNavigation = $filter('orderBy')(selectedNavigation, ['navigationName', 'value']);
+
+			return selectedNavigation;
+		};
+
 		view_model.search = function () {
 
-			var refinement_parameter = [];
-			angular.forEach(view_model.navigation, function(nav){
-				refinement_parameter = refinement_parameter.concat(nav.selected);
-			});
+			var refinement_parameter = view_model.getSelectedNavigation(view_model.navigation);
 
 			//semantic translation of the search
 			var interpretation = view_model.interpretSearch(view_model.query);
@@ -277,12 +291,14 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 		}; 
 
 		view_model.pin = function(id){
-			personalizationService.recordPinEvent(view_model.query, id, !view_model.isPinned(id) );
+			var selectedNavigation = view_model.getSelectedNavigation(view_model.navigation);
+			personalizationService.recordPinEvent(view_model.query, selectedNavigation, id, !view_model.isPinned(id) );
 			view_model.search();
 		};
 
 		view_model.isPinned = function(id){
-			return (personalizationService.isPinned(view_model.query, id) > -1);
+			var selectedNavigation = view_model.getSelectedNavigation(view_model.navigation);
+			return (personalizationService.isPinned(view_model.query, selectedNavigation, id) > -1);
 		};
 
 		view_model.inspect = function(product_id){

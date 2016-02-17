@@ -20,9 +20,9 @@ angular.module("groupByDemo.gbc.personalization",['ngCookies'])
 
 		};
 
-		service.applyProfile = function( query ){
+		service.applyProfile = function( query, nav ){
 			var profile = {};
-			profile.bringToTop = getBringToTop(query);
+			profile.bringToTop = getBringToTop( getKey(query, nav) );
 			profile.augmentBiases = true;
 			profile.biases = [];
 
@@ -59,38 +59,44 @@ angular.module("groupByDemo.gbc.personalization",['ngCookies'])
 			$cookies.putObject("profile", affinity);
 		};
 
-		service.recordPinEvent = function( search, id, add ){
+		service.recordPinEvent = function( search, nav, id, add ){
 
-			console.log("recording Pinning Event "  + search + " " + id + " " + add );
+			console.log("recording Pinning Event "  + getKey(search, nav) + " " + id + " " + add );
 
 			var searchpins = $cookies.getObject("searchpins");
 			searchpins = searchpins ? searchpins : {};
 
-			searchpins[search] = searchpins[search] ? searchpins[search] : [];
+			var key = getKey(search, nav);
+			searchpins[key] = searchpins[key] ? searchpins[key] : [];
 
 			if(add){
-				searchpins[search].push(id);
+				searchpins[key].push(id);
 			} else {
-				var index = searchpins[search].indexOf(id);
+				var index = searchpins[key].indexOf(id);
 				if (index == -1)
 					return;
-				searchpins[search].splice(index, 1);
+				searchpins[key].splice(index, 1);
 			}
 
 			$cookies.putObject("searchpins", searchpins);
 		};
 
-		service.isPinned = function(search, id){
-			var pinnedItems = getBringToTop(search);
+		service.isPinned = function(search, nav, id){
+			var pinnedItems = getBringToTop( getKey(search, nav) );
 			return pinnedItems.indexOf(id);		
 		};
 
-		var getBringToTop = function( search ) {
+		var getBringToTop = function( key ) {
 			var searchpins = $cookies.getObject("searchpins");
-			if(!searchpins || !searchpins[search]){
+			if(!searchpins || !searchpins[key]){
 				return [];
 			}
-			return searchpins[search];	
+			return searchpins[key];	
 		};
+
+		var getKey = function(search, nav){
+			var navString = JSON.stringify( nav );
+			return search + "+" + navString;
+		}
 
 	}]);
