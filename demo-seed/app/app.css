@@ -255,10 +255,30 @@ body.modal-open {
 
 .product-thumb-container .hover-btn {
      position: absolute;
+     top: 15%;
+     right: 5%;
+     background-color: transparent;
+     display: none;
+     cursor: pointer;
+}
+
+.product-thumb-container .hover-btn.pushpin-on {
+     position: absolute;
+     top: 5%;
+     right: 5%;
+     background-color: transparent;
+     display: block;
+     cursor: pointer;
+     color: red;     
+}
+
+.product-thumb-container .hover-btn.pushpin-off {
+     position: absolute;
      top: 5%;
      right: 5%;
      background-color: transparent;
      display: none;
+     cursor: pointer;     
 }
 
 .product-thumb-container:hover .hover-btn {

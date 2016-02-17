@@ -153,7 +153,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			if(settingsService.Personalization.Status !== "on")
 				return parameters;
 
-			var query_time_bias = personalizationService.applyProfile();
+			var query_time_bias = personalizationService.applyProfile(view_model.query);
 			if(query_time_bias === null)
 				return parameters;
 
@@ -233,7 +233,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			}
 
 			if(settingsService.Personalization.Fields.indexOf(nav_data_name) !== -1){
-				personalizationService.recordEvent( nav_data_name, ref_selected.value);
+				personalizationService.recordProfileEvent( nav_data_name, ref_selected.value);
 			}
 
 			navModel.selected.push( refinement ); 
@@ -275,6 +275,15 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 			view_model.search();
 		}; 
+
+		view_model.pin = function(id){
+			personalizationService.recordPinEvent(view_model.query, id, !view_model.isPinned(id) );
+			view_model.search();
+		};
+
+		view_model.isPinned = function(id){
+			return (personalizationService.isPinned(view_model.query, id) > -1);
+		};
 
 		view_model.inspect = function(product_id){
 
