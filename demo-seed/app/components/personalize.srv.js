@@ -97,6 +97,6 @@ angular.module("groupByDemo.gbc.personalization",['ngCookies'])
 		var getKey = function(search, nav){
 			var navString = JSON.stringify( nav );
 			return search + "+" + navString;
-		}
+		};
 
 	}]);
