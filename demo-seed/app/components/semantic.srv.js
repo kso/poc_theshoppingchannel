@@ -32,7 +32,7 @@ angular.module("groupByDemo.gbc.semantic",[])
 			}
 
 			// Cheap, lowprice, low price - Sort on price
-			var cheapTerms = ['cheap', 'low price', 'lowprice'];
+			var cheapTerms = ['cheap', 'low price', 'lowprice', 'cheapest'];
 			for(var ii = 0; ii < cheapTerms.length; ii++){
 				if (searchQuery.toLowerCase().indexOf(cheapTerms[ii]) > -1) {
 					searchQuery = searchQuery.replace(cheapTerms[ii], '').trim();

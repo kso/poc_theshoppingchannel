@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module("groupByDemo.search",['ui.bootstrap'])
-	.controller('searchCtrl', ['$scope', '$uibModal', 'apiService', '$stateParams', '$filter', 
+	.controller('searchCtrl', ['$scope', '$location', '$uibModal', 'apiService', '$stateParams', '$filter', 
 			'settingsService', 'personalizationService', 'semanticSearchService',
-			function ($scope, $uibModal, apiService, $stateParams, $filter, 
+			function ($scope, $location, $uibModal, apiService, $stateParams, $filter, 
 				settingsService, personalizationService, semanticSearchService) {
 
 		console.log("loading search controller");
@@ -73,6 +73,40 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 			});
 
+		//takes the current search and navigation state and maps it to a URL
+		view_model.toURL = function() {
+
+			var mapping = "";
+			var path = "";
+
+			if(view_model.query){
+				mapping = mapping.concat("q");
+				path = path.concat("/").concat( view_model.query.split(' ').join('+') );
+			}
+
+			var selectedNavigation = view_model.getSelectedNavigation(view_model.navigation);
+			selectedNavigation = $filter('orderBy')(selectedNavigation, function(x) { 
+				return settingsService['URL Parameter Ordering'].indexOf(x.navigationName);
+			});
+
+			angular.forEach( selectedNavigation , function(sel){
+				angular.forEach( settingsService['SEO-Friendly URL'], function( value, letter ){
+					console.log(value);
+					if(value.type === "search")
+						return;
+					if(value.value === sel.navigationName){
+						mapping = mapping.concat(letter);
+						path = path.concat("/").concat( sel.value.split(' ').join('+').split('&').join('and') );
+					}
+				});
+			});
+
+			console.log(mapping.concat(path));
+
+			return mapping.concat(path);
+
+		};
+
 	    view_model.getPageSize = function(){
 			return settingsService.search.pageSize;
 	    };
@@ -134,6 +168,17 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			//determine whether to show the model or not
 			angular.forEach(navModel, function(model){ 
 				model.visible = model.selected.length > 0 || 'raw' in model ; 
+			});
+
+
+			var navigationOrder = [];
+			angular.forEach(navFromSearch, function(nav){ 
+				navigationOrder.push(nav.displayName);
+			});
+
+			//order the model according to how it is returned by search
+			navModel = $filter('orderBy')(navModel, function(x) { 
+				return navigationOrder.indexOf(x.displayName);
 			});
 
 			return navModel;
@@ -282,7 +327,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 			navModel.selected.push( refinement ); 
 
-			view_model.search();
+			$location.path( view_model.toURL() );
 		};
 
 		view_model.unrefine = function(nav_data_name, ref_unselected) {
@@ -317,7 +362,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 			});
 
-			view_model.search();
+			$location.path( view_model.toURL() );
 		}; 
 
 		view_model.pin = function(id){

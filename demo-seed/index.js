@@ -13,7 +13,7 @@ httpProxy.prototype.onError = function (err) {
 };
 
 
-var appName = "/cb/";
+var appName = "/";
 var server = express();
 server.set('port', 8000);
 server.use(appName, express.static(__dirname + '/app'));
@@ -46,11 +46,13 @@ var logPost = function(request){
 server.all(appName + ":type(api|admin)/*", function(req, res) {
 
     //remove the application path from start of url
-    var re = /^\/[^\/]+(.*)$/;
-    var matches = req.url.match(re);
+    if(appName !== "/"){
+        var re = /^\/[^\/]+(.*)$/;
+        var matches = req.url.match(re);
 
-    if(matches[1]){
-        req.url = matches[1];
+        if(matches[1]){
+            req.url = matches[1];
+        }
     }
     console.log("Request made to " + req.url );
 
