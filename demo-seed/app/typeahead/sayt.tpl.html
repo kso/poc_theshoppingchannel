@@ -1,5 +1,6 @@
 <ul class="dropdown-menu saytDropdown" ng-show="isOpen() && !moveInProgress" ng-style="{top: position().top+'px', left: position().left+'px'}" role="listbox" aria-hidden="{{!isOpen()}}">
-    <li ng-repeat="match in matches track by $index" ng-class="{active: isActive($index) }" ng-mouseenter="selectActive($index)" role="option" id="{{::match.id}}">
+    <li ng-repeat="match in matches track by $index" ng-class="{active: isActive($index) }" ng-mouseenter="selectActive($index)" 
+    class="saytSection" role="option" id="{{::match.id}}">
 
 		<ul class="saytList" role="listbox">
 		    <li class="saytItem" ng-repeat="m in match.model track by $index" ng-mouseenter="selectActive($index)" role="option">

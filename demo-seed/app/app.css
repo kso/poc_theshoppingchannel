@@ -353,7 +353,15 @@ rzslider .rz-bar.rz-selection {
 
 .saytList {
 	padding-left: 20px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #bbb;
+	padding-bottom: 10px;
 } 
+
+.saytSection:last-of-type > ul.saytList {
+	border-bottom-width: 0px;
+}
 
 .saytItem {
 	list-style-type: none;
@@ -371,13 +379,15 @@ rzslider .rz-bar.rz-selection {
 }
 
 .saytProductTitle {
+	float:left;
     font-size: 11px;
     padding-right: 10px;
 }
 
 .saytHeader {
-	border-bottom-style: solid;
-	border-width: 1px;
+	font-size: 16px;
+	font-weight: bold;
+	padding-top: 10px;
 	margin-left: -10px;
 	margin-right: 10px;
 }
