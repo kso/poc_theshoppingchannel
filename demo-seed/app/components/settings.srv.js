@@ -24,6 +24,12 @@ angular.module('groupByDemo.util.settings', [])
 			numberOfPreviewImages : 8
 		};
 
+		settings['SEO-Friendly URL'] = {
+			q : { type : "search" },
+			c : { type : "navigation" , displayName: "Sub Category",  value: "Qtype" },
+			d : { type : "navigation" , displayName: "Category", value: "QtopRatedType" }
+		};
+
 		settings['Nav Menu'] = [
 			{ displayName: "Dining & Entertaining", searchTerm: "dining", submenu: 
 				[

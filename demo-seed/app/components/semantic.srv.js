@@ -27,6 +27,10 @@ angular.module("groupByDemo.gbc.semantic",[])
 
 		service.priceOrderPattern = function( searchQuery, sortParam ){
 
+			if(!searchQuery){
+				return { sort : sortParam, query : searchQuery };
+			}
+
 			// Cheap, lowprice, low price - Sort on price
 			var cheapTerms = ['cheap', 'low price', 'lowprice'];
 			for(var ii = 0; ii < cheapTerms.length; ii++){

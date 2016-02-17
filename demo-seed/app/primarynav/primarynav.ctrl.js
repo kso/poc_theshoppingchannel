@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('groupByDemo.primarynav', [])
-	.controller('primaryNavCtrl', ['settingsService', 'apiService', '$filter', 
-		function(settingsService, apiService, $filter){
+	.controller('primaryNavCtrl', ['$location', 'settingsService', 'apiService', '$filter', 
+		function($location, settingsService, apiService, $filter){
 		
 		console.log("loading primary nav controller");
 
@@ -17,6 +17,10 @@ angular.module('groupByDemo.primarynav', [])
 		for (var i = 0; i < n; i++)
 		    vm.preview.push({ id : i , product : {} });
 
+		//there should be a way to do this directly through the anchor?
+		vm.go = function( path ){
+			$location.path( path );
+		};
 
 		vm.clearPreviewImages = function() {
 			var n = settingsService['Nav Menu Defaults'].numberOfPreviewImages;
@@ -77,6 +81,7 @@ angular.module('groupByDemo.primarynav', [])
 			menu.name = nav.displayName ? nav.displayName : nav.value;
 			menu.value  = nav.value ? nav.value : nav.displayName;
 			menu.field_name = nav.navigationName ? nav.navigationName : defaults.menuNavigationName;
+			menu.path = "d/" + nav.value.split(' ').join('+').split('&').join('and');
 
 			var parameters = {
 				pageSize : 0,
@@ -105,7 +110,8 @@ angular.module('groupByDemo.primarynav', [])
 					menu.items.push({ 
 						name : item.displayName ? item.displayName : item.value,
 						value : item.value ? item.value : item.displayName,
-						path : "#", //TODO
+						path : "dc/" + nav.value.split(' ').join('+').split('&').join('and')
+								 + "/" + item.value.split(' ').join('+').split('&').join('and'),
 						field_name : data.availableNavigation[0].name
 					});
 				});

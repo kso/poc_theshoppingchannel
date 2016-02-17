@@ -11,14 +11,44 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 		$scope.currentPage = 1;
 
 		var view_model = this;
+		view_model.navigation = [];
 
-		view_model.query = $stateParams.query.split('+').join(' ');
-		if(view_model.query === "all"){
-			view_model.query = "";
-		}
+		var processURL = function(){
+			var types = $stateParams.mapping.split('');
+			var values = $stateParams.query.split('/');
+			for(var i=0; i<values.length; i++){
+
+				var type = types[i];
+				var value = values[i];
+
+				value = value.split('+').join(' '); 
+
+				var mapping = settingsService['SEO-Friendly URL'][type];
+
+				if(mapping.type === "search"){
+					view_model.query = value;
+					//'all' is a special query to return all results
+					if(view_model.query === "all"){ view_model.query = ""; 	}
+				} else {
+					//setup a dummy navigation
+					var nav = {
+						name : mapping.value,
+						displayName : mapping.displayName,
+						type : "value",
+						selected : [{
+							type : "Value",
+							navigationName : mapping.value,
+							value : value.split(' and ').join(' & ')
+						}]
+					};
+					view_model.navigation.push(nav);
+				}
+			}
+		};
+
+		processURL();
 
 		view_model.resultSummary =  "";
-		view_model.navigation = [];
 		view_model.personalizationEnabled = settingsService.Personalization.Status;
 
 	    $scope.sortFields = settingsService.Sorting;

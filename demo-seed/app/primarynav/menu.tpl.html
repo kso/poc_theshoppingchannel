@@ -3,12 +3,14 @@
 		<div class="col-md-8 menu-no-padding">
 			<li class="col-md-6 category-menu" role="menuitem" 
 				ng-repeat="category in nav.items">
-				<a href="{{category.path}}"
+				<a 	ng-href="{{category.path}}"
+					ng-click="primarynav.go(category.path)"
 					ng-mouseenter="primarynav.updateImagesForCategory(category, null)"> {{category.name}} </a>
 				<ul>
 					<li class="sub-category-menu" role="menuitem" 
 						ng-repeat="subcat in category.items">
-						<a 	href="{{subcat.path}}"
+						<a 	ng-href="{{subcat.path}}"
+							ng-click="primarynav.go(subcat.path)"
 							ng-mouseenter="primarynav.updateImagesForCategory(category, subcat)"> {{subcat.name}} </a>
 					</li>
 				</ul>
