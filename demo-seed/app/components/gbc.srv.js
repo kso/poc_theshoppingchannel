@@ -60,8 +60,6 @@ angular.module('groupByDemo.gbc', [])
 				parameters.timeout = canceller.promise;
 			}
 
-			console.log(parameters);
-
 			return $http.jsonp( url, { params: parameters } );
 
 		};
