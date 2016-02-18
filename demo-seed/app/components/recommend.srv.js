@@ -6,6 +6,10 @@ angular.module("groupByDemo.gbc.recommendation",[])
 		var service = this; 
 
 		service.searchRecommendations = function( searchTerm ){
+
+			if(!searchTerm)
+				return null; 
+
 			return service.data[searchTerm.toLowerCase()];
 		};
 

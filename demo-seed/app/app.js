@@ -41,7 +41,7 @@ config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'JSONFormat
 		controllerAs: "homepage"
 	}).
 	state('query', {
-		url: '/q/:query',
+		url: '/{mapping:[bcdfghjklmnpqrstvwxz]*}/{query:.*}',
 		templateUrl: "search/search-results.html", 
 		controller: "searchCtrl",
 		controllerAs: "search"

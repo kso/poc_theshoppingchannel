@@ -24,6 +24,16 @@ angular.module('groupByDemo.util.settings', [])
 			numberOfPreviewImages : 8
 		};
 
+		settings['SEO-Friendly URL'] = {
+			q : { type : "search" },
+			c : { type : "navigation" , displayName: "Sub Category",  value: "Qtype" },
+			d : { type : "navigation" , displayName: "Category", value: "QtopRatedType" },
+			f : { type : "navigation" , displayName: "Color", value: "Qcolor" },
+			b : { type : "navigation" , displayName: "Brand", value: "CBrand" }
+		};
+
+		settings['URL Parameter Ordering'] = [ "QtopRatedType", "Qcolor", "CBrand", "Qtype" ];
+
 		settings['Nav Menu'] = [
 			{ displayName: "Dining & Entertaining", searchTerm: "dining", submenu: 
 				[

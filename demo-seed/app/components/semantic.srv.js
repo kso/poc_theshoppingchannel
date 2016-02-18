@@ -27,8 +27,12 @@ angular.module("groupByDemo.gbc.semantic",[])
 
 		service.priceOrderPattern = function( searchQuery, sortParam ){
 
+			if(!searchQuery){
+				return { sort : sortParam, query : searchQuery };
+			}
+
 			// Cheap, lowprice, low price - Sort on price
-			var cheapTerms = ['cheap', 'low price', 'lowprice'];
+			var cheapTerms = ['cheapest', 'cheap', 'low price', 'lowprice'];
 			for(var ii = 0; ii < cheapTerms.length; ii++){
 				if (searchQuery.toLowerCase().indexOf(cheapTerms[ii]) > -1) {
 					searchQuery = searchQuery.replace(cheapTerms[ii], '').trim();
@@ -65,30 +69,42 @@ angular.module("groupByDemo.gbc.semantic",[])
 
 			var under = underPattern.test(searchQuery);
 			var over = overPattern.test(searchQuery);
+			var onsale = searchQuery ? (searchQuery.toLowerCase().indexOf('on sale') > -1) : false;
 
-			if(!under && !over)
+			if(!under && !over && !onsale)
 				return { refinements : refinement_parameter, query : searchQuery };
 
 			var refineIndex = searchQuery.search(under ? underPattern: overPattern);
 			var refineValueIndex = searchQuery.search(numberPattern);
 			var refineValue = searchQuery.substring(refineValueIndex);
-			searchQuery = searchQuery.substring(0,refineIndex).trim();
+
+			if(under || over)
+				searchQuery = searchQuery.substring(0,refineIndex).trim();
 
 			var priceRefinement = {};
 			priceRefinement.type = "Range";
 			priceRefinement.navigationName = "price";
 
+			if(onsale){
+				var onsale_refinement = {
+					type : "Value",
+					navigationName : "on_sale",
+					value : "On Sale"
+				}
+				refinement_parameter = refinement_parameter.concat(onsale_refinement);
+			}
+
 			// Plates under $15
 			if (under){
 				priceRefinement.low = 0;
 				priceRefinement.high = parseInt(refineValue);
+				refinement_parameter = refinement_parameter.concat(priceRefinement);
 			// Tables over $1500
 			} else if (over){
 				priceRefinement.low = parseInt(refineValue);
 				priceRefinement.high = 99999;
+				refinement_parameter = refinement_parameter.concat(priceRefinement);
 			}
-
-			refinement_parameter = refinement_parameter.concat(priceRefinement);
 
 			return { refinements : refinement_parameter, query : searchQuery };
 

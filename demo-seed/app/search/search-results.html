@@ -130,12 +130,14 @@
           <div class="hover-btn" ng-click="search.inspect(result.allMeta.ID)">
             <i class="glyphicon glyphicon-eye-open"></i>
           </div>
+          <div ng-class="search.isPinned(result.allMeta.ID) ? 'pushpin-on' : 'pushpin-off'" class="hover-btn" ng-click="search.pin(result.allMeta.ID)">
+            <i class="glyphicon glyphicon-pushpin"></i>
+          </div>
           <div class="product-add-to-cart">
             <ngcart-addtocart id="{{result.allMeta.ID}}" quantity="1" quantity-max="9" name="{{result.allMeta.Ctitle}}" price="{{result.allMeta.price}}" template-url="cart/addtocart.tpl.html" data="product">Add to Cart</ngcart-addtocart>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </div>

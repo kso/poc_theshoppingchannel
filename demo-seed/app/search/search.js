@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module("groupByDemo.search",['ui.bootstrap'])
-	.controller('searchCtrl', ['$scope', '$uibModal', 'apiService', '$stateParams', '$filter', 
+	.controller('searchCtrl', ['$scope', '$location', '$uibModal', 'apiService', '$stateParams', '$filter', 
 			'settingsService', 'personalizationService', 'semanticSearchService',
-			function ($scope, $uibModal, apiService, $stateParams, $filter, 
+			function ($scope, $location, $uibModal, apiService, $stateParams, $filter, 
 				settingsService, personalizationService, semanticSearchService) {
 
 		console.log("loading search controller");
@@ -11,14 +11,44 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 		$scope.currentPage = 1;
 
 		var view_model = this;
+		view_model.navigation = [];
 
-		view_model.query = $stateParams.query.split('+').join(' ');
-		if(view_model.query === "all"){
-			view_model.query = "";
-		}
+		var processURL = function(){
+			var types = $stateParams.mapping.split('');
+			var values = $stateParams.query.split('/');
+			for(var i=0; i<values.length; i++){
+
+				var type = types[i];
+				var value = values[i];
+
+				value = value.split('+').join(' '); 
+
+				var mapping = settingsService['SEO-Friendly URL'][type];
+
+				if(mapping.type === "search"){
+					view_model.query = value;
+					//'all' is a special query to return all results
+					if(view_model.query === "all"){ view_model.query = ""; 	}
+				} else {
+					//setup a dummy navigation
+					var nav = {
+						name : mapping.value,
+						displayName : mapping.displayName,
+						type : "value",
+						selected : [{
+							type : "Value",
+							navigationName : mapping.value,
+							value : value.split(' and ').join(' & ')
+						}]
+					};
+					view_model.navigation.push(nav);
+				}
+			}
+		};
+
+		processURL();
 
 		view_model.resultSummary =  "";
-		view_model.navigation = [];
 		view_model.personalizationEnabled = settingsService.Personalization.Status;
 
 	    $scope.sortFields = settingsService.Sorting;
@@ -42,6 +72,40 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				view_model.search();
 
 			});
+
+		//takes the current search and navigation state and maps it to a URL
+		view_model.toURL = function() {
+
+			var mapping = "";
+			var path = "";
+
+			if(view_model.query){
+				mapping = mapping.concat("q");
+				path = path.concat("/").concat( view_model.query.split(' ').join('+') );
+			}
+
+			var selectedNavigation = view_model.getSelectedNavigation(view_model.navigation);
+			selectedNavigation = $filter('orderBy')(selectedNavigation, function(x) { 
+				return settingsService['URL Parameter Ordering'].indexOf(x.navigationName);
+			});
+
+			angular.forEach( selectedNavigation , function(sel){
+				angular.forEach( settingsService['SEO-Friendly URL'], function( value, letter ){
+					console.log(value);
+					if(value.type === "search")
+						return;
+					if(value.value === sel.navigationName){
+						mapping = mapping.concat(letter);
+						path = path.concat("/").concat( sel.value.split(' ').join('+').split('&').join('and') );
+					}
+				});
+			});
+
+			console.log(mapping.concat(path));
+
+			return mapping.concat(path);
+
+		};
 
 	    view_model.getPageSize = function(){
 			return settingsService.search.pageSize;
@@ -106,6 +170,17 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				model.visible = model.selected.length > 0 || 'raw' in model ; 
 			});
 
+
+			var navigationOrder = [];
+			angular.forEach(navFromSearch, function(nav){ 
+				navigationOrder.push(nav.displayName);
+			});
+
+			//order the model according to how it is returned by search
+			navModel = $filter('orderBy')(navModel, function(x) { 
+				return navigationOrder.indexOf(x.displayName);
+			});
+
 			return navModel;
 
 		};
@@ -153,7 +228,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			if(settingsService.Personalization.Status !== "on")
 				return parameters;
 
-			var query_time_bias = personalizationService.applyProfile();
+			var query_time_bias = personalizationService.applyProfile(view_model.query, view_model.getSelectedNavigation(view_model.navigation));
 			if(query_time_bias === null)
 				return parameters;
 
@@ -161,12 +236,26 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			return parameters;
 		};
 
+		//returns deep cloned version of selected navigation, sorted alphabetically
+		view_model.getSelectedNavigation = function( navigationModel ){
+
+			var selectedNavigation = [];
+			angular.forEach(navigationModel, function(nav){
+				angular.forEach(nav.selected, function(sel){
+					var copy = angular.copy(sel);
+					selectedNavigation.push(copy);
+				});
+			});
+
+			//sort first by navigation name, then value (for multi-select refinements)
+			selectedNavigation = $filter('orderBy')(selectedNavigation, ['navigationName', 'value']);
+
+			return selectedNavigation;
+		};
+
 		view_model.search = function () {
 
-			var refinement_parameter = [];
-			angular.forEach(view_model.navigation, function(nav){
-				refinement_parameter = refinement_parameter.concat(nav.selected);
-			});
+			var refinement_parameter = view_model.getSelectedNavigation(view_model.navigation);
 
 			//semantic translation of the search
 			var interpretation = view_model.interpretSearch(view_model.query);
@@ -233,12 +322,12 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			}
 
 			if(settingsService.Personalization.Fields.indexOf(nav_data_name) !== -1){
-				personalizationService.recordEvent( nav_data_name, ref_selected.value);
+				personalizationService.recordProfileEvent( nav_data_name, ref_selected.value);
 			}
 
 			navModel.selected.push( refinement ); 
 
-			view_model.search();
+			$location.path( view_model.toURL() );
 		};
 
 		view_model.unrefine = function(nav_data_name, ref_unselected) {
@@ -273,8 +362,19 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 			});
 
-			view_model.search();
+			$location.path( view_model.toURL() );
 		}; 
+
+		view_model.pin = function(id){
+			var selectedNavigation = view_model.getSelectedNavigation(view_model.navigation);
+			personalizationService.recordPinEvent(view_model.query, selectedNavigation, id, !view_model.isPinned(id) );
+			view_model.search();
+		};
+
+		view_model.isPinned = function(id){
+			var selectedNavigation = view_model.getSelectedNavigation(view_model.navigation);
+			return (personalizationService.isPinned(view_model.query, selectedNavigation, id) > -1);
+		};
 
 		view_model.inspect = function(product_id){
 
