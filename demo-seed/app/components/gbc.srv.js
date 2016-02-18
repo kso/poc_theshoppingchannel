@@ -42,7 +42,7 @@ angular.module('groupByDemo.gbc', [])
 
 		};
 
-		gbcAPI.sayt = function(term) {
+		gbcAPI.sayt = function(term, canceller) {
 
 			var base_url = settingsService.search.saytURL;
 			var url = base_url + "/api/v1/sayt/search?";
@@ -55,6 +55,10 @@ angular.module('groupByDemo.gbc', [])
 				productItems: settingsService.search.saytProducts,
 				callback : 'JSON_CALLBACK'
 			};
+
+			if(canceller){
+				parameters.timeout = canceller.promise;
+			}
 
 			return $http.jsonp( url, { params: parameters } );
 

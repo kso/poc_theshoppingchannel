@@ -3,20 +3,30 @@
 // taken from the ui.bootstrap example: http://angular-ui.github.io/bootstrap/#/typeahead
 
 angular.module('groupByDemo.typeahead', [])
-.controller('TypeaheadCtrl', ['$location', 'apiService', function($location, apiService) {
+.controller('TypeaheadCtrl', ['$q', '$location', 'apiService', function($q, $location, apiService) {
 
   var view_model = this;
+
+  view_model.cancellers = [];
+  view_model.saytdata = [];
 
   // Any function returning a promise object can be used to load values asynchronously
   view_model.fetch = function(val) {
     console.time("sayt");
-    return apiService.sayt(val).then(function(response){
+    var canceller = $q.defer();
+    view_model.cancellers.push(canceller); 
+    return apiService.sayt(val, canceller).then(function(response){
       console.timeEnd("sayt");
-      
+
+      var cancellerIndex = view_model.cancellers.indexOf(canceller);
+      if(cancellerIndex > -1){
+        view_model.cancellers.splice(cancellerIndex, 1);
+      }
+
       // The uib-typeahead expects data in arrays, so we need to restructure.
       //  The SAYT template takes nested arrays into consideration
       var arrayResponse = [];
-      
+
       // Search suggestions
       if (response.data.result && response.data.result.searchTerms){
         for (var ii=response.data.result.searchTerms.length;ii--;){
@@ -66,7 +76,25 @@ angular.module('groupByDemo.typeahead', [])
         arrayResponse.push(products);
       }
 
-      return arrayResponse;
+
+      //if the request was cancelled after we got the response, suppress the results
+      if(canceller.promise.$$state.status !== 0){
+        view_model.saytdata.length = 0;
+      } else {
+        view_model.saytdata = arrayResponse;
+      }
+
+      return view_model.saytdata;
+
+    }, function(response){
+      console.timeEnd("sayt");
+      console.log("error");
+      console.log(response);
+
+      var cancellerIndex = view_model.cancellers.indexOf(canceller);
+      if(cancellerIndex > -1){
+        view_model.cancellers.splice(cancellerIndex, 1);
+      }
 
     });
   };
@@ -75,10 +103,17 @@ angular.module('groupByDemo.typeahead', [])
 
   	var queryString = typeof label === 'object' ? label.value : label;
 
+    //cancel any pending requqests
+    angular.forEach( view_model.cancellers, function(cancel) {
+      cancel.resolve();
+    });
+    view_model.saytdata.length = 0;
+
     if(!queryString){
 	    $location.path( "/" );
 	    return;
     } 
+
     $location.path( "q/" + queryString.split(' ').join('+') );
   };
 
@@ -91,7 +126,7 @@ angular.module('groupByDemo.typeahead', [])
     view_model.$model = $model;
     view_model.$label = $label;
 
-	redirect($label);
+	  redirect($label);
   };
 
   view_model.modelOptions = {
