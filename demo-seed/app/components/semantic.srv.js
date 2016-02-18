@@ -70,8 +70,9 @@ angular.module("groupByDemo.gbc.semantic",[])
 			var under = underPattern.test(searchQuery);
 			var over = overPattern.test(searchQuery);
 			var onsale = searchQuery ? (searchQuery.toLowerCase().indexOf('on sale') > -1) : false;
+			var partNumber = numberPattern.test(searchQuery);
 
-			if(!under && !over && !onsale)
+			if(!under && !over && !onsale && !partNumber)
 				return { refinements : refinement_parameter, query : searchQuery };
 
 			var refineIndex = searchQuery.search(under ? underPattern: overPattern);
@@ -90,7 +91,7 @@ angular.module("groupByDemo.gbc.semantic",[])
 					type : "Value",
 					navigationName : "on_sale",
 					value : "On Sale"
-				}
+				};
 				refinement_parameter = refinement_parameter.concat(onsale_refinement);
 			}
 
@@ -104,6 +105,14 @@ angular.module("groupByDemo.gbc.semantic",[])
 				priceRefinement.low = parseInt(refineValue);
 				priceRefinement.high = 99999;
 				refinement_parameter = refinement_parameter.concat(priceRefinement);
+			} else if (partNumber) {
+				searchQuery = "";
+				var partNoRefinement = {
+					type : "Value",
+					navigationName : "ID",
+					value : refineValue
+				};
+				refinement_parameter = refinement_parameter.concat(partNoRefinement);
 			}
 
 			return { refinements : refinement_parameter, query : searchQuery };
