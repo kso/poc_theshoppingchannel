@@ -122,19 +122,19 @@
     <div class="row">
       <div class="product-container col-md-3 col-xs-6 clearfix" ng-repeat="result in search.resultList track by result._id">
         <div class="product-thumb-container" style="position:relative">
-          <a href="product/{{result.allMeta.ID}}" class="product-thumb">
-            <img class="img-responsive" ng-src="{{result.allMeta.wideImage}}">
-            <h5>{{result.allMeta.title}} - {{result.allMeta.price | currency}}</h5>
+          <a href="product/{{result.allMeta[search.displayFields.id]}}" class="product-thumb">
+            <img class="img-responsive" ng-src="{{result.allMeta[search.displayFields.image]}}">
+            <h5>{{result.allMeta[search.displayFields.title]}} - {{result.allMeta[search.displayFields.price] | currency}}</h5>
           </a>
           <img ng-if="result.allMeta.on_sale" class="sale-badge img-responsive" src="http://wac.aee8.edgecastcdn.net/80AEE8/p/p/baseballwarehouse/images/product-badges/on-sale-badge-left.png">
-          <div class="hover-btn" ng-click="search.inspect(result.allMeta.ID)">
+          <div class="hover-btn" ng-click="search.inspect(result.allMeta[search.displayFields.id])">
             <i class="glyphicon glyphicon-eye-open"></i>
           </div>
-          <div ng-class="search.isPinned(result.allMeta.ID) ? 'pushpin-on' : 'pushpin-off'" class="hover-btn" ng-click="search.pin(result.allMeta.ID)">
+          <div ng-class="search.isPinned(result.allMeta[search.displayFields.id]) ? 'pushpin-on' : 'pushpin-off'" class="hover-btn" ng-click="search.pin(result.allMeta[search.displayFields.id])">
             <i class="glyphicon glyphicon-pushpin"></i>
           </div>
           <div class="product-add-to-cart">
-            <ngcart-addtocart id="{{result.allMeta.ID}}" quantity="1" quantity-max="9" name="{{result.allMeta.Ctitle}}" price="{{result.allMeta.price}}" template-url="cart/addtocart.tpl.html" data="product">Add to Cart</ngcart-addtocart>
+            <ngcart-addtocart id="{{result.allMeta[search.displayFields.id]}}" quantity="1" quantity-max="9" name="{{result.allMeta[search.displayFields.title]}}" price="{{result.allMeta[search.displayFields.price]}}" template-url="cart/addtocart.tpl.html" data="product">Add to Cart</ngcart-addtocart>
           </div>
         </div>
       </div>

@@ -50,6 +50,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 		view_model.resultSummary =  "";
 		view_model.personalizationEnabled = settingsService.Personalization.Status;
+		view_model.displayFields = settingsService['Display Fields'];
 
 	    $scope.sortFields = settingsService.Sorting;
 

@@ -5,13 +5,27 @@ angular.module('groupByDemo.util.settings', [])
 
 		var settings = this;
 
+		settings['Display Fields'] = {
+			image : "wideImage",
+			title : "Ctitle",
+			price : "price",
+			id : "ID"
+		};
+
+		var searchFields = [];
+		Object.keys(settings['Display Fields']).forEach( function(key) {
+			searchFields.push( settings['Display Fields'][key] );
+		});
+		//add any additional fields to return here:
+		searchFields = searchFields.concat(["on_sale"]);
+
 		settings.search = {
 			clientKey : "269466c6-e7b6-4439-a175-c6d5faa069dd",
 			collection : "productsonsale",
 			area : "Test",
 			pageSize : 50,
-			fields : ["ID", "wideImage", "Ctitle", "price" , "on_sale"],
 			saytURL : "http://crateandbarreldemo.groupbycloud.com",
+			fields : searchFields,
 			saytKeywords : 5,
 			saytNavigation : 4,
 			saytProducts : 3

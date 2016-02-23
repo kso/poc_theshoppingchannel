@@ -8,6 +8,7 @@ angular.module('groupByDemo.primarynav', [])
 
 		var vm = this;
 		var defaults = settingsService['Nav Menu Defaults'];
+		vm.displayFields = settingsService['Display Fields'];
 
 		//we create a fixed array of N objects so that only N dom elements (tracked by id) are created by angular
 		//If the array and object are replaced each time, angular creates new DOM elements, sometimes
@@ -151,6 +152,10 @@ angular.module('groupByDemo.primarynav', [])
 			parameters.refinements = [ refinement ];
 
 		  	apiService.search(parameters).success(function(data){
+
+		  		if(!data.availableNavigation.length){
+		  			return;
+		  		}
 
 				var menu_items = data.availableNavigation[0].refinements;
 
