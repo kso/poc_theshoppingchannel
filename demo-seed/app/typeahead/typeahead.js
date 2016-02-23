@@ -3,7 +3,8 @@
 // taken from the ui.bootstrap example: http://angular-ui.github.io/bootstrap/#/typeahead
 
 angular.module('groupByDemo.typeahead', [])
-.controller('TypeaheadCtrl', ['$q', '$location', 'apiService', function($q, $location, apiService) {
+.controller('TypeaheadCtrl', ['settingsService', '$q', '$location', 'apiService', 
+  function(settingsService, $q, $location, apiService) {
 
   var view_model = this;
 
@@ -58,6 +59,8 @@ angular.module('groupByDemo.typeahead', [])
         arrayResponse.push(navigations);
       }
 
+      var displayFields = settingsService['Display Fields'];
+
       // Products
       if (response.data.result.products){
         var products = [];
@@ -65,11 +68,11 @@ angular.module('groupByDemo.typeahead', [])
           var product = response.data.result.products[ii];
           if (product.allMeta){
               var newProd = {};
-              newProd.value = product.allMeta.title;
-              newProd.url = 'product/' + product.allMeta.ID;
+              newProd.value = product.allMeta[displayFields.title];
+              newProd.url = 'product/' + product.allMeta[displayFields.id];
               newProd.type = 'products';
-              newProd.price = product.allMeta.price;
-              newProd.image = product.allMeta.image_url;
+              newProd.price = product.allMeta[displayFields.price];
+              newProd.image = product.allMeta[displayFields.image];
               products.push(newProd);
           }
         }
