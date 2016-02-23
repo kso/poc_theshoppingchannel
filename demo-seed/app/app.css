@@ -369,13 +369,19 @@ rzslider .rz-bar.rz-selection {
 
 .saytLink {
 	color: black;
+	text-align: center;
+	margin-top: 150px;
 }
 
 .saytImage {
     display: block;
     max-width: 120px;
-    max-height: 185px;
+    max-height: 135px;
     margin-bottom: 5px;
+  	position: absolute;
+  	left: 50%;
+  	top: 40%;
+ 	transform: translate(-50%, -50%);
 }
 
 .saytProductTitle {

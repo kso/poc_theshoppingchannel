@@ -6,7 +6,7 @@
 		    <li class="saytItem" ng-repeat="m in match.model track by $index" ng-mouseenter="selectActive($index)" role="option">
 
 				<div ng-if="m.type == 'navigations' && $index == 0">
-					<div ng-if="m.field == 'CBrand'">
+					<div ng-if="m.field == 'brand'">
 						<p class="message saytHeader">Brand</p>
 					</div>
 				</div>
@@ -17,7 +17,7 @@
 				<div ng-if="m.type == 'products'">
 					<div class="col-md-4 menu-no-padding">
 						<a href="{{m.url}}">
-							<img class="img-responsive menu-preview-image saytImage" ng-src="{{m.image}}" src="{{m.image}}"/>
+							<img class="img-responsive saytImage" ng-src="{{m.image}}" src="{{m.image}}"/>
 						</a>
 						<a class="saytLink saytProductTitle" href="{{m.url}}"
 						   tabindex="-1"
