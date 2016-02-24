@@ -82,7 +82,6 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				if(!nav.range) { return; }
 
 				//keep existing values if a refinement is already applied
-				var currentVal = $filter('filter')(model.selected, { navigationName : nav.name, type : CONST.api.refinement.range});	
 				if('slider' in model) { return; }
 
 				var lo_bucket = 0;
@@ -93,19 +92,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 					hi_bucket = Math.max(ref.high, hi_bucket);
 				});
 
-				model.slider = {
-					min : currentVal.length > 0 ? currentVal[0].low : lo_bucket,  
-					max : currentVal.length > 0 ? currentVal[0].high : hi_bucket,
-					options : { 
-						id : nav.name, 
-						floor: lo_bucket, 
-						ceil: hi_bucket,
-						onEnd: function(id, low, high) {
-							console.log(id + " " + low + " " + high);
-							view_model.refine(id, { low : low, high : high }, CONST.api.refinement.range);
-						}
-					}
-				}; 
+				model.slider = urlService.buildSliderModel(lo_bucket, hi_bucket, nav.name); 
 			});
 
 			//determine whether to show the model or not
@@ -336,10 +323,9 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 		view_model.search();
 
-		$scope.broadcast = function() {
-			$timeout(function(){
-				$scope.$broadcast('reCalcViewDimensions');
-			}, 50);
-		};
+		//workaround for slider issue:  https://github.com/angular-slider/angularjs-slider/issues/79
+		$timeout(function(){
+			$scope.$broadcast('reCalcViewDimensions');
+		}, 300);
 
 	}]);
