@@ -30,16 +30,25 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 					//'all' is a special query to return all results
 					if(view_model.query === "all"){ view_model.query = ""; 	}
 				} else {
-					//setup a dummy navigation
+
+					var refinement = {
+						type : "Value",
+						navigationName : mapping.value,
+						value : value.split(' and ').join(' & ')
+					};
+
+					//if a refinement was multi-selected, the nav model may already exist
+					var navModel = $filter('filter')(view_model.navigation, { name : mapping.value } );
+					if(navModel.length > 0){
+						navModel[0].selected.push(refinement);
+						continue;
+					}
+
 					var nav = {
 						name : mapping.value,
 						displayName : mapping.displayName,
 						type : "value",
-						selected : [{
-							type : "Value",
-							navigationName : mapping.value,
-							value : value.split(' and ').join(' & ')
-						}]
+						selected : [refinement]
 					};
 					view_model.navigation.push(nav);
 				}
