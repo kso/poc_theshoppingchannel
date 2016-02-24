@@ -5,6 +5,13 @@ angular.module('groupByDemo.util.settings', [])
 
 		var settings = this;
 
+		settings['SAYT Display Fields'] = {
+			image : "image_url",
+			title : "title",
+			price : "price",
+			id : "ID"
+		};
+
 		settings['Display Fields'] = {
 			image : "wideImage",
 			title : "Ctitle",

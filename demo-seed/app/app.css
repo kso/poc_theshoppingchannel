@@ -370,18 +370,13 @@ rzslider .rz-bar.rz-selection {
 .saytLink {
 	color: black;
 	text-align: center;
-	margin-top: 150px;
 }
 
 .saytImage {
+	float: left;
+	padding: 5px 5px 0 0;
     display: block;
-    max-width: 120px;
-    max-height: 135px;
-    margin-bottom: 5px;
-  	position: absolute;
-  	left: 50%;
-  	top: 40%;
- 	transform: translate(-50%, -50%);
+    margin: auto;
 }
 
 .saytProductTitle {

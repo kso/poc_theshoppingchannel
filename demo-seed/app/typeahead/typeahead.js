@@ -43,6 +43,12 @@ angular.module('groupByDemo.typeahead', [])
         var navigations = [];
         for (var ii=response.data.result.navigations.length;ii--;){
           var navigation = response.data.result.navigations[ii];
+
+          //TODO: extract to settings
+          if(navigation.name !== 'CBrand'){
+            continue;
+          }
+
           if (navigation.values){
             for (var jj=navigation.values.length;jj--;){
               var item = navigation.values[jj];
@@ -52,14 +58,17 @@ angular.module('groupByDemo.typeahead', [])
               newNav.field = navigation.name;
               newNav.url = '';
               newNav.type = 'navigations';
+              newNav.fieldDisplayName = "Brand"; //TODO: extract to settings
               navigations.push(newNav);
             }
           }
         }
-        arrayResponse.push(navigations);
+        if(navigations.length >0) {
+          arrayResponse.push(navigations);
+        }
       }
 
-      var displayFields = settingsService['Display Fields'];
+      var displayFields = settingsService['SAYT Display Fields'];
 
       // Products
       if (response.data.result.products){
