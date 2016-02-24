@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('groupByDemo.primarynav', [])
-	.controller('primaryNavCtrl', ['$location', 'settingsService', 'apiService', '$filter', 'personalizationService' ,
-		function($location, settingsService, apiService, $filter, personalizationService){
+	.controller('primaryNavCtrl', ['$location', 'settingsService', 'apiService', '$filter', 'personalizationService', 'CONST',
+		function($location, settingsService, apiService, $filter, personalizationService, CONST){
 		
 		console.log("loading primary nav controller");
 

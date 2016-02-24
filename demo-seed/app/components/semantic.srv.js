@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module("groupByDemo.gbc.semantic",[])
-	.service('semanticSearchService', [function () {
+	.service('semanticSearchService', [ 'CONST', function (CONST) {
 
 		var service = this; 
 
@@ -39,7 +39,7 @@ angular.module("groupByDemo.gbc.semantic",[])
 
 					sortParam = {};
 					sortParam.field = 'price';
-					sortParam.order = 'Ascending';
+					sortParam.order = CONST.api.order.ascending;
 				}
 			}
 			// Expensive - Sort on price
@@ -50,7 +50,7 @@ angular.module("groupByDemo.gbc.semantic",[])
 
 					sortParam = {};
 					sortParam.field = 'price';
-					sortParam.order = 'Descending';
+					sortParam.order = CONST.api.order.descending;
 				}
 			}
 
@@ -83,12 +83,12 @@ angular.module("groupByDemo.gbc.semantic",[])
 				searchQuery = searchQuery.substring(0,refineIndex).trim();
 
 			var priceRefinement = {};
-			priceRefinement.type = "Range";
+			priceRefinement.type = CONST.api.refinement.range;
 			priceRefinement.navigationName = "price";
 
 			if(onsale){
 				var onsale_refinement = {
-					type : "Value",
+					type : CONST.api.refinement.value,
 					navigationName : "on_sale",
 					value : "On Sale"
 				};
@@ -108,7 +108,7 @@ angular.module("groupByDemo.gbc.semantic",[])
 			} else if (partNumber) {
 				searchQuery = "";
 				var partNoRefinement = {
-					type : "Value",
+					type : CONST.api.refinement.value,
 					navigationName : "ID",
 					value : refineValue
 				};

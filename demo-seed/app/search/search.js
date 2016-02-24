@@ -2,9 +2,9 @@
 
 angular.module("groupByDemo.search",['ui.bootstrap'])
 	.controller('searchCtrl', ['$scope', '$location', '$uibModal', 'apiService', '$stateParams', '$filter', 
-			'settingsService', 'personalizationService', 'semanticSearchService', 'urlService',
+			'settingsService', 'personalizationService', 'semanticSearchService', 'urlService', 'CONST', '$timeout',
 			function ($scope, $location, $uibModal, apiService, $stateParams, $filter, 
-				settingsService, personalizationService, semanticSearchService, urlService) {
+				settingsService, personalizationService, semanticSearchService, urlService, CONST, $timeout) {
 
 		console.log("loading search controller");
 
@@ -68,22 +68,22 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				model.raw = nav;
 				model.displayName = nav.displayName;
 				model.name = nav.name;
-				model.type = nav.range ? "range" : "value"; //default
+				model.type = nav.range ? CONST.nav.type.range : CONST.nav.type.value; //default
 
 				switch(nav.displayName){
 					case "Color":
-						model.type = "color";
+						model.type = CONST.nav.type.color;
 						break;
 					case "Rating":
-						model.type = "rating";
+						model.type = CONST.nav.type.rating;
 						break;
 				}
 
 				if(!nav.range) { return; }
 
 				//keep existing values if a refinement is already applied
-				var currentVal = $filter('filter')(model.selected, { navigationName : nav.name, type : 'Range'});	
-				if(currentVal.length > 0) { return; }
+				var currentVal = $filter('filter')(model.selected, { navigationName : nav.name, type : CONST.api.refinement.range});	
+				if('slider' in model) { return; }
 
 				var lo_bucket = 0;
 				var hi_bucket = 0;
@@ -102,7 +102,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 						ceil: hi_bucket,
 						onEnd: function(id, low, high) {
 							console.log(id + " " + low + " " + high);
-							view_model.refine(id, { low : low, high : high }, 'Range');
+							view_model.refine(id, { low : low, high : high }, CONST.api.refinement.range);
 						}
 					}
 				}; 
@@ -249,7 +249,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			var navModel = $filter('filter')(view_model.navigation, { name : nav_data_name } )[0];
 
 			switch(type){
-				case "Range":
+				case CONST.api.refinement.range:
 					console.log("add refinement: " + nav_data_name + " -->  " + ref_selected.low + "-" + ref_selected.high);
 					refinement.low = ref_selected.low;
 					refinement.high = ref_selected.high;
@@ -258,7 +258,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 					navModel.selected = [];
 
 					break;
-				case "Value":
+				case CONST.api.refinement.value:
 					console.log("add refinement: " + nav_data_name + " -->  " + ref_selected.value);
 					refinement.value = ref_selected.value;
 					break;
@@ -276,7 +276,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 		view_model.unrefine = function(nav_data_name, ref_unselected) {
 
 			console.log("remove value refinement: " + nav_data_name + " -->  " +
-				 (ref_unselected.type === "Value" ? ref_unselected.value : ref_unselected.low + "-" + ref_unselected.high)) ;
+				 (ref_unselected.type === CONST.api.refinement.value ? ref_unselected.value : ref_unselected.low + "-" + ref_unselected.high)) ;
 
 			angular.forEach(view_model.navigation, function(nav){
 
@@ -288,13 +288,13 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 						return true;
 					}
 
-					if(ref_unselected.type === "Value"){
+					if(ref_unselected.type === CONST.api.refinement.value){
 						console.log(o);
 						return !(o.navigationName === nav_data_name 
 							&& o.value === ref_unselected.value);
 					}
 
-					if(ref_unselected.type === "Range"){
+					if(ref_unselected.type === CONST.api.refinement.range){
 						return !(o.navigationName === nav_data_name 
 							&& o.high == ref_unselected.high 
 							&& o.low == ref_unselected.low );
@@ -335,5 +335,11 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 		};
 
 		view_model.search();
+
+		$scope.broadcast = function() {
+			$timeout(function(){
+				$scope.$broadcast('reCalcViewDimensions');
+			}, 50);
+		};
 
 	}]);
