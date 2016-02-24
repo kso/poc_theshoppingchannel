@@ -5,6 +5,23 @@ angular.module("groupByDemo.util.url",[])
 
 		var service = this; 
 
+		var encodeSearch = function(v){
+			return v.split(' ').join('+');
+		};
+
+		var decodeSearch = function(v) {
+			return v.split('+').join(' '); 
+		};
+
+		var encodeNav = function(v){
+			return encodeSearch(v).split('&').join('and');
+		};
+
+		var decodeNav = function(v){
+			return decodeSearch(v).split(' and ').join(' & ');
+		};
+
+
 		service.processURL = function(types, values){
 
 			var model = {
@@ -17,12 +34,10 @@ angular.module("groupByDemo.util.url",[])
 				var type = types[i];
 				var value = values[i];
 
-				value = value.split('+').join(' '); 
-
 				var mapping = settingsService['SEO-Friendly URL'][type];
 
 				if(mapping.type === "search"){
-					model.query = value;
+					model.query = decodeSearch(value);
 					//'all' is a special query to return all results
 					if(model.query === "all"){ 
 						model.query = ""; 	
@@ -36,7 +51,7 @@ angular.module("groupByDemo.util.url",[])
 					var refinement = {
 						type : "Value",
 						navigationName : mapping.value,
-						value : value.split(' and ').join(' & ')
+						value: decodeNav(value)
 					};
 
 					//if a refinement was multi-selected, the nav model may already exist
@@ -81,7 +96,7 @@ angular.module("groupByDemo.util.url",[])
 						return;
 					if(value.value === sel.navigationName){
 						mapping = mapping.concat(letter);
-						path = path.concat("/").concat( sel.value.split(' ').join('+').split('&').join('and') );
+						path = path.concat("/").concat( encodeNav(sel.value) );
 					}
 				});
 			});
