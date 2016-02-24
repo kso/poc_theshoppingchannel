@@ -13,6 +13,7 @@ angular.module("groupByDemo", [
 	'groupByDemo.inspect',
 	'groupByDemo.settings',
 	'groupByDemo.templates',
+	'groupByDemo.util.url',
 	'groupByDemo.util.settings',
 	'groupByDemo.util.filters',
 	'groupByDemo.primarynav',

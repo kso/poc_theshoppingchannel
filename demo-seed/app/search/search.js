@@ -2,60 +2,22 @@
 
 angular.module("groupByDemo.search",['ui.bootstrap'])
 	.controller('searchCtrl', ['$scope', '$location', '$uibModal', 'apiService', '$stateParams', '$filter', 
-			'settingsService', 'personalizationService', 'semanticSearchService',
+			'settingsService', 'personalizationService', 'semanticSearchService', 'urlService',
 			function ($scope, $location, $uibModal, apiService, $stateParams, $filter, 
-				settingsService, personalizationService, semanticSearchService) {
+				settingsService, personalizationService, semanticSearchService, urlService) {
 
 		console.log("loading search controller");
 
 		$scope.currentPage = 1;
 
 		var view_model = this;
-		view_model.navigation = [];
 
-		var processURL = function(){
-			var types = $stateParams.mapping.split('');
-			var values = $stateParams.query.split('/');
-			for(var i=0; i<values.length; i++){
+		var types = $stateParams.mapping.split('');
+		var values = $stateParams.query.split('/');
 
-				var type = types[i];
-				var value = values[i];
-
-				value = value.split('+').join(' '); 
-
-				var mapping = settingsService['SEO-Friendly URL'][type];
-
-				if(mapping.type === "search"){
-					view_model.query = value;
-					//'all' is a special query to return all results
-					if(view_model.query === "all"){ view_model.query = ""; 	}
-				} else {
-
-					var refinement = {
-						type : "Value",
-						navigationName : mapping.value,
-						value : value.split(' and ').join(' & ')
-					};
-
-					//if a refinement was multi-selected, the nav model may already exist
-					var navModel = $filter('filter')(view_model.navigation, { name : mapping.value } );
-					if(navModel.length > 0){
-						navModel[0].selected.push(refinement);
-						continue;
-					}
-
-					var nav = {
-						name : mapping.value,
-						displayName : mapping.displayName,
-						type : "value",
-						selected : [refinement]
-					};
-					view_model.navigation.push(nav);
-				}
-			}
-		};
-
-		processURL();
+		var modelFromURL = urlService.processURL(types, values);
+		view_model.query = modelFromURL.query;
+		view_model.navigation = modelFromURL.navigation;
 
 		view_model.resultSummary =  "";
 		view_model.personalizationEnabled = settingsService.Personalization.Status;
@@ -85,36 +47,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 		//takes the current search and navigation state and maps it to a URL
 		view_model.toURL = function() {
-
-			var mapping = "";
-			var path = "";
-
-			if(view_model.query){
-				mapping = mapping.concat("q");
-				path = path.concat("/").concat( view_model.query.split(' ').join('+') );
-			}
-
-			var selectedNavigation = view_model.getSelectedNavigation(view_model.navigation);
-			selectedNavigation = $filter('orderBy')(selectedNavigation, function(x) { 
-				return settingsService['URL Parameter Ordering'].indexOf(x.navigationName);
-			});
-
-			angular.forEach( selectedNavigation , function(sel){
-				angular.forEach( settingsService['SEO-Friendly URL'], function( value, letter ){
-					console.log(value);
-					if(value.type === "search")
-						return;
-					if(value.value === sel.navigationName){
-						mapping = mapping.concat(letter);
-						path = path.concat("/").concat( sel.value.split(' ').join('+').split('&').join('and') );
-					}
-				});
-			});
-
-			console.log(mapping.concat(path));
-
-			return mapping.concat(path);
-
+			return urlService.toURL( view_model.query,  view_model.getSelectedNavigation(view_model.navigation));
 		};
 
 	    view_model.getPageSize = function(){
