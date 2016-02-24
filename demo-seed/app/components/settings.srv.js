@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('groupByDemo.util.settings', [])
-	.service('settingsService', function(){
+	.service('settingsService', ['CONST', function(CONST){
 
 		var settings = this;
 
@@ -53,12 +53,16 @@ angular.module('groupByDemo.util.settings', [])
 			numberOfPreviewImages : 8
 		};
 
+		console.log(CONST);
+
 		settings['SEO-Friendly URL'] = {
-			q : { type : "search" },
-			c : { type : "navigation" , displayName: "Sub Category",  value: "Qtype" },
-			d : { type : "navigation" , displayName: "Category", value: "QtopRatedType" },
-			f : { type : "navigation" , displayName: "Color", value: "Qcolor" },
-			b : { type : "navigation" , displayName: "Brand", value: "CBrand" }
+			q : { component : CONST.search.component.query },
+			c : { component : CONST.search.component.navigation , navType : CONST.nav.type.value, displayName: "Sub Category",  value: "Qtype" },
+			d : { component : CONST.search.component.navigation , navType : CONST.nav.type.value, displayName: "Category", value: "QtopRatedType" },
+			f : { component : CONST.search.component.navigation , navType : CONST.nav.type.value, displayName: "Color", value: "Qcolor" },
+			b : { component : CONST.search.component.navigation , navType : CONST.nav.type.value, displayName: "Brand", value: "CBrand" },
+			r : { component : CONST.search.component.navigation , navType : CONST.nav.type.range, displayName: "Rating", value: "Qrating" },
+			p : { component : CONST.search.component.navigation , navType : CONST.nav.type.range, displayName: "Price", value: "price" }
 		};
 
 		settings['URL Parameter Ordering'] = [ "QtopRatedType", "Qcolor", "CBrand", "Qtype" ];
@@ -126,4 +130,4 @@ angular.module('groupByDemo.util.settings', [])
 		};
 
 		return settings;
-	});
+	}]);
