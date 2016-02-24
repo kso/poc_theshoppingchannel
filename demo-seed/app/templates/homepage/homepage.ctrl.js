@@ -1,9 +1,11 @@
 'use strict';
 
 angular.module('groupByDemo.templates', [])
-	.controller('homepageCtrl', [ 'apiService', function(apiService){
+	.controller('homepageCtrl', [ 'apiService', 'sharedData', function(apiService, sharedData){
 
 		var vm = this;
+
+		sharedData.query = "";
 
 		vm.zonemapping = ["TL","TM","TR","BL","BM","BR"];
 

@@ -2,9 +2,11 @@
 
 angular.module("groupByDemo.search",['ui.bootstrap'])
 	.controller('searchCtrl', ['$scope', '$location', '$uibModal', 'apiService', '$stateParams', '$filter', 
-			'settingsService', 'personalizationService', 'semanticSearchService', 'urlService', 'CONST', '$timeout',
+			'settingsService', 'personalizationService', 'semanticSearchService', 'urlService', 'CONST', 
+			'$timeout', 'sharedData',
 			function ($scope, $location, $uibModal, apiService, $stateParams, $filter, 
-				settingsService, personalizationService, semanticSearchService, urlService, CONST, $timeout) {
+				settingsService, personalizationService, semanticSearchService, urlService, 
+				CONST, $timeout, sharedData) {
 
 		console.log("loading search controller");
 
@@ -16,7 +18,8 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 		var values = $stateParams.query.split('/');
 
 		var modelFromURL = urlService.processURL(types, values);
-		view_model.query = modelFromURL.query;
+		sharedData.query = modelFromURL.query; //shared with typeahead!
+		view_model.query = modelFromURL.query; //controller keeps its own model to support e.g. autocorrect of search.
 		view_model.navigation = modelFromURL.navigation;
 
 		view_model.resultSummary =  "";

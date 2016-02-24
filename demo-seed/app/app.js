@@ -17,6 +17,7 @@ angular.module("groupByDemo", [
 	'groupByDemo.util.settings',
 	'groupByDemo.util.filters',
 	'groupByDemo.util.const',
+	'groupByDemo.util.sharedData',
 	'groupByDemo.primarynav',
 	'groupByDemo.recommendations',
 	'groupByDemo.cart',

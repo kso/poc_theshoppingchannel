@@ -3,25 +3,26 @@
 // taken from the ui.bootstrap example: http://angular-ui.github.io/bootstrap/#/typeahead
 
 angular.module('groupByDemo.typeahead', [])
-.controller('TypeaheadCtrl', ['settingsService', '$q', '$location', 'apiService', 
-  function(settingsService, $q, $location, apiService) {
+.controller('TypeaheadCtrl', ['settingsService', '$q', '$location', 'apiService', 'sharedData', 
+  function(settingsService, $q, $location, apiService, sharedData) {
 
-  var view_model = this;
+  var vm = this;
 
-  view_model.cancellers = [];
-  view_model.saytdata = [];
+  vm.cancellers = [];
+  vm.saytdata = [];
+  vm.data = sharedData;
 
   // Any function returning a promise object can be used to load values asynchronously
-  view_model.fetch = function(val) {
+  vm.fetch = function(val) {
     console.time("sayt");
     var canceller = $q.defer();
-    view_model.cancellers.push(canceller); 
+    vm.cancellers.push(canceller); 
     return apiService.sayt(val, canceller).then(function(response){
       console.timeEnd("sayt");
 
-      var cancellerIndex = view_model.cancellers.indexOf(canceller);
+      var cancellerIndex = vm.cancellers.indexOf(canceller);
       if(cancellerIndex > -1){
-        view_model.cancellers.splice(cancellerIndex, 1);
+        vm.cancellers.splice(cancellerIndex, 1);
       }
 
       // The uib-typeahead expects data in arrays, so we need to restructure.
@@ -91,21 +92,21 @@ angular.module('groupByDemo.typeahead', [])
 
       //if the request was cancelled after we got the response, suppress the results
       if(canceller.promise.$$state.status !== 0){
-        view_model.saytdata.length = 0;
+        vm.saytdata.length = 0;
       } else {
-        view_model.saytdata = arrayResponse;
+        vm.saytdata = arrayResponse;
       }
 
-      return view_model.saytdata;
+      return vm.saytdata;
 
     }, function(response){
       console.timeEnd("sayt");
       console.log("error");
       console.log(response);
 
-      var cancellerIndex = view_model.cancellers.indexOf(canceller);
+      var cancellerIndex = vm.cancellers.indexOf(canceller);
       if(cancellerIndex > -1){
-        view_model.cancellers.splice(cancellerIndex, 1);
+        vm.cancellers.splice(cancellerIndex, 1);
       }
 
     });
@@ -116,10 +117,10 @@ angular.module('groupByDemo.typeahead', [])
   	var queryString = typeof label === 'object' ? label.value : label;
 
     //cancel any pending requqests
-    angular.forEach( view_model.cancellers, function(cancel) {
+    angular.forEach( vm.cancellers, function(cancel) {
       cancel.resolve();
     });
-    view_model.saytdata.length = 0;
+    vm.saytdata.length = 0;
 
     if(!queryString){
 	    $location.path( "/" );
@@ -129,19 +130,19 @@ angular.module('groupByDemo.typeahead', [])
     $location.path( "q/" + queryString.split(' ').join('+') );
   };
 
-  view_model.onEnterKey = function (text) {
+  vm.onEnterKey = function (text) {
   	redirect(text);
   };
 
-  view_model.onSelectItem = function ($item, $model, $label) {
-    view_model.$item = $item;
-    view_model.$model = $model;
-    view_model.$label = $label;
+  vm.onSelectItem = function ($item, $model, $label) {
+    vm.$item = $item;
+    vm.$model = $model;
+    vm.$label = $label;
 
 	  redirect($label);
   };
 
-  view_model.modelOptions = {
+  vm.modelOptions = {
     debounce: {
       default: 500,
       blur: 250
