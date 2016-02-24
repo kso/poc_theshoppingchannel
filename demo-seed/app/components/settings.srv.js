@@ -19,12 +19,20 @@ angular.module('groupByDemo.util.settings', [])
 			id : "ID"
 		};
 
-		var searchFields = [];
-		Object.keys(settings['Display Fields']).forEach( function(key) {
-			searchFields.push( settings['Display Fields'][key] );
-		});
+		var getValuesFromObj = function(obj){
+			var values = [];
+			Object.keys(obj).forEach( function(key) {
+				values.push( obj[key] );
+			});
+			return values;
+		};
+
+		settings.getNames = function( settingsObj ){
+			return getValuesFromObj(settingsObj);
+		};
+
 		//add any additional fields to return here:
-		searchFields = searchFields.concat(["on_sale"]);
+		var searchFields = settings.getNames(settings['Display Fields']).concat(["on_sale"]);
 
 		settings.search = {
 			clientKey : "269466c6-e7b6-4439-a175-c6d5faa069dd",

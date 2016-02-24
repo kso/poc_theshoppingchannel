@@ -74,7 +74,7 @@ angular.module('groupByDemo.primarynav', [])
 				pageSize : settingsService['Nav Menu Defaults'].numberOfPreviewImages,
 				query : searchTerm,
 				refinements : refinement_parameter,
-				fields: vm.displayFields
+				fields: settingsService.getNames(vm.displayFields)
 			};
 
 			if(refinement_parameter.length > 0){
