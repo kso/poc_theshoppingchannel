@@ -81,7 +81,7 @@ angular.module("groupByDemo.util.url",[])
 				selected : [refinement]
 			};
 
-			nav.slider = service.buildSliderModel(range[0], range[1], mapping.displayName);
+			nav.slider = service.buildSliderModel(range[0], range[1], mapping.value);
 
 			navigation.push(nav);
 		};
@@ -118,11 +118,7 @@ angular.module("groupByDemo.util.url",[])
 				options : { 
 					id : name, 
 					floor: lo_bucket, 
-					ceil: hi_bucket,
-					onEnd: function(id, low, high) {
-						console.log(id + " " + low + " " + high);
-						view_model.refine(id, { low : low, high : high }, CONST.api.refinement.range);
-					}
+					ceil: hi_bucket
 				}
 			};
 		};

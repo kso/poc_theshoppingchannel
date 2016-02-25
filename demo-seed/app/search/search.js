@@ -83,9 +83,19 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				}
 
 				if(!nav.range) { return; }
+				if(nav.displayName === "Rating") { return; }
+
+				var onSliderRefinement = function(id, low, high) {
+						console.log(id + " " + low + " " + high);
+						view_model.refine(id, { low : low, high : high }, CONST.api.refinement.range);
+				};
 
 				//keep existing values if a refinement is already applied
-				if('slider' in model) { return; }
+				if('slider' in model) { 
+					//make sure there is a callback defined, this is not set by URL service.
+					model.slider.options.onEnd = onSliderRefinement;
+					return; 
+				}
 
 				var lo_bucket = 0;
 				var hi_bucket = 0;
@@ -95,7 +105,8 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 					hi_bucket = Math.max(ref.high, hi_bucket);
 				});
 
-				model.slider = urlService.buildSliderModel(lo_bucket, hi_bucket, nav.name); 
+				model.slider = urlService.buildSliderModel(lo_bucket, hi_bucket, nav.name, view_model.refine ); 
+				model.slider.options.onEnd = onSliderRefinement;
 			});
 
 			//determine whether to show the model or not
