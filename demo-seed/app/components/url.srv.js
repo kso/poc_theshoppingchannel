@@ -6,18 +6,18 @@ angular.module("groupByDemo.util.url",[])
 
 		var service = this; 
 
-		var encodeSearch = function(v){
+		service.encodeSearch = function(v){
 			return v.split(' ').join('+');
 		};
 
-		var decodeSearch = function(v) {
+		service.decodeSearch = function(v) {
 			return v.split('+').join(' '); 
 		};
 
-		var encodeNav = function(refinement, navType){
+		service.encodeNav = function(refinement, navType){
 
 			if(navType === CONST.nav.type.value){
-				return encodeSearch(refinement.value).split('&').join('and');
+				return service.encodeSearch(refinement.value).split('&').join('and');
 			}
 
 			if(navType === CONST.nav.type.range){
@@ -26,10 +26,10 @@ angular.module("groupByDemo.util.url",[])
 
 		};
 
-		var decodeNav = function(v, navType){
+		service.decodeNav = function(v, navType){
 
 			if(navType === CONST.nav.type.value){
-				return decodeSearch(v).split(' and ').join(' & ');
+				return service.decodeSearch(v).split(' and ').join(' & ');
 			}
 
 			if(navType === CONST.nav.type.range){
@@ -39,7 +39,7 @@ angular.module("groupByDemo.util.url",[])
 		};
 
 		var processQuery = function(inQuery) {
-			var outQuery = decodeSearch(inQuery);
+			var outQuery = service.decodeSearch(inQuery);
 
 			//'all' is a special query to return all results
 			if(outQuery === "all"){
@@ -65,7 +65,7 @@ angular.module("groupByDemo.util.url",[])
 
 		var processRangeNavigation = function(navigation, mapping, value){
 
-			var range = decodeNav(value, CONST.nav.type.range);
+			var range = service.decodeNav(value, CONST.nav.type.range);
 
 			var refinement = {
 				type : CONST.api.refinement.range,
@@ -91,7 +91,7 @@ angular.module("groupByDemo.util.url",[])
 			var refinement = {
 				type : CONST.api.refinement.value,
 				navigationName : mapping.value,
-				value: decodeNav(value, CONST.nav.type.value)
+				value: service.decodeNav(value, CONST.nav.type.value)
 			};
 
 			//if a refinement was multi-selected, the nav model may already exist
@@ -173,7 +173,7 @@ angular.module("groupByDemo.util.url",[])
 						return;
 					if(value.value === sel.navigationName){
 						mapping = mapping.concat(letter);
-						path = path.concat("/").concat( encodeNav(sel, value.navType) );
+						path = path.concat("/").concat( service.encodeNav(sel, value.navType) );
 					}
 				});
 			});
