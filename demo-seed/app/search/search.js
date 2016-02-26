@@ -238,6 +238,11 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				view_model.resultSummary =  firstResult.toString() + " - " + lastResult.toString() + " of " +  view_model.totalRecordCount.toString() + " Products";
 
 				console.log(view_model);
+
+				//workaround for slider issue:  https://github.com/angular-slider/angularjs-slider/issues/79
+				$timeout(function(){
+					$scope.$broadcast('reCalcViewDimensions');
+				}, 300);
 			});
 		};
 
@@ -336,10 +341,5 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 		};
 
 		view_model.search();
-
-		//workaround for slider issue:  https://github.com/angular-slider/angularjs-slider/issues/79
-		$timeout(function(){
-			$scope.$broadcast('reCalcViewDimensions');
-		}, 300);
 
 	}]);
