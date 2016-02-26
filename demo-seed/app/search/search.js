@@ -17,7 +17,12 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 		var types = $stateParams.mapping.split('');
 		var values = $stateParams.query.split('/');
 
-		var modelFromURL = urlService.processURL(types, values);
+		//stateParams can't capture query parameters unless they are bound to names,
+		//since we don't know our dimension names ahead of time, we use location service instead
+		//http://stackoverflow.com/questions/19053991/how-to-extract-query-parameters-with-ui-router-for-angularjs
+		var unmappedParameters = $location.search();
+
+		var modelFromURL = urlService.processURL(types, values, unmappedParameters);
 		sharedData.query = modelFromURL.query; //shared with typeahead!
 		view_model.query = modelFromURL.query; //controller keeps its own model to support e.g. autocorrect of search.
 		view_model.navigation = modelFromURL.navigation;
@@ -58,14 +63,23 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 	    };
 
 		//augment the navigation with additional info needed to render
-		view_model.updateNavModel = function(navModel, navFromSearch){
+		view_model.updateNavModel = function(navModel, navFromSearch, navSelected){
 
 			//reset the navigation objects from search
 			angular.forEach(navModel, function(model){ delete model.raw; });
 
+			//we use this to pick up category names of selected refinements when rebuilding state from a URL
+			angular.forEach(navSelected, function(nav){
+				var matchingModels = $filter('filter')(navModel, { name : nav.name });
+
+				if(matchingModels.length > 0){
+					matchingModels[0].displayName = nav.displayName;
+				}
+			});
+
 			angular.forEach(navFromSearch, function(nav){
 
-				var found = $filter('filter')(navModel, { displayName : nav.displayName});
+				var found = $filter('filter')(navModel, { name : nav.name});
 				var model =  found.length ? found[0] : navModel[ navModel.push({ selected: [] })-1 ];
  
 				model.raw = nav;
@@ -224,7 +238,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 		  		console.log(data);
 				view_model.totalRecordCount = data.totalRecordCount;
 				view_model.resultList = data.records;
-				view_model.navigation = view_model.updateNavModel(view_model.navigation, data.availableNavigation );
+				view_model.navigation = view_model.updateNavModel(view_model.navigation, data.availableNavigation, data.selectedNavigation );
 				view_model.selectedNavigation = data.selectedNavigation;
 
 				view_model.template = undefined;
@@ -276,7 +290,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 			navModel.selected.push( refinement ); 
 
-			$location.path( view_model.toURL() );
+			$location.url( view_model.toURL() );
 		};
 
 		view_model.unrefine = function(nav_data_name, ref_unselected) {
@@ -311,7 +325,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 			});
 
-			$location.path( view_model.toURL() );
+			$location.url( view_model.toURL() );
 		}; 
 
 		view_model.pin = function(id){

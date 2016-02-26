@@ -14,25 +14,25 @@ angular.module("groupByDemo.util.url",[])
 			return v.split('+').join(' '); 
 		};
 
-		service.encodeNav = function(refinement, navType){
+		service.encodeRefinement = function(refinement){
 
-			if(navType === CONST.nav.type.value){
+			if(refinement.type === CONST.api.refinement.value){
 				return service.encodeSearch(refinement.value).split('&').join('and');
 			}
 
-			if(navType === CONST.nav.type.range){
+			if(refinement.type === CONST.api.refinement.range){
 				return refinement.low + "-" + refinement.high;
 			}
 
 		};
 
-		service.decodeNav = function(v, navType){
+		service.decodeRefinement = function(v, refinementType){
 
-			if(navType === CONST.nav.type.value){
+			if(refinementType === CONST.api.refinement.value){
 				return service.decodeSearch(v).split(' and ').join(' & ');
 			}
 
-			if(navType === CONST.nav.type.range){
+			if(refinementType === CONST.api.refinement.range){
 				return v.split('-');
 			}
 
@@ -49,9 +49,7 @@ angular.module("groupByDemo.util.url",[])
 			return outQuery;
 		};
 
-		var processNavigation = function(navigation, type, value){
-
-			var mapping = settingsService['SEO-Friendly URL'][type];
+		var processNavigation = function(navigation, mapping, value){
 
 			if(mapping.navType === CONST.nav.type.value){
 				return processValueNavigation(navigation, mapping, value);
@@ -65,7 +63,7 @@ angular.module("groupByDemo.util.url",[])
 
 		var processRangeNavigation = function(navigation, mapping, value){
 
-			var range = service.decodeNav(value, CONST.nav.type.range);
+			var range = service.decodeRefinement(value, CONST.api.refinement.range);
 
 			var refinement = {
 				type : CONST.api.refinement.range,
@@ -91,7 +89,7 @@ angular.module("groupByDemo.util.url",[])
 			var refinement = {
 				type : CONST.api.refinement.value,
 				navigationName : mapping.value,
-				value: service.decodeNav(value, CONST.nav.type.value)
+				value: service.decodeRefinement(value, CONST.api.refinement.value)
 			};
 
 			//if a refinement was multi-selected, the nav model may already exist
@@ -111,6 +109,13 @@ angular.module("groupByDemo.util.url",[])
 
 		};
 
+		var inferRefinementType = function(value){
+
+			//if there's a dash, assume it is a range refinement
+			return value.indexOf('-') === -1 ? CONST.nav.type.value : CONST.nav.type.range;
+
+		};
+
 		service.buildSliderModel = function(lo_bucket, hi_bucket, name){
 			return {
 				min : lo_bucket,  
@@ -123,7 +128,7 @@ angular.module("groupByDemo.util.url",[])
 			};
 		};
 
-		service.processURL = function(types, values){
+		service.processURL = function(letters, values, unmappedParameters){
 
 			var model = {
 				query : "",
@@ -132,10 +137,10 @@ angular.module("groupByDemo.util.url",[])
 
 			for(var i=0; i<values.length; i++){
 
-				var type = types[i];
+				var letter = letters[i];
 				var value = values[i];
 
-				var mapping = settingsService['SEO-Friendly URL'][type];
+				var mapping = settingsService['SEO-Friendly URL'][letter];
 
 				if(mapping.component === CONST.search.component.query){
 					model.query = processQuery(value);
@@ -143,9 +148,27 @@ angular.module("groupByDemo.util.url",[])
 				} 
 
 				if(mapping.component === CONST.search.component.navigation) {
-					processNavigation(model.navigation, type, value);
+					processNavigation(model.navigation, mapping, value);
 
 				}
+			}
+
+			//TODO: decode unmapped parameters
+			if(!unmappedParameters)
+				return model;
+
+			var parameters = Object.keys(unmappedParameters);
+			for(var i=0; i<parameters.length; i++){
+				var value = unmappedParameters[parameters[i]];
+
+				var dummyMapping = {
+					component : CONST.search.component.navigation, 
+					navType : inferRefinementType(value),
+					value: parameters[i],
+					displayName : "N/A",  //we don't know this from the URL
+				};
+
+				processNavigation(model.navigation, dummyMapping, value);
 			}
 
 			return model;
@@ -156,6 +179,7 @@ angular.module("groupByDemo.util.url",[])
 
 			var mapping = "";
 			var path = "";
+			var parameters = "";
 
 			if(query){
 				mapping = mapping.concat("q");
@@ -167,20 +191,26 @@ angular.module("groupByDemo.util.url",[])
 			});
 
 			angular.forEach( selectedNavigation , function(sel){
-				angular.forEach( settingsService['SEO-Friendly URL'], function( value, letter ){
-					console.log(value);
-					if(value.type === CONST.search.component.query)
-						return;
-					if(value.value === sel.navigationName){
-						mapping = mapping.concat(letter);
-						path = path.concat("/").concat( service.encodeNav(sel, value.navType) );
-					}
-				});
+				var letter = settingsService.navToChar(sel.navigationName);
+
+				if(letter.length > 0){
+					var navDefinition = settingsService['SEO-Friendly URL'][letter];
+					mapping = mapping.concat(letter);
+					path = path.concat("/").concat( service.encodeRefinement(sel) );
+					return;
+				}
+
+				parameters = parameters.length > 0 ? parameters + "&" : "?";
+				parameters = parameters + service.encodeSearch(sel.navigationName) + "=" + service.encodeRefinement(sel);
+				
+
 			});
+			path = path.concat(parameters);
 
-			console.log(mapping.concat(path));
+			var fullpath = mapping.concat(path);
+			console.log(fullpath);
 
-			return mapping.concat(path);
+			return fullpath;
 
 		};
 

@@ -53,8 +53,6 @@ angular.module('groupByDemo.util.settings', [])
 			numberOfPreviewImages : 8
 		};
 
-		console.log(CONST);
-
 		settings['SEO-Friendly URL'] = {
 			q : { component : CONST.search.component.query },
 			c : { component : CONST.search.component.navigation , navType : CONST.nav.type.value, displayName: "Sub Category",  value: "Qtype" },
@@ -63,6 +61,20 @@ angular.module('groupByDemo.util.settings', [])
 			b : { component : CONST.search.component.navigation , navType : CONST.nav.type.value, displayName: "Brand", value: "CBrand" },
 			r : { component : CONST.search.component.navigation , navType : CONST.nav.type.range, displayName: "Rating", value: "Qrating" },
 			p : { component : CONST.search.component.navigation , navType : CONST.nav.type.range, displayName: "Price", value: "price" }
+		};
+
+		settings.navToChar = function(navigationFieldName){
+
+			var map = settings['SEO-Friendly URL'];
+			var keys = Object.keys(map);
+			for(var i = 0; i<keys.length; i++){
+				var value = map[keys[i]];
+				if(value.type === CONST.search.component.query)
+					continue;
+				if(value.value === navigationFieldName)
+					return keys[i];
+			}
+			return "";
 		};
 
 		settings['URL Parameter Ordering'] = [ "QtopRatedType", "Qcolor", "CBrand", "Qtype" ];
