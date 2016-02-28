@@ -21,7 +21,7 @@ angular.module("groupByDemo.util.url",[])
 			}
 
 			if(refinement.type === CONST.api.refinement.range){
-				return refinement.low + "-" + refinement.high;
+				return refinement.low + "~" + refinement.high;
 			}
 
 		};
@@ -33,7 +33,7 @@ angular.module("groupByDemo.util.url",[])
 			}
 
 			if(refinementType === CONST.api.refinement.range){
-				return v.split('-');
+				return v.split('~');
 			}
 
 		};
@@ -112,7 +112,7 @@ angular.module("groupByDemo.util.url",[])
 		var inferRefinementType = function(value){
 
 			//if there's a dash, assume it is a range refinement
-			return value.indexOf('-') === -1 ? CONST.nav.type.value : CONST.nav.type.range;
+			return value.indexOf('~') === -1 ? CONST.nav.type.value : CONST.nav.type.range;
 
 		};
 
@@ -153,7 +153,6 @@ angular.module("groupByDemo.util.url",[])
 				}
 			}
 
-			//TODO: decode unmapped parameters
 			if(!unmappedParameters)
 				return model;
 
@@ -174,12 +173,12 @@ angular.module("groupByDemo.util.url",[])
 			return model;
 		};
 
-		//takes the current search and navigation state and maps it to a URL
-		service.toURL = function(query, selectedNavigation) {
+		//takes the current search and navigation state and maps it to a state object
+		service.toState = function(query, selectedNavigation) {
 
 			var mapping = "";
 			var path = "";
-			var parameters = "";
+			var parameters = {};
 
 			if(query){
 				mapping = mapping.concat("q");
@@ -200,18 +199,80 @@ angular.module("groupByDemo.util.url",[])
 					return;
 				}
 
-				parameters = parameters.length > 0 ? parameters + "&" : "?";
-				parameters = parameters + service.encodeSearch(sel.navigationName) + "=" + service.encodeRefinement(sel);
-				
+				var paramName = service.encodeSearch(sel.navigationName);
+				var paramValue = service.encodeRefinement(sel);
+				if( parameters.hasOwnProperty(paramName) ){ // a multi-select refinement maps to an array 
+					var v = parameters[paramName];
+					parameters[paramName] = Array.isArray(v) ? v.concat(paramValue) : [v].concat(paramValue);
+				} else {
+					parameters[paramName] = paramValue;
+				}
 
 			});
-			path = path.concat(parameters);
 
-			var fullpath = mapping.concat(path);
-			console.log(fullpath);
+			//remove leading slash on path
+			if(path.length > 0){
+				path = path.substring(1);
+			}
 
-			return fullpath;
+			var state = { 'mappings' : mapping,  'values' : path };
+
+			if(Object.keys(parameters).length > 0){
+				var queryString = service.paramsToQueryString(parameters);
+				state.p = queryString;
+			} else {
+				state.p = null;
+			}
+
+			return state;
 
 		};
+
+		service.queryStringToParams = function(queryString){
+
+			var params = {};
+
+			if(!queryString)
+				return params;
+
+			angular.forEach( queryString.split('&') , function(paramString){
+
+				var p = paramString.split('=');
+				var paramName = p[0];
+				var paramValue = p[1];
+
+				if( params.hasOwnProperty(paramName) ){ // a multi-select refinement maps to an array 
+					var v = params[paramName];
+					params[paramName] = Array.isArray(v) ? v.concat(paramValue) : [v].concat(paramValue);
+				} else {
+					params[paramName] = paramValue;
+				}
+			});
+
+			return params;
+		};
+
+		service.paramsToQueryString = function(params){
+
+			var queryString = "";
+
+			angular.forEach( params , function(paramValue, paramName){
+				queryString = queryString.length > 0 ? queryString + "&" : queryString;
+
+				var values = [];
+				if(!Array.isArray(paramValue)){
+					values.push(paramValue);
+				} else {
+					values = paramValue;
+				}
+
+				for(var i=0; i<values.length; i++){
+					queryString = queryString + paramName + "=" + values[i];
+				}
+
+			});
+			return queryString;
+		};
+
 
 	}]);

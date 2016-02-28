@@ -1,26 +1,23 @@
 'use strict';
 
 angular.module("groupByDemo.search",['ui.bootstrap'])
-	.controller('searchCtrl', ['$scope', '$location', '$uibModal', 'apiService', '$stateParams', '$filter', 
+	.controller('searchCtrl', ['$scope', '$location', '$uibModal', 'apiService', '$state', '$stateParams', '$filter', 
 			'settingsService', 'personalizationService', 'semanticSearchService', 'urlService', 'CONST', 
-			'$timeout', 'sharedData',
-			function ($scope, $location, $uibModal, apiService, $stateParams, $filter, 
+			'$timeout', 'sharedData', '_', 
+			function ($scope, $location, $uibModal, apiService, $state, $stateParams, $filter, 
 				settingsService, personalizationService, semanticSearchService, urlService, 
-				CONST, $timeout, sharedData) {
+				CONST, $timeout, sharedData, _ ) {
 
-		console.log("loading search controller");
+		console.group("Loading Search Controller");
 
 		$scope.currentPage = 1;
 
 		var view_model = this;
 
-		var types = $stateParams.mapping.split('');
-		var values = $stateParams.query.split('/');
-
-		//stateParams can't capture query parameters unless they are bound to names,
-		//since we don't know our dimension names ahead of time, we use location service instead
-		//http://stackoverflow.com/questions/19053991/how-to-extract-query-parameters-with-ui-router-for-angularjs
-		var unmappedParameters = $location.search();
+		console.log($stateParams);
+		var types = $stateParams.mappings.split('');
+		var values = $stateParams.values.split('/');
+		var unmappedParameters = urlService.queryStringToParams($stateParams.p);
 
 		var modelFromURL = urlService.processURL(types, values, unmappedParameters);
 		sharedData.query = modelFromURL.query; //shared with typeahead!
@@ -53,13 +50,22 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 			});
 
-		//takes the current search and navigation state and maps it to a URL
-		view_model.toURL = function() {
-			return urlService.toURL( view_model.query,  view_model.getSelectedNavigation(view_model.navigation));
-		};
-
 	    view_model.getPageSize = function(){
 			return settingsService.search.pageSize;
+	    };
+
+
+	    //TODO: move this out of the search controller. This mapping in settings service. 
+	    view_model.navDisplayNameToModelType = function(displayname){
+
+	    	switch(displayname){
+	    		case "Color":
+	    			return CONST.nav.type.color;
+	    		case "Rating":
+	    			return CONST.nav.type.rating;
+	    	}
+
+	    	return null;
 	    };
 
 		//augment the navigation with additional info needed to render
@@ -73,8 +79,15 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				var matchingModels = $filter('filter')(navModel, { name : nav.name });
 
 				if(matchingModels.length > 0){
-					matchingModels[0].displayName = nav.displayName;
+					var model = matchingModels[0];
+					model.displayName = nav.displayName;
+
+					var specialType = view_model.navDisplayNameToModelType(model.displayName);
+					if(specialType){
+						model.type = specialType;		
+					}
 				}
+
 			});
 
 			angular.forEach(navFromSearch, function(nav){
@@ -85,16 +98,11 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				model.raw = nav;
 				model.displayName = nav.displayName;
 				model.name = nav.name;
+
 				model.type = nav.range ? CONST.nav.type.range : CONST.nav.type.value; //default
 
-				switch(nav.displayName){
-					case "Color":
-						model.type = CONST.nav.type.color;
-						break;
-					case "Rating":
-						model.type = CONST.nav.type.rating;
-						break;
-				}
+				var specialType = view_model.navDisplayNameToModelType(model.displayName);
+				model.type = specialType ? specialType : model.type;		
 
 				if(!nav.range) { return; }
 				if(nav.displayName === "Rating") { return; }
@@ -213,6 +221,8 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 		view_model.search = function () {
 
+			console.group("Running Search");
+
 			var refinement_parameter = view_model.getSelectedNavigation(view_model.navigation);
 
 			//semantic translation of the search
@@ -235,7 +245,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
   		  	console.time("search");
 		  	apiService.search(parameters).success(function(data){
 		  		console.timeEnd("search");
-		  		console.log(data);
+		  		console.log("Search API Data", data);
 				view_model.totalRecordCount = data.totalRecordCount;
 				view_model.resultList = data.records;
 				view_model.navigation = view_model.updateNavModel(view_model.navigation, data.availableNavigation, data.selectedNavigation );
@@ -251,13 +261,30 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				var lastResult =  Math.min( firstResult + view_model.getPageSize() - 1, view_model.totalRecordCount);
 				view_model.resultSummary =  firstResult.toString() + " - " + lastResult.toString() + " of " +  view_model.totalRecordCount.toString() + " Products";
 
-				console.log(view_model);
+				console.log("Search Model", view_model);
+
+				console.groupEnd();
 
 				//workaround for slider issue:  https://github.com/angular-slider/angularjs-slider/issues/79
 				$timeout(function(){
 					$scope.$broadcast('reCalcViewDimensions');
 				}, 300);
 			});
+		};
+
+		view_model.reload = function(){
+
+			//takes the current search and navigation state and maps it to a URL
+			var state = urlService.toState( view_model.query,  view_model.getSelectedNavigation(view_model.navigation));
+
+			console.group("Changing State");
+			console.log(state);
+
+			//if path is the same, the query parameters have changed
+			$state.go('query', state, {reload: true, relative: $state.$current, inherit: true, notify: true});
+
+			console.groupEnd();
+
 		};
 
 		view_model.refine = function(nav_data_name, ref_selected, type) {
@@ -290,7 +317,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 			navModel.selected.push( refinement ); 
 
-			$location.url( view_model.toURL() );
+			view_model.reload();
 		};
 
 		view_model.unrefine = function(nav_data_name, ref_unselected) {
@@ -325,7 +352,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 			});
 
-			$location.url( view_model.toURL() );
+			view_model.reload();
 		}; 
 
 		view_model.pin = function(id){
@@ -354,6 +381,8 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			});
 		};
 
+
+		console.groupEnd();
 		view_model.search();
 
 	}]);

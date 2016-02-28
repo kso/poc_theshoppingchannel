@@ -44,10 +44,18 @@ config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'JSONFormat
 		controllerAs: "homepage"
 	}).
 	state('query', {
-		url: '/{mapping:[bcdfghjklmnpqrstvwxz]*}/{query:.*}',
+		url: '/{mappings:[bcdfghjklmnpqrstvwxz]*}/{values:any}?{p:any}',
 		templateUrl: "search/search-results.html", 
 		controller: "searchCtrl",
-		controllerAs: "search"
+		controllerAs: "search",
+	   	resolve:{
+    		values: ['$stateParams', function($stateParams){ 
+    			return $stateParams.values; 
+    		}],
+    		mappings: ['$stateParams', function($stateParams){ 
+    			return $stateParams.mappings; 
+    		}]
+      	}
 	}).
 	state('product', {
 		url: '/product/:id',
@@ -62,4 +70,5 @@ config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'JSONFormat
     $locationProvider.html5Mode(true);
 
     JSONFormatterConfigProvider.hoverPreviewEnabled = true;
-}]);
+}]).
+constant('_', _);  //lodash
