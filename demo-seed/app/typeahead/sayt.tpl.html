@@ -19,7 +19,7 @@
 						</a>
 						<a class="saytLink saytProductTitle" href="{{m.url}}"
 						   tabindex="-1"
-						   ng-bind-html="m.value | uibTypeaheadHighlight:query"
+						   ng-bind-html="m.value | cut:true:50:'...' | uibTypeaheadHighlight:query"
 						   ng-attr-title="{{m.value}}"></a>
 					 </div>
 				</div>
