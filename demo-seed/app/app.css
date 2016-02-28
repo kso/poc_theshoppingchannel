@@ -153,6 +153,21 @@ body.modal-open {
 	float:right;
 }
 
+
+.showmore{
+	padding: 5px 2px 2px 2px;
+	border-color: transparent;
+	cursor: pointer;
+	font-size: 11px;
+	color: #bbb;
+	display: table;
+}
+
+.showmore p {
+    display: table-cell;
+    padding-left: 5px;
+}
+
 .refinement {
 	padding: 3px;
 	border-radius: 6px;

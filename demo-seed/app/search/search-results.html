@@ -65,7 +65,7 @@
             <span>{{refinement.value}}</span>
           </li>
           <li class="list-group-item refinement" 
-              ng-repeat="refinement in nav.raw.refinements | limitTo:5 "
+              ng-repeat="refinement in nav.raw.refinements | limitTo: showmore ? 20 : 5 "
               ng-click="(nav.selected | filter:{navigationName : nav.name, value: refinement.value}).length > 0  ? 
                 search.unrefine(nav.name, refinement) : 
                 search.refine(nav.name, refinement, 'Value')">
@@ -76,6 +76,12 @@
               class="state-icon glyphicon"></span>
             <span class="badge">{{refinement.count}}</span>
             <span>{{refinement.value}}</span>
+          </li>
+          <li class="list-group-item showmore" 
+              ng-show="nav.raw.refinements.length > 5"
+              ng-click="showmore = !showmore">
+            <p ng-class="showmore ? 'glyphicon glyphicon-minus' : 'glyphicon glyphicon-plus'"></p>
+            <p>{{showmore ? 'Show Less' : 'Show More'}}</p>
           </li>
         </ul>
 
