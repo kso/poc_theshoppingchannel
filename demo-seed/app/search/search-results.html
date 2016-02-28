@@ -23,6 +23,20 @@
       <!-- Reviews selector  -->
       <div ng-switch on="nav.type">
         <ul ng-switch-when="rating" class="list-group" uib-collapse="nav.collapsed">
+          <!-- TODO: Notice that we have two different li - one for selected refinements, 
+          another for unselected. This should be consolidated -->
+          <li class="list-group-item refinement" 
+              ng-repeat="refinement in nav.selected"
+              ng-click="(nav.selected | filter:{navigationName : nav.name}).length > 0  ? 
+                search.unrefine(nav.name, refinement) : 
+                search.refine(nav.name, refinement, 'Range')"
+              ng-attr-title="{{refinement.low}}-{{refinement.high}} Stars" >
+            <uib-rating
+              ng-model="refinement.high"
+              readonly='true'></uib-rating> 
+            <p ng-if="(nav.selected | filter:{navigationName : nav.name, high: refinement.high}).length > 0" class="glyphicon glyphicon-remove"></p>
+            <span ng-if="!(nav.selected | filter:{navigationName : nav.name, high: refinement.high}).length > 0" class="badge">{{refinement.count}}</span>
+          </li>
           <li class="list-group-item refinement" 
               ng-repeat="refinement in nav.raw.refinements"
               ng-click="(nav.selected | filter:{navigationName : nav.name}).length > 0  ? 
