@@ -280,8 +280,9 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			console.group("Changing State");
 			console.log(state);
 
-			//if path is the same, the query parameters have changed
-			$state.go('query', state, {reload: true, relative: $state.$current, inherit: true, notify: true});
+			//TODO: possible to go to new state without having to re-load the controller (notify = false)? 
+			//It could  make for a more seamless refresh
+			$state.go('query', state, {notify: true});
 
 			console.groupEnd();
 
