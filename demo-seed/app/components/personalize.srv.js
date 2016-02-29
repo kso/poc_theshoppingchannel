@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module("groupByDemo.gbc.personalization",['ngCookies'])
-	.service('personalizationService', ['$cookies', function ($cookies) {
+	.service('personalizationService', ['$cookies', 'merchandisingService', function ($cookies, merchandisingService) {
 
 		var service = this; 
 
@@ -22,7 +22,7 @@ angular.module("groupByDemo.gbc.personalization",['ngCookies'])
 
 		service.applyProfile = function( query, nav ){
 			var profile = {};
-			profile.bringToTop = getBringToTop( getKey(query, nav) );
+			profile.bringToTop = merchandisingService.getBringToTop( query, nav );
 			profile.augmentBiases = true;
 			profile.biases = [];
 
@@ -57,46 +57,6 @@ angular.module("groupByDemo.gbc.personalization",['ngCookies'])
 			affinity[type] = affinity[type] ? affinity[type] : {};
 			affinity[type][value] = affinity[type][value] ? affinity[type][value] + 1 : 1;
 			$cookies.putObject("profile", affinity);
-		};
-
-		service.recordPinEvent = function( search, nav, id, add ){
-
-			console.log("recording Pinning Event "  + getKey(search, nav) + " " + id + " " + add );
-
-			var searchpins = $cookies.getObject("searchpins");
-			searchpins = searchpins ? searchpins : {};
-
-			var key = getKey(search, nav);
-			searchpins[key] = searchpins[key] ? searchpins[key] : [];
-
-			if(add){
-				searchpins[key].push(id);
-			} else {
-				var index = searchpins[key].indexOf(id);
-				if (index == -1)
-					return;
-				searchpins[key].splice(index, 1);
-			}
-
-			$cookies.putObject("searchpins", searchpins);
-		};
-
-		service.isPinned = function(search, nav, id){
-			var pinnedItems = getBringToTop( getKey(search, nav) );
-			return pinnedItems.indexOf(id);		
-		};
-
-		var getBringToTop = function( key ) {
-			var searchpins = $cookies.getObject("searchpins");
-			if(!searchpins || !searchpins[key]){
-				return [];
-			}
-			return searchpins[key];	
-		};
-
-		var getKey = function(search, nav){
-			var navString = JSON.stringify( nav );
-			return search + "+" + navString;
 		};
 
 	}]);

@@ -7,6 +7,7 @@ angular.module("groupByDemo", [
 	'groupByDemo.gbc',
 	'groupByDemo.gbc.personalization',
 	'groupByDemo.gbc.recommendation',
+	'groupByDemo.gbc.merchandising',
 	'groupByDemo.gbc.semantic',
 	'groupByDemo.product',
 	'groupByDemo.typeahead',

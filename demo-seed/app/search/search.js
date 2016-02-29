@@ -2,11 +2,11 @@
 
 angular.module("groupByDemo.search",['ui.bootstrap'])
 	.controller('searchCtrl', ['$scope', '$location', '$uibModal', 'apiService', '$state', '$stateParams', '$filter', 
-			'settingsService', 'personalizationService', 'semanticSearchService', 'urlService', 'CONST', 
+			'settingsService', 'personalizationService', 'merchandisingService', 'semanticSearchService', 'urlService', 'CONST', 
 			'$timeout', 'sharedData', '_', 
 			function ($scope, $location, $uibModal, apiService, $state, $stateParams, $filter, 
-				settingsService, personalizationService, semanticSearchService, urlService, 
-				CONST, $timeout, sharedData, _ ) {
+				settingsService, personalizationService, merchandisingService, semanticSearchService, 
+				urlService, CONST, $timeout, sharedData, _ ) {
 
 		console.group("Loading Search Controller");
 
@@ -358,7 +358,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 		view_model.pin = function(id){
 			var selectedNavigation = view_model.getSelectedNavigation(view_model.navigation);
-			personalizationService.recordPinEvent(view_model.query, selectedNavigation, id, !view_model.isPinned(id) );
+			merchandisingService.recordPinEvent(view_model.query, selectedNavigation, id, !view_model.isPinned(id) );
 			view_model.search();
 		};
 
@@ -378,7 +378,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 		view_model.isPinned = function(id){
 			var selectedNavigation = view_model.getSelectedNavigation(view_model.navigation);
-			return (personalizationService.isPinned(view_model.query, selectedNavigation, id) > -1);
+			return (merchandisingService.isPinned(view_model.query, selectedNavigation, id) > -1);
 		};
 
 		view_model.inspect = function(product_id){
