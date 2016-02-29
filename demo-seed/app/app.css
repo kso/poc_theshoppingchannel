@@ -218,6 +218,10 @@ body.modal-open {
 	height:auto;
 }
 
+.product-container.curated {
+	background-color : rgba(255, 23, 23, 0.09);
+}
+
 .sale-badge {
 	position: absolute;
 	top:0;
@@ -268,32 +272,28 @@ body.modal-open {
 	display:block;
 }
 
+
 .product-thumb-container .hover-btn {
      position: absolute;
-     top: 15%;
-     right: 5%;
-     background-color: transparent;
+     top: 0%;
+     right: 25%;
+     background-color: rgba(231, 232, 228, 0.55);
      display: none;
      cursor: pointer;
 }
 
-.product-thumb-container .hover-btn.pushpin-on {
-     position: absolute;
-     top: 5%;
-     right: 5%;
-     background-color: transparent;
-     display: block;
-     cursor: pointer;
+.product-thumb-container .hover-btn span {
+	padding-left : 5px;
+	padding-right : 5px;
+	text-shadow: 2px 0 0 #eee, -2px 0 0 #eee, 0 2px 0 #eee, 0 -2px 0 #eee, 1px 1px #eee, -1px -1px 0 #eee, 1px -1px 0 #eee, -1px 1px 0 #eee;
+}
+
+.product-thumb-container .hover-btn span.pushpin-on {
      color: red;     
 }
 
-.product-thumb-container .hover-btn.pushpin-off {
-     position: absolute;
-     top: 5%;
-     right: 5%;
-     background-color: transparent;
-     display: none;
-     cursor: pointer;     
+.product-thumb-container .hover-btn span.pushpin-off {
+     color: gray;     
 }
 
 .product-thumb-container:hover .hover-btn {

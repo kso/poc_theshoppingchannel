@@ -140,18 +140,33 @@
       </div>
     </div>
     <div class="row">
-      <div class="product-container col-md-3 col-xs-6 clearfix" ng-repeat="result in search.resultList track by result._id">
+      <div class="product-container col-md-3 col-xs-6 clearfix" 
+        ng-repeat="result in search.resultList track by result._id"
+        ng-class="search.isPinned(result.allMeta[search.displayFields.id]) ? 'curated' : ''" >
         <div class="product-thumb-container" style="position:relative">
           <a href="product/{{result.allMeta[search.displayFields.id]}}" class="product-thumb">
-            <img class="img-responsive" ng-src="{{result.allMeta[search.displayFields.image]}}">
+            <img class="img-responsive" ng-src="{{result.allMeta[search.displayFields.image] ? result.allMeta[search.displayFields.image] :
+            'http://prodimage.images-bn.com/mimages/0000000000000_p0_v0_s192x300.jpg'}}">
             <h5>{{result.allMeta[search.displayFields.title] | cut:true:50:'...'}} - {{result.allMeta[search.displayFields.price] | currency}}</h5>
           </a>
           <img ng-if="result.allMeta.on_sale" class="sale-badge img-responsive" src="http://wac.aee8.edgecastcdn.net/80AEE8/p/p/baseballwarehouse/images/product-badges/on-sale-badge-left.png">
-          <div class="hover-btn" ng-click="search.inspect(result.allMeta[search.displayFields.id])">
-            <i class="glyphicon glyphicon-eye-open"></i>
-          </div>
-          <div ng-class="search.isPinned(result.allMeta[search.displayFields.id]) ? 'pushpin-on' : 'pushpin-off'" class="hover-btn" ng-click="search.pin2(result.allMeta[search.displayFields.id], $index)">
-            <i class="glyphicon glyphicon-pushpin"></i>
+          <div class="hover-btn">
+            <span class="glyphicon glyphicon-eye-open" 
+              ng-click="search.inspect(result.allMeta[search.displayFields.id])"></span>
+
+            <span class="octicon octicon-arrow-up" 
+              ng-click="search.pushToTop(result.allMeta[search.displayFields.id])"></span>
+
+            <span class="glyphicon glyphicon-pushpin"
+              ng-click="search.curate(result.allMeta[search.displayFields.id], $index)"></span>
+
+            <span ng-click="search.bury(result.allMeta[search.displayFields.id])" 
+              class="octicon octicon-arrow-down"
+              ng-class= "search.isPinned(result.allMeta[search.displayFields.id]) ? 'pushpin-off' : ''"></span>
+
+            <span ng-click="search.removeCuratedItem(result.allMeta[search.displayFields.id])" 
+              ng-class= "search.isPinned(result.allMeta[search.displayFields.id]) ? 'pushpin-on' : 'pushpin-off'"
+              class="octicon octicon-x"></span>
           </div>
           <div class="product-add-to-cart">
             <ngcart-addtocart id="{{result.allMeta[search.displayFields.id]}}" quantity="1" quantity-max="9" name="{{result.allMeta[search.displayFields.title]}}" price="{{result.allMeta[search.displayFields.price]}}" template-url="cart/addtocart.tpl.html" data="product">Add to Cart</ngcart-addtocart>

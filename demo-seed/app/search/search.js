@@ -26,9 +26,29 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 		view_model.resultSummary =  "";
 		view_model.personalizationEnabled = settingsService.Personalization.Status;
+		view_model.safeSearchEnabled = settingsService.Personalization.SafeSearch;
 		view_model.displayFields = settingsService['Display Fields'];
 
 	    $scope.sortFields = settingsService.Sorting;
+
+		$scope.$watch( function( scope ) {
+				var hasChanged = settingsService.Personalization.SafeSearch !== view_model.safeSearchEnabled;
+				return hasChanged;
+			},
+			function(newValue, oldValue) {
+
+				if(oldValue)
+					return;
+
+				//callback sometimes fires when controller is initialized
+				var hasChanged = settingsService.Personalization.SafeSearch !== view_model.safeSearchEnabled;
+				if(!hasChanged) 
+					return;
+
+				view_model.safeSearchEnabled = settingsService.Personalization.SafeSearch;
+				view_model.search();
+
+			});
 
 		$scope.$watch( function( scope ) {
 				var hasChanged = settingsService.Personalization.Status !== view_model.personalizationEnabled;
@@ -219,6 +239,25 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			return selectedNavigation;
 		};
 
+		view_model.applyExclusions = function(query, nav) {
+
+			var exclusions = merchandisingService.getExcluded(query, nav);
+
+			var exclusion_refinements = _.transform( exclusions, function(result, exclusion ){
+
+				result.push({
+					type : CONST.api.refinement.value,
+					navigationName : 'id',
+					value : exclusion,
+					exclude : true
+				});
+
+			}, []);
+
+			return exclusion_refinements;
+
+		};
+
 		view_model.search = function () {
 
 			console.group("Running Search");
@@ -230,6 +269,9 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			var sort = interpretation.sort;
 			var query = interpretation.query; 
 			refinement_parameter = refinement_parameter.concat(interpretation.refinements);
+
+			var refinement_exclusions = view_model.applyExclusions(view_model.query, view_model.getSelectedNavigation(view_model.navigation));
+			refinement_parameter = refinement_parameter.concat(refinement_exclusions);
 
 			var parameters = {
 				skip : view_model.getPageSize() * ($scope.currentPage - 1),
@@ -247,9 +289,11 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 		  		console.timeEnd("search");
 		  		console.log("Search API Data", data);
 				view_model.totalRecordCount = data.totalRecordCount;
-				view_model.resultList = data.records;
 				view_model.navigation = view_model.updateNavModel(view_model.navigation, data.availableNavigation, data.selectedNavigation );
 				view_model.selectedNavigation = data.selectedNavigation;
+				view_model.resultList = merchandisingService.curateResults(view_model.query, 
+					view_model.getSelectedNavigation(view_model.navigation), 
+					data.records);
 
 				view_model.template = undefined;
 				if("template" in data && data.template.name !== 'default') {
@@ -356,13 +400,39 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			view_model.reload();
 		}; 
 
-		view_model.pin = function(id){
+		view_model.pushToTop = function(id, position){
+
+			if( view_model.isPinned(id) ) //skip if already pinned
+				return;
+
 			var selectedNavigation = view_model.getSelectedNavigation(view_model.navigation);
-			merchandisingService.recordPinEvent(view_model.query, selectedNavigation, id, !view_model.isPinned(id) );
+			merchandisingService.recordCurateEvent(view_model.query, selectedNavigation, id, 0, true);
 			view_model.search();
 		};
 
-		view_model.pin2 = function(product_id, position){
+		view_model.removeCuratedItem = function(id){
+
+			var selectedNavigation = view_model.getSelectedNavigation(view_model.navigation);
+			var position = merchandisingService.wherePinned(view_model.query, selectedNavigation, id); 
+			if( position === -1 ) //skip if not pinned
+				return;
+
+			merchandisingService.recordCurateEvent(view_model.query, selectedNavigation, id, position, false );
+			view_model.search();
+		};
+
+		//TODO: There is no way to remove a buried item right now
+		view_model.bury = function(id){
+
+			if( view_model.isPinned(id) ) //don't allow bury on pinned items
+				return;
+
+			var selectedNavigation = view_model.getSelectedNavigation(view_model.navigation);
+			merchandisingService.buryEvent(view_model.query, selectedNavigation, id, true); 
+			view_model.search();
+		};
+
+		view_model.curate = function(product_id, position){
 
 			var modalInstance = $uibModal.open({
 			  animation: true,
