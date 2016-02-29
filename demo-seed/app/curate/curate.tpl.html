@@ -1,0 +1,46 @@
+
+<div>
+    <div class="modal-header">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3 class="modal-title">Modify Spot #{{curate.position}}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body">
+        <uib-tabset class="reveal-modal clearfix" data-reveal>
+            <uib-tab heading="Move To" active="true">
+                <div class="col-md-12">
+                    <form novalidate>
+                      Move to spot#: <input type="number" ng-model="curate.moveto" min="1" max="200" required/>
+                    </form>
+                </div>
+            </uib-tab>
+            <uib-tab heading="Pick Product" active="false">
+                <div class="row curate-search-box">
+                    <form novalidate>
+                      Replace spot #{{curate.position}} with this product: <input type="text" ng-model="curate.searchText" ng-change="curate.search()" required ng-trim="false">
+                    </form>
+                </div>
+                <div class="row curate-search-results">
+                    <div class="curate-container col-md-3 col-xs-6" ng-repeat="result in curate.results track by result._id">
+                      <div class="curate-preview">
+                        <div class="curate-thumb">
+                          <img class="img-responsive" ng-src="{{result.allMeta[curate.displayFields.image]}}">
+                          <h5>{{result.allMeta[curate.displayFields.title] | cut:true:50:'...'}}</h5>
+                        </div> 
+                        <div class="hover-btn">
+                          <button class="btn btn-danger" type="button" ng-click="curate.pick(result.allMeta[curate.displayFields.id])">Select</button>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </uib-tab>
+ 
+        </uib-tabset>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="curate.save()">Save</button>
+        <button class="btn btn-primary" type="button" ng-click="curate.cancel()">Cancel</button>
+    </div>
+</div>

@@ -11,6 +11,7 @@ angular.module("groupByDemo", [
 	'groupByDemo.product',
 	'groupByDemo.typeahead',
 	'groupByDemo.inspect',
+	'groupByDemo.curate',
 	'groupByDemo.settings',
 	'groupByDemo.templates',
 	'groupByDemo.util.url',

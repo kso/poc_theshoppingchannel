@@ -150,7 +150,7 @@
           <div class="hover-btn" ng-click="search.inspect(result.allMeta[search.displayFields.id])">
             <i class="glyphicon glyphicon-eye-open"></i>
           </div>
-          <div ng-class="search.isPinned(result.allMeta[search.displayFields.id]) ? 'pushpin-on' : 'pushpin-off'" class="hover-btn" ng-click="search.pin(result.allMeta[search.displayFields.id])">
+          <div ng-class="search.isPinned(result.allMeta[search.displayFields.id]) ? 'pushpin-on' : 'pushpin-off'" class="hover-btn" ng-click="search.pin2(result.allMeta[search.displayFields.id], $index)">
             <i class="glyphicon glyphicon-pushpin"></i>
           </div>
           <div class="product-add-to-cart">

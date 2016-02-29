@@ -1,0 +1,56 @@
+
+.curate-search-box {
+	margin: 15px;
+}
+
+.curate-search-results {
+	margin: 15px;
+}
+
+.curate-container:nth-of-type(4n+1){
+  clear:both;
+}
+
+.curate-container {
+	height:auto;
+}
+
+.curate-thumb {
+	padding: 10px;
+}
+
+.curate-thumb > img {
+	border-color: transparent;
+	margin-left:auto;
+	margin-right:auto;
+	max-width: 60%;
+	height: auto;
+	margin-bottom: 10px;
+}
+
+.curate-thumb > h5 {
+	margin-left:20px;
+	margin-right:20px;
+}
+
+.curate-preview {
+	border: 1px solid transparent;
+	border-radius: 6px;
+}
+
+.curate-preview:hover {
+	border-color: #ddd;
+}
+
+.curate-preview .hover-btn {
+     position: absolute;
+     top: 34%;
+     right: 34%;
+     background-color: transparent;
+     display: none;
+     cursor: pointer;
+}
+
+.curate-preview:hover .hover-btn {
+	display: block;
+}

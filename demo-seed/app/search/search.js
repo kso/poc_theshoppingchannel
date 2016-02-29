@@ -362,6 +362,20 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			view_model.search();
 		};
 
+		view_model.pin2 = function(product_id, position){
+
+			var modalInstance = $uibModal.open({
+			  animation: true,
+			  templateUrl: "curate/curate.tpl.html",
+			  controller: "curateCtrl as curate",
+			  size: "lg",
+			  resolve : {
+			  	id : function () { return product_id; },
+			  	position : function  () { return position + 1; }
+			  }
+			});
+		};
+
 		view_model.isPinned = function(id){
 			var selectedNavigation = view_model.getSelectedNavigation(view_model.navigation);
 			return (personalizationService.isPinned(view_model.query, selectedNavigation, id) > -1);
