@@ -1,6 +1,42 @@
 
+.move-box {
+	width : 40%;
+	padding-left: 5px;
+}
+
+.curate-search-container {
+	width : 100%;
+	margin : 0;
+	float: left;
+	padding-left: 5%;
+	background-color: #ddd;
+	border-radius: 10px;
+	position: relative;
+}
+
 .curate-search-box {
-	margin: 15px;
+	padding: 3% 0;
+	position: relative;
+}
+
+.curate-replace-preview {
+	padding: 3% 0;
+	text-align: center;
+}
+
+.curate-move-box {
+	width : 100%;
+	margin : 15px 0 0 0;
+	float: left;
+	padding-left: 5%;
+	background-color: #ddd;
+	border-radius: 10px;
+	position: relative;
+}
+
+.curate-move-box > div {
+	padding: 3% 0;
+	position: relative;
 }
 
 .curate-search-results {
@@ -15,8 +51,17 @@
 	height:auto;
 }
 
+.curate-replace-preview > img {
+	margin-left:auto;
+	margin-right:auto;
+	max-height: 200px;
+	height: auto;
+	margin-bottom: 5px;
+}
+
 .curate-thumb {
 	padding: 10px;
+	text-align: center;
 }
 
 .curate-thumb > img {

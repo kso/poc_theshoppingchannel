@@ -218,10 +218,6 @@ body.modal-open {
 	height:auto;
 }
 
-.product-container.curated {
-	background-color : rgba(255, 23, 23, 0.09);
-}
-
 .sale-badge {
 	position: absolute;
 	top:0;
@@ -246,7 +242,7 @@ body.modal-open {
 }
 
 .product-thumb > img {
-	border-color: transparent;
+	border: 2px solid transparent;
 	margin-left:auto;
 	margin-right:auto;
 	max-width: 100%;
@@ -256,6 +252,10 @@ body.modal-open {
 
 .product-thumb:hover > img {
 	border-color: #ddd;
+}
+
+.product-thumb > img.curated {
+	border-color : red;
 }
 
 .product-thumb-container .product-add-to-cart {

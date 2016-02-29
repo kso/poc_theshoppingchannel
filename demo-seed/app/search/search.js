@@ -400,13 +400,13 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			view_model.reload();
 		}; 
 
-		view_model.pushToTop = function(id, position){
+		view_model.moveToPosition = function(id, position){
 
 			if( view_model.isPinned(id) ) //skip if already pinned
 				return;
 
 			var selectedNavigation = view_model.getSelectedNavigation(view_model.navigation);
-			merchandisingService.recordCurateEvent(view_model.query, selectedNavigation, id, 0, true);
+			merchandisingService.recordCurateEvent(view_model.query, selectedNavigation, id, position, true);
 			view_model.search();
 		};
 
@@ -444,6 +444,13 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			  	position : function  () { return position + 1; }
 			  }
 			});
+
+			modalInstance.result.then(function ( result ) {
+					view_model.moveToPosition( result.id, result.position-1 );
+			    }, function () {
+			    	console.log('Curate modal dismissed');
+			    });
+
 		};
 
 		view_model.isPinned = function(id){

@@ -10,6 +10,7 @@ angular.module('groupByDemo.curate', ['ui.bootstrap'])
 			vm.moveto = position;
 			vm.searchText = "";
 			vm.results = [];
+			vm.selected = undefined;
 			vm.displayFields = settingsService['Display Fields'];
 
 			vm.search = function () {
@@ -26,9 +27,13 @@ angular.module('groupByDemo.curate', ['ui.bootstrap'])
 				});
 			};
 
-			vm.save = function() {
 
-				$uibModalInstance.dismiss('cancel');
+			vm.ok = function () {
+			  	$uibModalInstance.close( 
+			  		{ 
+			  			id : vm.selected ? vm.selected.allMeta.id : id,
+			  			position: vm.moveto
+			  		});
 			};
 
 			vm.cancel = function() {
