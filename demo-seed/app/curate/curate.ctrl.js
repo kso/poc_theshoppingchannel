@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('groupByDemo.curate', ['ui.bootstrap'])
-	.controller('curateCtrl', ['apiService', 'settingsService', '$uibModalInstance', 'id', 'position',
-		function(apiService, settingsService, $uibModalInstance, id, position){
+	.controller('curateCtrl', ['apiService', 'settingsService', 'semanticSearchService' ,'$uibModalInstance', 'id', 'position',
+		function(apiService, settingsService, semanticSearchService, $uibModalInstance, id, position){
 
 			var vm = this;
 			vm.id = id;
@@ -21,6 +21,10 @@ angular.module('groupByDemo.curate', ['ui.bootstrap'])
 					query : vm.searchText,
 					fields: settingsService.search.fields
 				};
+
+				var filterInterpretation = semanticSearchService.interpretFilter( vm.searchText );
+				parameters.query = filterInterpretation.query;
+				parameters.refinements = filterInterpretation.refinements;
 
 				apiService.search(parameters).then(function(response){
 					vm.results = response.data.records;
