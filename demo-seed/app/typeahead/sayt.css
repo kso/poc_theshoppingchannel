@@ -1,0 +1,79 @@
+.scoped-sayt-last {
+	height: 1px;
+	border-style: solid;
+	border-width: 0 0 1px 0;
+	border-color: #D4D4D4;
+	margin-left: -20px;
+}
+
+.scoped-sayt {
+	font-style: italic;
+	color: #DC7F09;
+}
+
+.saytList {
+	padding-left: 0px;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+	border-bottom-color: #bbb;
+	padding-bottom: 10px;
+} 
+
+.sayt-header-background {
+    position: absolute;
+    height: 25px;
+	width: 100%;
+    background-color: #E8E8E8;
+    left: 0;
+    z-index: -1;
+}
+
+.saytSection:last-of-type > ul.saytList {
+	border-bottom-width: 0px;
+}
+
+.saytItem {
+	list-style-type: none;
+}
+
+.sayt-link-container:hover{	
+	background-color: #eee;
+}
+
+.saytLink:hover {
+    color: #000;
+    text-decoration: none;
+}
+
+.saytLink {
+    width: 100%;
+	color: black;
+    display: inline-block;
+    text-align: left;
+	padding-left: 15px;
+}
+
+.saytImage {
+	float: left;
+	padding: 5px 5px 0 0;
+    display: block;
+    margin: auto;
+}
+
+.saytProductTitle {
+	float:left;
+    font-size: 11px;
+    padding-right: 10px;
+}
+
+.saytHeader {
+	font-size: 16px;
+	font-weight: bold;
+	padding-top: 2px;
+	margin-left: 5px;
+	margin-right: 10px;
+}
+
+.saytDropdown {
+	width: 500px;
+}

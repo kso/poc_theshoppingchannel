@@ -35,7 +35,7 @@ angular.module('groupByDemo.curate', ['ui.bootstrap'])
 			vm.ok = function () {
 			  	$uibModalInstance.close( 
 			  		{ 
-			  			id : vm.selected ? vm.selected.allMeta.id : id,
+			  			id : vm.selected ? vm.selected.allMeta[vm.displayFields.id] : id,
 			  			position: vm.moveto
 			  		});
 			};

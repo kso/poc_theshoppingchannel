@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module("groupByDemo.gbc.semantic",[])
-	.service('semanticSearchService', [ 'CONST', function (CONST) {
+	.service('semanticSearchService', [ 'CONST', 'settingsService', function (CONST, settingsService) {
 
 		var service = this; 
 
@@ -27,10 +27,13 @@ angular.module("groupByDemo.gbc.semantic",[])
 
 		service.priceOrderPattern = function( searchQuery, sortParam ){
 
+			var price_field = settingsService['Display Fields'].price;
+
 			if(!searchQuery){
 				return { sort : sortParam, query : searchQuery };
 			}
 
+			// TODO make this configurable
 			// Cheap, lowprice, low price - Sort on price
 			var cheapTerms = ['cheapest', 'cheap', 'low price', 'lowprice'];
 			for(var ii = 0; ii < cheapTerms.length; ii++){
@@ -38,10 +41,12 @@ angular.module("groupByDemo.gbc.semantic",[])
 					searchQuery = searchQuery.replace(cheapTerms[ii], '').trim();
 
 					sortParam = {};
-					sortParam.field = 'price';
+					sortParam.field = price_field;
 					sortParam.order = CONST.api.order.ascending;
 				}
 			}
+
+			// TODO make this configurable
 			// Expensive - Sort on price
 			var expensiveTerms = ['expensive', 'overpriced', 'pricey'];
 			for(var ii = 0; ii < expensiveTerms.length; ii++){
@@ -49,7 +54,7 @@ angular.module("groupByDemo.gbc.semantic",[])
 					searchQuery = searchQuery.replace(expensiveTerms[ii], '').trim();
 
 					sortParam = {};
-					sortParam.field = 'price';
+					sortParam.field = price_field;
 					sortParam.order = CONST.api.order.descending;
 				}
 			}
@@ -59,6 +64,9 @@ angular.module("groupByDemo.gbc.semantic",[])
 		};
 
 		service.priceOverUnderPattern = function( searchQuery ){
+
+			var price_field = settingsService['Display Fields'].price;
+			var id_field = settingsService['Display Fields'].id;
 
 			// Automatic Price refinement
 			var overPattern = / over\s*.[0-9]*/i;
@@ -84,8 +92,10 @@ angular.module("groupByDemo.gbc.semantic",[])
 
 			var priceRefinement = {};
 			priceRefinement.type = CONST.api.refinement.range;
-			priceRefinement.navigationName = "price";
+			priceRefinement.navigationName = price_field;
 
+			//WARNING: demo-specific code
+			//TODO: need to extract this to make it configurable
 			if(onsale){
 				var onsale_refinement = {
 					type : CONST.api.refinement.value,
@@ -109,7 +119,7 @@ angular.module("groupByDemo.gbc.semantic",[])
 				searchQuery = "";
 				var partNoRefinement = {
 					type : CONST.api.refinement.value,
-					navigationName : "ID",
+					navigationName : id_field,
 					value : refineValue
 				};
 				refinement_parameter = refinement_parameter.concat(partNoRefinement);

@@ -3,14 +3,16 @@
 // taken from the ui.bootstrap example: http://angular-ui.github.io/bootstrap/#/typeahead
 
 angular.module('groupByDemo.typeahead', [])
-.controller('TypeaheadCtrl', ['settingsService', '$q', '$location', 'apiService', 'sharedData', 
-  function(settingsService, $q, $location, apiService, sharedData) {
+.controller('TypeaheadCtrl', ['settingsService', 'personalizationService', '$q', '$location', 
+  'apiService', 'sharedData', 'CONST',
+  function(settingsService, personalizationService, $q, $location, apiService, sharedData, CONST) {
 
   var vm = this;
 
   vm.cancellers = [];
   vm.saytdata = [];
   vm.data = sharedData;
+  vm.lastProductSearch = "";
 
   // Any function returning a promise object can be used to load values asynchronously
   vm.fetch = function(val) {
@@ -27,16 +29,28 @@ angular.module('groupByDemo.typeahead', [])
 
       // The uib-typeahead expects data in arrays, so we need to restructure.
       //  The SAYT template takes nested arrays into consideration
-      var arrayResponse = [];
+      var arrayResponse = [[],[],[]]; //searchTerms, Navigation, Products
+
+      var firstSuggestion = "";
 
       // Search suggestions
       if (response.data.result && response.data.result.searchTerms){
         for (var ii=response.data.result.searchTerms.length;ii--;){
             var item = response.data.result.searchTerms[ii];
+
+            if(ii===0){
+              firstSuggestion = item.value;
+            }
+
             item.url = 'q/' + item.value.replace(' ','+');
+
+            if(item.additionalInfo && item.additionalInfo[settingsService.search.saytScopedKeywordField]){
+              item.scopes = item.additionalInfo[settingsService.search.saytScopedKeywordField];
+              item.scopeChar = settingsService.navToChar(settingsService.search.saytScopedKeywordField);
+            }
             item.type = 'searchTerms';
           }
-        arrayResponse.push(response.data.result.searchTerms);
+        arrayResponse[0] = response.data.result.searchTerms;
       }
   
       // Navigations
@@ -65,30 +79,44 @@ angular.module('groupByDemo.typeahead', [])
           }
         }
         if(navigations.length >0) {
-          arrayResponse.push(navigations);
+          arrayResponse[1] = navigations;
         }
       }
 
       var displayFields = settingsService['SAYT Display Fields'];
 
       // Products
-      if (response.data.result.products){
-        var products = [];
-        for (var ii=response.data.result.products.length;ii--;){
-          var product = response.data.result.products[ii];
-          if (product.allMeta){
-              var newProd = {};
-              newProd.value = product.allMeta[displayFields.title];
-              newProd.url = 'product/' + product.allMeta[displayFields.id];
-              newProd.type = 'products';
-              newProd.price = product.allMeta[displayFields.price];
-              newProd.image = product.allMeta[displayFields.image];
-              products.push(newProd);
-          }
-        }
-        arrayResponse.push(products);
+      var products = vm.saytdata.length > 0 ? vm.saytdata[2].slice() : [];
+
+      var productQuery = firstSuggestion.length === 0 ? val : firstSuggestion;
+      if(vm.lastProductSearch !== productQuery){
+
+        console.time("saytProducts");
+        apiService.search(getProductSearchParameters(productQuery)).then( function(response) {
+              console.timeEnd("saytProducts");
+              var displayFields = settingsService['SAYT Display Fields'];
+
+              if (response.data.records){
+
+                products.length = 0;
+
+                for (var ii=response.data.records.length;ii--;){
+                  var product = response.data.records[ii];
+                  if (product.allMeta){
+                      var newProd = {};
+                      newProd.value = product.allMeta[displayFields.title];
+                      newProd.url = 'product/' + product.allMeta[displayFields.id];
+                      newProd.type = 'products';
+                      newProd.price = product.allMeta[displayFields.price];
+                      newProd.image = product.allMeta[displayFields.image];
+                      products.push(newProd);
+                  }
+                }
+              }
+            }); 
       }
 
+      arrayResponse[2] = products;
 
       //if the request was cancelled after we got the response, suppress the results
       if(canceller.promise.$$state.status !== 0){
@@ -111,6 +139,33 @@ angular.module('groupByDemo.typeahead', [])
 
     });
   };
+
+  var getProductSearchParameters = function (searchTerm ){
+
+    var refinement_parameter = [];
+
+    var parameters = {
+      excludedNavigations : '*',
+      pageSize : settingsService.search.saytProducts,
+      query : searchTerm,
+      refinements : refinement_parameter,
+      fields: settingsService.getNames(settingsService['SAYT Display Fields'])
+    };
+
+    if(settingsService.Personalization.Status === "on"){
+      var query_time_bias = personalizationService.applyProfile(searchTerm, refinement_parameter);
+      if(query_time_bias !== null)
+        parameters.biasing = query_time_bias;
+    }
+
+    if(refinement_parameter.length > 0){
+      parameters.refinements = refinement_parameter;
+    }
+
+    return parameters;
+
+  };
+
 
   var redirect = function(label){
 

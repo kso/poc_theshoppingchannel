@@ -43,7 +43,8 @@ angular.module('groupByDemo.util.settings', [])
 			fields : searchFields,
 			saytKeywords : 5,
 			saytNavigation : 4,
-			saytProducts : 3
+			saytProducts : 3,
+			saytScopedKeywordField : "QtopRatedType"
 		};
 
 		settings['Nav Menu Defaults'] = {

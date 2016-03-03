@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module("groupByDemo.gbc.merchandising",['ngCookies'])
-	.service('merchandisingService', ['$cookies', '_', function ($cookies, _ ) {
+	.service('merchandisingService', ['$cookies', '_', 'settingsService',
+	 function ($cookies, _ , settingsService) {
 
 		var service = this; 
 
@@ -125,13 +126,15 @@ angular.module("groupByDemo.gbc.merchandising",['ngCookies'])
 
 			var curatedIds = _.values(curatedPages[key].curatedByPosition);
 
+
+			var id_field = settingsService['Display Fields'].id
 			//remove the pinned results
 			var curatedResults = _.remove( results, function(result) {
-				return _.indexOf( curatedIds, result.allMeta.id ) !== -1;
+				return _.indexOf( curatedIds, result.allMeta[id_field] ) !== -1;
 			});
 
 			//key the curated results by ID
-			var curatedResultLookup = _.keyBy( curatedResults, '.allMeta.id' );
+			var curatedResultLookup = _.keyBy( curatedResults, '.allMeta.' + id_field );
 
 			//add the pinned results back in the correct locations
 			_.forIn( curatedPages[key].curatedByPosition, function(productId, position) {

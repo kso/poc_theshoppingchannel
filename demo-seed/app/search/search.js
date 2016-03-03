@@ -26,29 +26,9 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 		view_model.resultSummary =  "";
 		view_model.personalizationEnabled = settingsService.Personalization.Status;
-		view_model.safeSearchEnabled = settingsService.Personalization.SafeSearch;
 		view_model.displayFields = settingsService['Display Fields'];
 
 	    $scope.sortFields = settingsService.Sorting;
-
-		$scope.$watch( function( scope ) {
-				var hasChanged = settingsService.Personalization.SafeSearch !== view_model.safeSearchEnabled;
-				return hasChanged;
-			},
-			function(newValue, oldValue) {
-
-				if(oldValue)
-					return;
-
-				//callback sometimes fires when controller is initialized
-				var hasChanged = settingsService.Personalization.SafeSearch !== view_model.safeSearchEnabled;
-				if(!hasChanged) 
-					return;
-
-				view_model.safeSearchEnabled = settingsService.Personalization.SafeSearch;
-				view_model.search();
-
-			});
 
 		$scope.$watch( function( scope ) {
 				var hasChanged = settingsService.Personalization.Status !== view_model.personalizationEnabled;
@@ -294,6 +274,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				view_model.resultList = merchandisingService.curateResults(view_model.query, 
 					view_model.getSelectedNavigation(view_model.navigation), 
 					data.records);
+				view_model.relatedQueries = data.relatedQueries;
 
 				view_model.template = undefined;
 				if("template" in data && data.template.name !== 'default') {

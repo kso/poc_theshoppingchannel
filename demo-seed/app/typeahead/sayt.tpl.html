@@ -2,7 +2,8 @@
     <li ng-repeat="match in matches track by $index" ng-class="{active: isActive($index) }" ng-mouseenter="selectActive($index)" 
     class="saytSection" role="option" id="{{::match.id}}">
 
-		<ul class="saytList" role="listbox">
+		<ul class="saytList" role="listbox" ng-if="match.model.length > 0">
+			<div ng-if="!$first" class="sayt-header-background"></div>
 		    <li class="saytItem" ng-repeat="m in match.model track by $index" ng-mouseenter="selectActive($index)" role="option">
 
 				<div ng-if="m.type === 'navigations' && $index == 0">
@@ -23,13 +24,24 @@
 						   ng-attr-title="{{m.value}}"></a>
 					 </div>
 				</div>
-				<div ng-if="m.type === 'navigations' ">
+				<div class="sayt-link-container" ng-if="m.type === 'navigations' ">
 					<a class="saytLink" href="{{m.url}}"
 					   tabindex="-1"
 					   ng-bind-html="m.value | uibTypeaheadHighlight:query"
 					   ng-attr-title="{{m.value}}"></a>
 				</div>
-				<div ng-if="m.type === 'searchTerms' ">
+				<div ng-if="m.type === 'searchTerms' && $index == 0">
+					<div class="sayt-link-container" ng-repeat="addnInfo in (m.scopes | limitTo:5) ">
+						<a class="saytLink" href="{{'q' + m.scopeChar + '/' + m.value.replace(' ','+') + '/' + addnInfo}}"
+						   tabindex="-1"
+						   ng-attr-title="{{m.value}}"><span ng-bind-html="m.value | uibTypeaheadHighlight:query"></span>
+						   <span>in </span><span class="scoped-sayt"> {{addnInfo}}</span></a>
+						<div ng-if="$last">
+							<div class="scoped-sayt-last"></div>
+						</div>
+					</div>
+				</div>
+				<div class="sayt-link-container" ng-if="m.type === 'searchTerms' && $index > 0">
 					<a class="saytLink" href="{{m.url}}"
 					   tabindex="-1"
 					   ng-bind-html="m.value | uibTypeaheadHighlight:query"

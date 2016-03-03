@@ -1,6 +1,9 @@
 <div class="recommendations-set">
-  <span ng-show="recommendations.forSearch(search.query)" class="recommendations-label">Recommended Searches:</span>
-	<div class="recommendation" ng-repeat="rec in recommendations.forSearch(search.query) | limitTo:5">
-    <a href="q/{{recommendations.encode(rec)}}">{{rec}}</a>
+  	<span ng-show="recommendations.forSearch(search.query) || search.relatedQueries.length > 0" class="recommendations-label">Recommended Searches:</span>
+	<div class="recommendation" ng-repeat="rec in search.relatedQueries | limitTo:5">
+	     <a href="q/{{recommendations.encode(rec)}}">{{rec}}</a>
+	</div>
+  	<div class="recommendation" ng-repeat="rec in recommendations.forSearch(search.query) | limitTo:5">
+    	<a href="q/{{recommendations.encode(rec)}}">{{rec}}</a>
 	</div>
 </div>

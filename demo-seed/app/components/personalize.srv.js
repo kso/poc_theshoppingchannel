@@ -42,7 +42,14 @@ angular.module("groupByDemo.gbc.personalization",['ngCookies'])
 				});
 			});
 
-			profile.influence = Math.min(max_strength, 10);
+			//DON'T set an influence, unless there is no default bias in CommandCenter 
+			//If we override the command center bias influence with one at query time, 
+			//it tends to throw off the command center bias, giving unexpected results. 
+/*			if(profile.biases.length > 0){
+				profile.influence = Math.min(max_strength, 10);
+			} else {
+				profile.influence = 10;
+			}*/
 
 			return profile;
 		};

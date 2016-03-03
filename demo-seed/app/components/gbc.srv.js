@@ -52,7 +52,6 @@ angular.module('groupByDemo.gbc', [])
 				area : settingsService.search.area, 
 				searchItems : settingsService.search.saytKeywords,
 				navigationItems : settingsService.search.saytNavigation,
-				productItems: settingsService.search.saytProducts,
 				callback : 'JSON_CALLBACK'
 			};
 
