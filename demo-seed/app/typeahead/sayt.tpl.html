@@ -32,6 +32,10 @@
 				</div>
 				<div ng-if="m.type === 'searchTerms' && $index == 0">
 					<div class="sayt-link-container" ng-repeat="addnInfo in (m.scopes | limitTo:5) ">
+						<a ng-if="$first" class="saytLink" href="{{'q' + '/' + m.value.replace(' ','+') }}"
+						   tabindex="-1"
+						   ng-attr-title="{{m.value}}"><span ng-bind-html="m.value | uibTypeaheadHighlight:query"></span>
+						   <span>in </span><span class="scoped-sayt"> All Departments</span></a>
 						<a class="saytLink" href="{{'q' + m.scopeChar + '/' + m.value.replace(' ','+') + '/' + addnInfo}}"
 						   tabindex="-1"
 						   ng-attr-title="{{m.value}}"><span ng-bind-html="m.value | uibTypeaheadHighlight:query"></span>
