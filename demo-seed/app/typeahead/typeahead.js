@@ -89,12 +89,16 @@ angular.module('groupByDemo.typeahead', [])
       var products = vm.saytdata.length > 0 ? vm.saytdata[2].slice() : [];
 
       var productQuery = firstSuggestion.length === 0 ? val : firstSuggestion;
+
+      //don't make repeated product queries for the same thing. The first keyword doesn't change that often
       if(vm.lastProductSearch !== productQuery){
 
+        vm.lastProductSearch = productQuery;
         console.time("saytProducts");
         apiService.search(getProductSearchParameters(productQuery)).then( function(response) {
               console.timeEnd("saytProducts");
               var displayFields = settingsService['SAYT Display Fields'];
+
 
               if (response.data.records){
 
