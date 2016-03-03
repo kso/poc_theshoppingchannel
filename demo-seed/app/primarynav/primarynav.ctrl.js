@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('groupByDemo.primarynav', [])
-	.controller('primaryNavCtrl', ['$location', 'settingsService', 'apiService', '$filter', 'personalizationService', 'CONST',
-		function($location, settingsService, apiService, $filter, personalizationService, CONST){
+	.controller('primaryNavCtrl', ['$location', 'settingsService', 'apiService', '$filter', 'personalizationService' ,
+		function($location, settingsService, apiService, $filter, personalizationService){
 		
 		console.log("loading primary nav controller");
 
@@ -51,11 +51,7 @@ angular.module('groupByDemo.primarynav', [])
 
 		};
 
-		var getPersonalizedCategoryImages = function (category, subCategory, searchTerm ){
-
-			if(settingsService.Personalization.Status !== "on")
-				return null;
-
+		var getRefinementParameter = function(category, subCategory){
 		 	var refinement_parameter = [];
 			if(category){
 				refinement_parameter.push( { type : "Value", navigationName : category.field_name, value : category.value } );
@@ -63,6 +59,15 @@ angular.module('groupByDemo.primarynav', [])
 			if(subCategory){
 				refinement_parameter.push( { type : "Value", navigationName : subCategory.field_name, value : subCategory.value } );
 			}
+			return refinement_parameter;
+		};
+
+		var getPersonalizedCategoryImages = function (category, subCategory, searchTerm ){
+
+			if(settingsService.Personalization.Status !== "on")
+				return null;
+
+			var refinement_parameter = getRefinementParameter(category, subCategory);
 
 			var query_time_bias = personalizationService.applyProfile(searchTerm, refinement_parameter);
 			if(query_time_bias === null)
@@ -93,6 +98,10 @@ angular.module('groupByDemo.primarynav', [])
 			if(parameters) {
 
 				apiService.search(parameters).success( function(data) {
+
+					var refinement_parameter = getRefinementParameter(category, subCategory);
+					data.records = merchandisingService.curateResults("", refinement_parameter, data.records);
+
 					updatePreviewImages(data.records);
 				});
 
