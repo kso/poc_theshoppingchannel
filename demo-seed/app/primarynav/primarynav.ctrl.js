@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('groupByDemo.primarynav', [])
-	.controller('primaryNavCtrl', ['$location', 'settingsService', 'apiService', '$filter', 'personalizationService' ,
-		function($location, settingsService, apiService, $filter, personalizationService){
+	.controller('primaryNavCtrl', ['$location', 'settingsService', 'apiService', '$filter', 'personalizationService', 
+		'CONST', 'urlService', 'merchandisingService',
+		function($location, settingsService, apiService, $filter, personalizationService, CONST, urlService, merchandisingService){
 		
 		console.log("loading primary nav controller");
 
@@ -54,10 +55,10 @@ angular.module('groupByDemo.primarynav', [])
 		var getRefinementParameter = function(category, subCategory){
 		 	var refinement_parameter = [];
 			if(category){
-				refinement_parameter.push( { type : "Value", navigationName : category.field_name, value : category.value } );
+				refinement_parameter.push( { type : CONST.api.refinement.value , navigationName : category.field_name, value : category.value } );
 			}
 			if(subCategory){
-				refinement_parameter.push( { type : "Value", navigationName : subCategory.field_name, value : subCategory.value } );
+				refinement_parameter.push( { type : CONST.api.refinement.value , navigationName : subCategory.field_name, value : subCategory.value } );
 			}
 			return refinement_parameter;
 		};
@@ -141,7 +142,8 @@ angular.module('groupByDemo.primarynav', [])
 			menu.name = nav.displayName ? nav.displayName : nav.value;
 			menu.value  = nav.value ? nav.value : nav.displayName;
 			menu.field_name = nav.navigationName ? nav.navigationName : defaults.menuNavigationName;
-			menu.path = "d/" + nav.value.split(' ').join('+').split('&').join('and');
+
+			menu.path = settingsService.navToChar(defaults.menuNavigationName) + "/" + urlService.encodeRefinement( { type: CONST.api.refinement.value, value : nav.value } );
 
 			var parameters = {
 				pageSize : 0,
@@ -153,7 +155,7 @@ angular.module('groupByDemo.primarynav', [])
 			menu.items = [];
 
 			var refinement = {
-				type : "Value",
+				type : CONST.api.refinement.value,
 				navigationName : nav.navigationName ? nav.navigationName : defaults.menuNavigationName, 
 				value : nav.value
 			};
@@ -170,12 +172,14 @@ angular.module('groupByDemo.primarynav', [])
 
 				menu_items = $filter('limitTo')(menu_items, defaults.menuSize);
 
+				var topCatLetter = settingsService.navToChar(defaults.menuNavigationName);
+				var subCatLetter = settingsService.navToChar(defaults.subMenuNavigationName);
+
 				angular.forEach(menu_items, function(item){ 
 					menu.items.push({ 
 						name : item.displayName ? item.displayName : item.value,
 						value : item.value ? item.value : item.displayName,
-						path : "dc/" + nav.value.split(' ').join('+').split('&').join('and')
-								 + "/" + item.value.split(' ').join('+').split('&').join('and'),
+						path : topCatLetter + subCatLetter + "/" + urlService.encodeRefinement( { type: CONST.api.refinement.value, value : nav.value } ) + "/" + urlService.encodeRefinement( { type: CONST.api.refinement.value, value : item.value } ),
 						field_name : data.availableNavigation[0].name
 					});
 				});
