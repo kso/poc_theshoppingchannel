@@ -76,7 +76,7 @@ angular.module('groupByDemo.util.settings', [])
 			return key ? key : "";
 		};
 
-		settings['URL Parameter Ordering'] = [ "QtopRatedType", "Qcolor", "CBrand", "Qtype" ];
+		settings['URL Parameter Ordering'] = [ "QtopRatedType", "Qcolor", "CBrand", "Qtype", "Qrating" ,"price" ];
 
 		settings['Nav Menu'] = [
 			{ displayName: "Dining & Entertaining", searchTerm: "dining", submenu: 

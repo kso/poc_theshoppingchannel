@@ -60,6 +60,11 @@ angular.module('groupByDemo.primarynav', [])
 			if(subCategory){
 				refinement_parameter.push( { type : CONST.api.refinement.value , navigationName : subCategory.field_name, value : subCategory.value } );
 			}
+
+			//TODO: this logic is duplicated in the search controller, extract it. 
+			//sort first by navigation name, then value (for multi-select refinements)
+			refinement_parameter = $filter('orderBy')(refinement_parameter, ['navigationName', 'value']);
+
 			return refinement_parameter;
 		};
 
@@ -70,7 +75,7 @@ angular.module('groupByDemo.primarynav', [])
 
 			var refinement_parameter = getRefinementParameter(category, subCategory);
 
-			var query_time_bias = personalizationService.applyProfile(searchTerm, refinement_parameter);
+			var query_time_bias = personalizationService.applyProfile(searchTerm ? searchTerm : "", refinement_parameter);
 			if(query_time_bias === null)
 				return null;
 

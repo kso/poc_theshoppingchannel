@@ -213,6 +213,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				});
 			});
 
+			//TODO: this logic is duplicated in the primary nav controller, extract it. 
 			//sort first by navigation name, then value (for multi-select refinements)
 			selectedNavigation = $filter('orderBy')(selectedNavigation, ['navigationName', 'value']);
 

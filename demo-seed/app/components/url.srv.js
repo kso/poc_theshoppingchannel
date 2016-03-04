@@ -181,7 +181,7 @@ angular.module("groupByDemo.util.url",[])
 			var parameters = {};
 
 			if(query){
-				mapping = mapping.concat("q");
+				mapping = mapping.concat(settingsService.searchChar);
 				path = path.concat("/").concat( query.split(' ').join('+') );
 			}
 
