@@ -44,7 +44,8 @@ angular.module('groupByDemo.util.settings', [])
 			saytKeywords : 5,
 			saytNavigation : 4,
 			saytProducts : 3,
-			saytScopedKeywordField : "QtopRatedType"
+			saytScopedKeywordField : "QtopRatedType",
+			saytNavigationFields: [ { displayName: "Brands", value: "CBrand", limit: 3}, { displayName: "Departments", value: "QtopRatedType", limit:3} ]
 		};
 
 		settings['Nav Menu Defaults'] = {

@@ -4,9 +4,9 @@
 
 angular.module('groupByDemo.typeahead', [])
 .controller('TypeaheadCtrl', ['settingsService', 'personalizationService', '$q', '$location', 
-  'apiService', 'sharedData', 'CONST', 'merchandisingService', 'urlService',
+  'apiService', 'sharedData', 'CONST', 'merchandisingService', 'urlService', '_',
   function(settingsService, personalizationService, $q, $location, 
-    apiService, sharedData, CONST, merchandisingService, urlService) {
+    apiService, sharedData, CONST, merchandisingService, urlService, _ ) {
 
   var vm = this;
 
@@ -67,31 +67,35 @@ angular.module('groupByDemo.typeahead', [])
       // Navigations
       if (response.data.result.navigations){
         var navigations = [];
-        for (var ii=response.data.result.navigations.length;ii--;){
-          var navigation = response.data.result.navigations[ii];
+        for (var nav_idx=0; nav_idx < response.data.result.navigations.length; nav_idx++){
+          var navigation = response.data.result.navigations[nav_idx];
 
-          //TODO: extract to settings
-          if(navigation.name !== 'CBrand'){
+          //We only show navigations that are listed for display in the settings.
+          var saytNavSettings = _.find(settingsService.search.saytNavigationFields, [ 'value', navigation.name ]);
+          if(!saytNavSettings){
             continue;
           }
 
           if (navigation.values){
 
+            var refinements = [];
+
             var navChar = settingsService.navToChar(navigation.name);
 
-            for (var nav_idx=0; nav_idx < navigation.values.length; nav_idx++){
-              var navValue = navigation.values[nav_idx];
+            for (var refinement_idx=0; refinement_idx < navigation.values.length; refinement_idx++){
+              var refinementValue = navigation.values[refinement_idx];
 
-              var newNav = {
-                value : navValue,
+              var newRefinement = {
+                value : refinementValue,
                 field : navigation.name,
-                url : navChar + '/' + encodeRefinement(navValue),
-                type : 'navigations',
-                fieldDisplayName : "Brand" //TODO: extract to settings
+                url : navChar + '/' + encodeRefinement(refinementValue),
+                fieldDisplayName : saytNavSettings.displayName
               };
 
-              navigations.push(newNav);
+              refinements.push(newRefinement);
             }
+
+            navigations.push({ type : 'navigations', 'refinements': refinements, limit : saytNavSettings.limit });
           }
         }
         if(navigations.length >0) {

@@ -36,14 +36,19 @@
 				<!--            -->
 				<!-- NAVIGATION -->
 				<!--            -->
-				<div ng-if="m.type === 'navigations' && $index == 0">
-					<p class="message saytHeader">{{m.fieldDisplayName}}</p>
-				</div>
-				<div class="sayt-link-container" ng-if="m.type === 'navigations' ">
-					<a class="saytLink" href="{{m.url}}"
-					   tabindex="-1"
-					   ng-bind-html="m.value | uibTypeaheadHighlight:query"
-					   ng-attr-title="{{m.value}}"></a>
+				<div ng-class="{ 'extra-sayt-navigation-section' : !$first }" ng-if="m.type === 'navigations'">
+					<div ng-repeat="refinement in (m.refinements | limitTo:m.limit)">
+						<div ng-if="$first" class="sayt-header-background"></div>
+						<div ng-if="$first">
+							<p class="message saytHeader">{{refinement.fieldDisplayName}}</p>
+						</div>
+						<div class="sayt-link-container">
+							<a class="saytLink" href="{{refinement.url}}"
+							   tabindex="-1"
+							   ng-bind-html="refinement.value | uibTypeaheadHighlight:query"
+							   ng-attr-title="{{refinement.value}}"></a>
+						</div>
+					</div>
 				</div>
 
 				<!--          -->
