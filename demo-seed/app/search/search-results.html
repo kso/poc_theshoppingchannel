@@ -87,11 +87,11 @@
 
         <div ng-switch-when="color" class="color-refinement-container" uib-collapse="nav.collapsed">
           <div class="color-refinement" 
-              ng-repeat="refinement in nav.raw.refinements | limitTo:10 "
+              ng-repeat="refinement in nav.raw.refinements | limitTo:30 "
               ng-click="(nav.selected | filter:{navigationName : nav.name, value: refinement.value}).length > 0  ? 
                 search.unrefine(nav.name, refinement) : 
                 search.refine(nav.name, refinement, 'Value')"
-              ng-style="{'background-color' : refinement.value}"
+              ng-style="search.colorNameToStyle(refinement.value)"
               ng-attr-title="{{refinement.value}}" >
             <span ng-if="nav.raw.or" 
               ng-class="(nav.selected | filter:{navigationName : nav.name, value: refinement.value}).length > 0  ? 

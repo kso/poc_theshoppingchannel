@@ -41,11 +41,6 @@ angular.module("groupByDemo.util.url",[])
 		var processQuery = function(inQuery) {
 			var outQuery = service.decodeSearch(inQuery);
 
-			//'all' is a special query to return all results
-			if(outQuery === "all"){
-				return "";
-			}
-
 			return outQuery;
 		};
 

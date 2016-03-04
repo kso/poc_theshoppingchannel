@@ -54,6 +54,10 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			return settingsService.search.pageSize;
 	    };
 
+	    view_model.colorNameToStyle = function(colorName) {
+	    	return settingsService.colorNameToStyle(colorName);
+	    };
+
 
 	    //TODO: move this out of the search controller. This mapping in settings service. 
 	    view_model.navDisplayNameToModelType = function(displayname){
@@ -243,15 +247,18 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 			console.group("Running Search");
 
+			//'all' is a special query to return all results
+			var origQuery = view_model.query === "all" ? "" : view_model.query;
+
 			var refinement_parameter = view_model.getSelectedNavigation(view_model.navigation);
 
 			//semantic translation of the search
-			var interpretation = view_model.interpretSearch(view_model.query);
+			var interpretation = view_model.interpretSearch(origQuery);
 			var sort = interpretation.sort;
 			var query = interpretation.query; 
 			refinement_parameter = refinement_parameter.concat(interpretation.refinements);
 
-			var refinement_exclusions = view_model.applyExclusions(view_model.query, view_model.getSelectedNavigation(view_model.navigation));
+			var refinement_exclusions = view_model.applyExclusions(origQuery, view_model.getSelectedNavigation(view_model.navigation));
 			refinement_parameter = refinement_parameter.concat(refinement_exclusions);
 
 			var parameters = {
@@ -272,7 +279,7 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 				view_model.totalRecordCount = data.totalRecordCount;
 				view_model.navigation = view_model.updateNavModel(view_model.navigation, data.availableNavigation, data.selectedNavigation );
 				view_model.selectedNavigation = data.selectedNavigation;
-				view_model.resultList = merchandisingService.curateResults(view_model.query, 
+				view_model.resultList = merchandisingService.curateResults(origQuery, 
 					view_model.getSelectedNavigation(view_model.navigation), 
 					data.records);
 				view_model.relatedQueries = data.relatedQueries;

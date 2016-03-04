@@ -135,9 +135,43 @@ angular.module('groupByDemo.util.settings', [])
 	    ];
 
 		settings['Color Mapping'] = {
-			"Red" : "#F00",
-			"Green" : "#F00",
-			"Blue" : "#F00"
+			"ivory" 	: "#FFFFF0" ,
+			"tan" 		: "#D2B48C" ,
+			"silver" 	: "#C0C0C0" ,
+			"brown" 	: "#A52A2A" ,
+			"black" 	: "#000" ,
+			"metallic" 	: "url('assets/metallic.png')" ,
+			"white" 	: "#FFF" ,
+			"yellow" 	: "#FF0" ,
+			"grey" 		: "#D3D3D3" ,
+			"clear" 	: "url('assets/clear.png')" ,
+			"green" 	: "#008000" ,
+			"red" 		: "#F00" ,
+			"multi-colored" : "url('assets/multicolor.png')" ,
+			"blue" 		: "#00F" ,
+			"purple" 	: "#800080" ,
+			"orange" 	: "#FFA500" ,
+			"teal" 		: "#008080" ,
+			"bronze" 	: "#CD7F32" ,
+			"aqua" 		: "#0FF" ,
+			"pink" 		: "#FFC0CB" ,
+			"copper" 	: "#B87333" ,
+			"natural" 	: "#FFFAF0" ,
+			"brass" 	: "#B5A642" ,
+			"gold" 		: "url('assets/gold.png')"
+		};
+
+		settings.colorNameToStyle = function(colorName){
+			var hexOrImage = settings['Color Mapping'][colorName.toLowerCase()];
+
+			if(!hexOrImage)
+				return { "background-color" : "none" };
+
+			if(_.startsWith(hexOrImage, "url")){
+				return { 'background-image' : hexOrImage, 'background-repeat' : 'no-repeat' };
+			} else {
+				return { "background-color" : hexOrImage, 'border-color' : '#ddd' };
+			}
 		};
 
 		return settings;
