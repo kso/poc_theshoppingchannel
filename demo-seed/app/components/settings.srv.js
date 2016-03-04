@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('groupByDemo.util.settings', [])
-	.service('settingsService', ['CONST', function(CONST){
+	.service('settingsService', ['CONST', '_', function(CONST, _ ){
 
 		var settings = this;
 
@@ -64,18 +64,15 @@ angular.module('groupByDemo.util.settings', [])
 			p : { component : CONST.search.component.navigation , navType : CONST.nav.type.range, displayName: "Price", value: "price" }
 		};
 
-		settings.navToChar = function(navigationFieldName){
-
+		settings.searchChar = function(){
 			var map = settings['SEO-Friendly URL'];
-			var keys = Object.keys(map);
-			for(var i = 0; i<keys.length; i++){
-				var value = map[keys[i]];
-				if(value.type === CONST.search.component.query)
-					continue;
-				if(value.value === navigationFieldName)
-					return keys[i];
-			}
-			return "";
+			var key = _.findKey( map, ['component', CONST.search.component.query ]);
+			return key ? key : "";
+		};
+		settings.navToChar = function(navigationFieldName){
+			var map = settings['SEO-Friendly URL'];
+			var key = _.findKey( map, ['value', navigationFieldName ]);
+			return key ? key : "";
 		};
 
 		settings['URL Parameter Ordering'] = [ "QtopRatedType", "Qcolor", "CBrand", "Qtype" ];

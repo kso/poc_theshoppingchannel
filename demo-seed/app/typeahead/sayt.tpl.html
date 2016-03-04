@@ -6,37 +6,18 @@
 			<div ng-if="!$first" class="sayt-header-background"></div>
 		    <li class="saytItem" ng-repeat="m in match.model track by $index" ng-mouseenter="selectActive($index)" role="option">
 
-				<div ng-if="m.type === 'navigations' && $index == 0">
-					<p class="message saytHeader">{{m.fieldDisplayName}}</p>
-				</div>
-				<div ng-if="m.type === 'products' && $index == 0">
-					<p class="message saytHeader">Top Matches</p>
-				</div>
-
-				<div ng-if="m.type === 'products'">
-					<div class="col-md-4 menu-no-padding">
-						<a href="{{m.url}}">
-							<img class="img-responsive saytImage" ng-src="{{m.image}}" src="{{m.image}}"/>
-						</a>
-						<a class="saytLink saytProductTitle" href="{{m.url}}"
-						   tabindex="-1"
-						   ng-bind-html="m.value | cut:true:50:'...' | uibTypeaheadHighlight:query"
-						   ng-attr-title="{{m.value}}"></a>
-					 </div>
-				</div>
-				<div class="sayt-link-container" ng-if="m.type === 'navigations' ">
-					<a class="saytLink" href="{{m.url}}"
-					   tabindex="-1"
-					   ng-bind-html="m.value | uibTypeaheadHighlight:query"
-					   ng-attr-title="{{m.value}}"></a>
-				</div>
+				<!--            -->
+				<!-- KEYWORDS   -->
+				<!--            -->
 				<div ng-if="m.type === 'searchTerms' && $index == 0">
-					<div class="sayt-link-container" ng-repeat="addnInfo in (m.scopes | limitTo:5) ">
-						<a ng-if="$first" class="saytLink" href="{{'q' + '/' + m.value.replace(' ','+') }}"
+					<div class="sayt-link-container">
+						<a class="saytLink" href="{{m.url}}"
 						   tabindex="-1"
 						   ng-attr-title="{{m.value}}"><span ng-bind-html="m.value | uibTypeaheadHighlight:query"></span>
 						   <span>in </span><span class="scoped-sayt"> All Departments</span></a>
-						<a class="saytLink" href="{{'q' + m.scopeChar + '/' + m.value.replace(' ','+') + '/' + addnInfo}}"
+					</div>
+					<div class="sayt-link-container" ng-repeat="addnInfo in (m.scopes | limitTo:5) ">
+						<a class="saytLink" href="{{m.scopedURLs[$index]}}"
 						   tabindex="-1"
 						   ng-attr-title="{{m.value}}"><span ng-bind-html="m.value | uibTypeaheadHighlight:query"></span>
 						   <span>in </span><span class="scoped-sayt"> {{addnInfo}}</span></a>
@@ -52,6 +33,36 @@
 					   ng-attr-title="{{m.value}}"></a>
 				</div>
 
+				<!--            -->
+				<!-- NAVIGATION -->
+				<!--            -->
+				<div ng-if="m.type === 'navigations' && $index == 0">
+					<p class="message saytHeader">{{m.fieldDisplayName}}</p>
+				</div>
+				<div class="sayt-link-container" ng-if="m.type === 'navigations' ">
+					<a class="saytLink" href="{{m.url}}"
+					   tabindex="-1"
+					   ng-bind-html="m.value | uibTypeaheadHighlight:query"
+					   ng-attr-title="{{m.value}}"></a>
+				</div>
+
+				<!--          -->
+				<!-- PRODUCTS -->
+				<!--          -->
+				<div ng-if="m.type === 'products' && $index == 0">
+					<p class="message saytHeader">Top Matches</p>
+				</div>
+				<div ng-if="m.type === 'products'">
+					<div ng-class="{ 'saytImage-container-first': $first, 'saytImage-container-last': $last, 'saytImage-container-middle' : $middle }" class="col-md-4">
+						<a href="{{m.url}}">
+							<img class="img-responsive saytImage" ng-src="{{m.image}}" src="{{m.image}}"/>
+						</a>
+						<a class="saytLink saytProductTitle" href="{{m.url}}"
+						   tabindex="-1"
+						   ng-bind-html="m.value | cut:true:50:'...' | uibTypeaheadHighlight:query"
+						   ng-attr-title="{{m.value}}"></a>
+					 </div>
+				</div>
 		    </li>
 		</ul>
     </li>

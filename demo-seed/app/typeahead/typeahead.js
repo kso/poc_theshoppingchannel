@@ -4,8 +4,9 @@
 
 angular.module('groupByDemo.typeahead', [])
 .controller('TypeaheadCtrl', ['settingsService', 'personalizationService', '$q', '$location', 
-  'apiService', 'sharedData', 'CONST',
-  function(settingsService, personalizationService, $q, $location, apiService, sharedData, CONST) {
+  'apiService', 'sharedData', 'CONST', 'merchandisingService', 'urlService',
+  function(settingsService, personalizationService, $q, $location, 
+    apiService, sharedData, CONST, merchandisingService, urlService) {
 
   var vm = this;
 
@@ -13,6 +14,10 @@ angular.module('groupByDemo.typeahead', [])
   vm.saytdata = [];
   vm.data = sharedData;
   vm.lastProductSearch = "";
+
+  var encodeRefinement = function(refinementValue) {
+    return urlService.encodeRefinement({ type: CONST.api.refinement.value, value : refinementValue });
+  };
 
   // Any function returning a promise object can be used to load values asynchronously
   vm.fetch = function(val) {
@@ -42,11 +47,17 @@ angular.module('groupByDemo.typeahead', [])
               firstSuggestion = item.value;
             }
 
-            item.url = 'q/' + item.value.replace(' ','+');
+            item.url = settingsService.searchChar() + '/' +urlService.encodeSearch(item.value);
 
             if(item.additionalInfo && item.additionalInfo[settingsService.search.saytScopedKeywordField]){
               item.scopes = item.additionalInfo[settingsService.search.saytScopedKeywordField];
-              item.scopeChar = settingsService.navToChar(settingsService.search.saytScopedKeywordField);
+              var scopeChar = settingsService.navToChar(settingsService.search.saytScopedKeywordField);
+              var searchChar = settingsService.searchChar();
+
+              item.scopedURLs = [];
+              for(var scope_idx = 0; scope_idx < item.scopes.length; scope_idx ++){
+                item.scopedURLs.push( searchChar + scopeChar + '/' + urlService.encodeSearch(item.value) + '/' +  encodeRefinement(item.scopes[scope_idx])) ;
+              }
             }
             item.type = 'searchTerms';
           }
@@ -65,15 +76,20 @@ angular.module('groupByDemo.typeahead', [])
           }
 
           if (navigation.values){
-            for (var jj=navigation.values.length;jj--;){
-              var item = navigation.values[jj];
 
-              var newNav = {};
-              newNav.value = item;
-              newNav.field = navigation.name;
-              newNav.url = '';
-              newNav.type = 'navigations';
-              newNav.fieldDisplayName = "Brand"; //TODO: extract to settings
+            var navChar = settingsService.navToChar(navigation.name);
+
+            for (var nav_idx=0; nav_idx < navigation.values.length; nav_idx++){
+              var navValue = navigation.values[nav_idx];
+
+              var newNav = {
+                value : navValue,
+                field : navigation.name,
+                url : navChar + '/' + encodeRefinement(navValue),
+                type : 'navigations',
+                fieldDisplayName : "Brand" //TODO: extract to settings
+              };
+
               navigations.push(newNav);
             }
           }
@@ -102,10 +118,12 @@ angular.module('groupByDemo.typeahead', [])
 
               if (response.data.records){
 
+                response.data.records = merchandisingService.curateResults(productQuery, [], response.data.records);
+
                 products.length = 0;
 
-                for (var ii=response.data.records.length;ii--;){
-                  var product = response.data.records[ii];
+                for (var product_idx = 0; product_idx < response.data.records.length; product_idx++){
+                  var product = response.data.records[product_idx];
                   if (product.allMeta){
                       var newProd = {};
                       newProd.value = product.allMeta[displayFields.title];
