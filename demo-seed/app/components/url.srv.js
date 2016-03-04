@@ -181,8 +181,8 @@ angular.module("groupByDemo.util.url",[])
 			var parameters = {};
 
 			if(query){
-				mapping = mapping.concat(settingsService.searchChar);
-				path = path.concat("/").concat( query.split(' ').join('+') );
+				mapping = mapping.concat(settingsService.searchChar());
+				path = path.concat("/").concat( service.encodeSearch(query) );
 			}
 
 			selectedNavigation = $filter('orderBy')(selectedNavigation, function(x) { 
