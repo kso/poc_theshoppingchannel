@@ -1,4 +1,9 @@
 
+.add-to-cart-container {
+	display: table;
+    margin: 0 auto;
+}
+
 .cart-button {
 	background-color:black;
 	border-color:black;

@@ -276,7 +276,8 @@ body.modal-open {
 .product-thumb-container .hover-btn {
      position: absolute;
      top: 0%;
-     right: 25%;
+     margin-left:-63px;
+     left: 50%;
      background-color: rgba(231, 232, 228, 0.55);
      display: none;
      cursor: pointer;
