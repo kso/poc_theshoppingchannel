@@ -35,7 +35,7 @@
               ng-model="refinement.high"
               readonly='true'></uib-rating> 
             <p ng-if="(nav.selected | filter:{navigationName : nav.name, high: refinement.high}).length > 0" class="glyphicon glyphicon-remove"></p>
-            <span ng-if="!(nav.selected | filter:{navigationName : nav.name, high: refinement.high}).length > 0" class="badge">{{refinement.count}}</span>
+            <span ng-if="!(nav.selected | filter:{navigationName : nav.name, high: refinement.high}).length > 0" class="badge">{{refinement.count | number}}</span>
           </li>
           <li class="list-group-item refinement" 
               ng-repeat="refinement in nav.raw.refinements"
@@ -47,7 +47,7 @@
               ng-model="refinement.high"
               readonly='true'></uib-rating> 
             <p ng-if="(nav.selected | filter:{navigationName : nav.name, high: refinement.high}).length > 0" class="glyphicon glyphicon-remove"></p>
-            <span ng-if="!(nav.selected | filter:{navigationName : nav.name, high: refinement.high}).length > 0" class="badge">{{refinement.count}}</span>
+            <span ng-if="!(nav.selected | filter:{navigationName : nav.name, high: refinement.high}).length > 0" class="badge">{{refinement.count | number}}</span>
           </li>
         </ul>
 

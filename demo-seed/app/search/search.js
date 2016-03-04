@@ -285,7 +285,9 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 
 				var firstResult = view_model.getPageSize() * ($scope.currentPage - 1) + 1;
 				var lastResult =  Math.min( firstResult + view_model.getPageSize() - 1, view_model.totalRecordCount);
-				view_model.resultSummary =  firstResult.toString() + " - " + lastResult.toString() + " of " +  view_model.totalRecordCount.toString() + " Products";
+
+				var formattedRecordCount = $filter('number')(view_model.totalRecordCount);
+				view_model.resultSummary =  firstResult.toString() + " - " + lastResult.toString() + " of " +  formattedRecordCount + " Products";
 
 				console.log("Search Model", view_model);
 
