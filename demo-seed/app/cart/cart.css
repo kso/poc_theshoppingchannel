@@ -1,4 +1,30 @@
 
+.checkout-container {
+	margin-top: 30px;
+}
+
+.cart-image {
+	max-width: 200px;
+}
+
+.checkout-cart-section{
+	border: solid 1px #CCC;
+}
+
+.checkout-payment-section{
+	text-align: center;
+	border: solid 1px #CCC;
+}
+
+.checkout-cart-section h1 {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.checkout-payment-section h1 {
+    margin-bottom: 45px;
+}
+
 .add-to-cart-container {
 	display: table;
     margin: 0 auto;

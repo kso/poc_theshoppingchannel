@@ -25,4 +25,7 @@ angular.module('groupByDemo.cart', ['ui.router'])
 		  }
 		};
 
+	    ngCart.setTaxRate(13);
+	    ngCart.setShipping(2.99); 
+
 	}]);

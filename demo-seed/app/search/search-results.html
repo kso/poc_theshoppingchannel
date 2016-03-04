@@ -169,7 +169,14 @@
               class="octicon octicon-x"></span>
           </div>
           <div class="product-add-to-cart">
-            <ngcart-addtocart id="{{result.allMeta[search.displayFields.id]}}" quantity="1" quantity-max="9" name="{{result.allMeta[search.displayFields.title]}}" price="{{result.allMeta[search.displayFields.price]}}" template-url="cart/addtocart.tpl.html" data="product">Add to Cart</ngcart-addtocart>
+            <ngcart-addtocart 
+            id="{{result.allMeta[search.displayFields.id]}}" 
+            quantity="1" 
+            quantity-max="9" 
+            name="{{result.allMeta[search.displayFields.title]}}" 
+            price="{{result.allMeta[search.displayFields.price]}}" 
+            data="{ image : result.allMeta[search.displayFields.image] }"
+            template-url="cart/addtocart.tpl.html" data="product">Add to Cart</ngcart-addtocart>
           </div>
         </div>
       </div>
