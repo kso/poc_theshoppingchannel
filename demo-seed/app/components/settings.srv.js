@@ -14,7 +14,7 @@ angular.module('groupByDemo.util.settings', [])
 
 		settings['Display Fields'] = {
 			image : "wideImage",
-			title : "Ctitle",
+			title : "title",
 			price : "price",
 			id : "ID"
 		};
