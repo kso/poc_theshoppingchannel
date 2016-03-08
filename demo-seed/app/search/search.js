@@ -276,6 +276,13 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 		  	apiService.search(parameters).success(function(data){
 		  		console.timeEnd("search");
 		  		console.log("Search API Data", data);
+
+		  		if (data.redirect)
+		  		{
+		  			console.log("Redirecting to - " + data.redirect);
+		  			window.location = data.redirect;
+		  		}
+
 				view_model.totalRecordCount = data.totalRecordCount;
 				view_model.navigation = view_model.updateNavModel(view_model.navigation, data.availableNavigation, data.selectedNavigation );
 				view_model.selectedNavigation = data.selectedNavigation;
