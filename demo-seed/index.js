@@ -26,7 +26,7 @@ var httpsAgent = new https.Agent({ keepAlive:true, maxSockets:10 });
 
 var proxyOptions = {
     changeOrigin: true,
-    target: 'https://crateandbarreldemo.groupbycloud.com',
+    target: 'https://tscpoc.groupbycloud.com',
     agent: httpsAgent
 };
 

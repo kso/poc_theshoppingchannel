@@ -6,17 +6,17 @@ angular.module('groupByDemo.util.settings', [])
 		var settings = this;
 
 		settings['SAYT Display Fields'] = {
-			image : "image_url",
+			image : "product_images",
 			title : "title",
-			price : "price",
-			id : "ID"
+			brand : "brand",
+			url : "url"
 		};
 
 		settings['Display Fields'] = {
-			image : "wideImage",
+			image : "product_images",
 			title : "title",
-			price : "price",
-			id : "ID"
+			brand : "brand",
+			url : "url"
 		};
 
 		var getValuesFromObj = function(obj){
@@ -35,11 +35,11 @@ angular.module('groupByDemo.util.settings', [])
 		var searchFields = settings.getNames(settings['Display Fields']).concat(["on_sale"]);
 
 		settings.search = {
-			clientKey : "269466c6-e7b6-4439-a175-c6d5faa069dd",
-			collection : "productsonsale",
-			area : "Test",
+			clientKey : "e2c1781d-60c0-43d1-ae77-23c7386d325b",
+			collection : "shoppingchannel",
+			area : "Production",
 			pageSize : 50,
-			saytURL : "http://crateandbarreldemo.groupbycloud.com",
+			saytURL : "https://tscpoc.groupbycloud.com",
 			fields : searchFields,
 			saytKeywords : 5,
 			saytNavigation : 4,
@@ -79,12 +79,12 @@ angular.module('groupByDemo.util.settings', [])
 		settings['URL Parameter Ordering'] = [ "QtopRatedType", "Qcolor", "CBrand", "Qtype", "Qrating" ,"price" ];
 
 		settings['Nav Menu'] = [
-			{ displayName: "Dining & Entertaining", searchTerm: "dining", submenu: 
+			{ displayName: "Jewellery", searchTerm: "jewellery", submenu: 
 				[
-					{ value: "Dinnerware" },
-					{ value: "Flatware" },
-					{ value: "Drinkware" },
-					{ value: "Serveware" }
+					{ value: "Products" },
+					{ value: "Brands" },
+					{ value: "Quick Links" },
+					{ value: "Special Pricing" }
 				]
 			},
 			{ displayName: "Kitchen", searchTerm: "Kitchen",  submenu: 

@@ -26,7 +26,7 @@ angular.module('groupByDemo.typeahead', [])
     vm.cancellers.push(canceller); 
     return apiService.sayt(val, canceller).then(function(response){
       console.timeEnd("sayt");
-
+	  console.log (response);
       var cancellerIndex = vm.cancellers.indexOf(canceller);
       if(cancellerIndex > -1){
         vm.cancellers.splice(cancellerIndex, 1);
@@ -131,10 +131,18 @@ angular.module('groupByDemo.typeahead', [])
                   if (product.allMeta){
                       var newProd = {};
                       newProd.value = product.allMeta[displayFields.title];
-                      newProd.url = 'product/' + product.allMeta[displayFields.id];
+                      newProd.url = 'https://www.theshoppingchannel.com/' + product.allMeta.url;
                       newProd.type = 'products';
                       newProd.price = product.allMeta[displayFields.price];
-                      newProd.image = product.allMeta[displayFields.image];
+                      newProd.image = product.allMeta[displayFields.product_images];
+						var arrayLength = product.allMeta.product_images.length;
+					for (var i = 0; i < arrayLength; i++) {
+						console.log (product.allMeta.product_images[i]);
+					if (product.allMeta.product_images[i].search ("200x200")> -1){
+						newProd.image = product.allMeta.product_images[i];
+						break;
+						}
+					}
                       products.push(newProd);
                   }
                 }
