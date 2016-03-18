@@ -1,0 +1,115 @@
+# Your client key as found in the command center.
+clientKey: e2c1781d-60c0-43d1-ae77-23c7386d325b
+
+# Optional: If you wish to put these records into a different collection specify a collection
+# below.  You can then use the search API to select a specific collection to query against.
+collection: shoppingchannel
+
+# Optional: By default, all updates sent to the engine are partial updates. This means you have to manage
+# the deletes that are sent to the engine. If you do not wish to manage deletes, you may uncomment the
+# replaceCollection flag to replace the specified collection. If no collection is defined, the default
+# collection is replaced.
+replaceCollection: true
+
+# Optional: Queries will be fuzzy matched against the values of the attributes listed below.
+# If a match is found, the search service will serve the query from the variant record collection.
+# See the Variants documentation for more details.
+# This configuration item is multi-assign.
+# variantQueryFields: color
+# variantQueryFields: material
+
+# Optional: Refinements will be exactly matched against the values of the attributes listed below.
+# If a match is found, the search service will serve the query from the variant record collection.
+# This configuration item is multi-assign.
+# variantRefinementFields: color
+# variantRefinementFields: material
+
+# Optional: Return to using the legacy (flat) format for attaching categories to records in place of the default
+# nested format.
+# legacyCategories: true
+
+# Field Definitions allow you to define which fields will be indexed and included in the relevancy calculations.
+#
+# Only the name field is mandatory. The field name supports two types of wildcard characters: '?' and '*'. The '?'
+# wildcard will match one character. For example "????_price" will match "sale_price", but not "sales_price". The
+# '*' wildcard will match any number of characters. For example, a name of "*_price" will match both "sale_price"
+# and "sales_price", but not "sale_prices". It is important to note that for field definitions containing wildcard
+# characters, the defined type applies to all matching fields.
+#
+# If display name is not provided, the value of the name field will be used
+# instead. The type will default to "String" if not provided. Valid types are:
+#  - String
+#  - Integer
+#  - Float
+#  - ChildRecord (as of version 2.0.183)
+# 
+# Use the ChildRecord type to denote a field as a child record of the parent record. This will allow search
+# refinements to match fully against child records. For example, if you have the following record:
+#   {
+#     "title": "shirt",
+#     "child": [
+#       {
+#         "color": "red",
+#         "size": "XL"
+#       },
+#       {
+#         "color": "blue",
+#         "size": "M"
+#       }
+#     ]
+#   }
+#
+# When the "child" field is not defined as a ChildRecord, refining on "red" and "M" will bring back the record even
+# though the refinements match across the child records. If this is not the desired behavior, setting the type
+# to ChildRecord will force refinements to match fully on child records.
+#
+# Any field may be refined upon and sorted upon. However, it is very important to note that for all fields
+# default to the "String" type. This means that refinements values will always be sorted alphanumerically
+# unless the field is first defined as searchable field (or a dynamic navigation in Command
+# Center) with the appropriate numeric or date type. The also holds true for range refinements.
+#
+# At least one field definition must exist with "search" set to "true". Wildcarded field definitions should be ordered
+# from most specific to most generic. In the examples below, with the defined order, "field_specific" has the type
+# "Integer" while all other fields that match the pattern "field_*" has the type "String"
+fieldDefinition: {name: "p_item_number", search: true}
+fieldDefinition: {name: "title", displayName: "title", search: true}
+fieldDefinition: {name: "product_type", displayName: "Product Type", type: "String",search:true}
+fieldDefinition: {name: "brand", displayName: "Brand", type: "String",search:true}
+# fieldDefinition: {name: "field_*"}
+# fieldDefinition: {name: "field?", displayName: "Field Name"}
+# fieldDefinition: {name: "?_field_*", displayName: "Field Name", type: "String"}
+
+# **DEPRECATED**
+# Searchable Fields allow you to define which fields will be indexed and included in the relevancy calculations.
+#
+# Only the name field is mandatory. The field name supports two types of wildcard characters: '?' and '*'. The '?'
+# wildcard will match one character. For example "????_price" will match "sale_price", but not "sales_price". The
+# '*' wildcard will match any number of characters. For example, a name of "*_price" will match both "sale_price"
+# and "sales_price", but not "sale_prices". It is important to note that for searchable fields containing wildcard
+# characters, the defined type applies to all matching fields.
+#
+# If display name is not provided, the value of the name field will be used
+# instead. The type will default to "String" if not provided. Valid types are:
+#  - String
+#  - Integer
+#  - Float
+#
+# Any field may be refined upon and sorted upon. However, it is very important to note that for all fields
+# default to the "String" type. This means that refinements values will always be sorted based on natural
+# string order, unless the field is first defined as searchable field (or a dynamic navigation in Command
+# Center) with the appropriate numeric or date type. The also holds true for range refinements.
+#
+# At least one searchable field must be defined. Wildcarded searchable fields should be ordered from most
+# specific to most generic. In the examples below, with the defined order, "field_specific" has the type
+# "Integer" while all other fields that match the pattern "field_*" has the type "String"
+# searchableField: {name: "field_name"}
+# searchableField: {name: "field_name", displayName: "Field Name"}
+# searchableField: {name: "field_name", displayName: "Field Name", type: "String"}
+# searchableField: {name: "field_specific", type: "Integer"}
+# searchableField: {name: "field_*"}
+# searchableField: {name: "field?", displayName: "Field Name"}
+# searchableField: {name: "?_field_*", displayName: "Field Name", type: "String"}
+
+# Optional: The upload service will fail on the first invalid record if failOnFirstError is set to true. The default value is
+# false, meaning it will continue uploading until 100 invalid records are found.
+# failOnFirstError: false

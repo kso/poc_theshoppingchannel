@@ -1,0 +1,98 @@
+# Mandatory
+# Your client key as found in the command center.
+clientKey: e2c1781d-60c0-43d1-ae77-23c7386d325b
+
+# Mandatory
+# In SAYT there are three sections visible to the user.  Autocomplete, navigation
+# search and product recommendations.  Include navigationFields to define
+# which navigation options should be used for navigation search.
+# navigationField:categoryName
+# navigationField:type
+navigationField:brand
+navigationField:product_type
+
+# Mandatory
+# Fields specified by searchField are used for auto complete. In addition,
+# a weight can be given to terms found in each specified field. This can
+# be done by adding a number, separated by a comma, after the field name.
+# If weight is not set, the weight defaults to 1. Please note, these fields are
+# broken into every possible three word n-gram and this will generate a
+# lot of data. Autocomplete could become unresponsive if not used with care.
+# Decide which fields are most important to your user experience.
+searchField:title
+# searchField:brand
+#searchField:title,4
+#searchField:title,4.5
+
+# Optional
+# This parameter represents the sub-collection and must match the sub-collection
+# defined in one of your Upload Module configurations. If no sub-collection was defined
+# in the configuration for the upload, this parameter does not need to be overwritten.
+collection: shoppingchannel
+
+# Optional
+# A flag to disable generation of SAYT data
+# disabled: true
+
+# Optional
+# A list of words that should not get into the type ahead's first or last word.
+# For example, "Jimmy the Knife" would make it into the type ahead.
+# But, "The Knife" or "knife the" would not.
+stopWords:although|have|also|yes|no|you|and|for|to|the|that|with|which|is|in|allows|a|in|any|on|your|be|without|has|an|these|then|we|them|or|their|it|that|than|of|from|at|as|can|by|not|does|if|what|when|no|all
+
+# Optional
+# You can use regular expressions to exclude values from being included
+# in both the navigation search and search field.
+# http://www.regular-expressions.info/
+# starts with a symbol.
+excludePattern:^[^a-z^0-9]+ .*$
+# ends in a symbol.
+excludePattern:^.* [^a-z^0-9]+$
+# is a total of 1 character.
+excludePattern:^.{1}$
+# starts with a number. (disabled)
+#excludePattern:^[0-9]+ .*$
+# ends with a number. (disabled)
+#excludePattern:^.* [0-9]+$
+# is only a number.
+excludePattern:^[0-9]+$
+# ends with a space and single or double character.
+excludePattern:^.* .{1,2}
+# ends with a space and a single or double character.
+excludePattern:^.* .{1,2}
+# starts with a single or double character.
+excludePattern:^.{1,2} .*$
+# has a single middle ngram
+excludePattern:. .{1} .
+# starts with a stop word.
+excludePattern:^(STOP_WORDS) .*
+# ends with a stop word.
+excludePattern:.* (STOP_WORDS)$
+# is entirely a stop word
+excludePattern:^(STOP_WORDS)$
+# contains a colon in the middle.
+excludePattern:.*:.*
+# has a comma or full stop then a space.
+excludePattern:.*[\.,] .*
+# ends with a comma or a full stop
+excludePattern:.*[\.,]$
+
+# Optional
+# A language field can be specified to switch between character-based (for languages such as Thai,
+# Chinese, Korean or Japanese) and the default (word-based) processing. Records with supported
+# character-based languages will generate terms from all defined searchFields by splitting on
+# characters rather than by words. Please refer the documentation for a list of supported languages.
+# Please note, The "lang_" prefix is optional. For example, the field value can either be "lang_en"
+# or "en". If the language provided in the field is not recognized, the default word-based processing
+# is used.
+#languageField: language
+
+# Optional
+# By default, all the fields specified here are returned by the SAYT product search endpoint. As the endpoint is not secure
+# (does not require your client key to query) it is imperative that this "field" parameter is used to 
+# tell the service which data should be returned in the allMeta section.  More than one field can be defined.
+field: title
+field: brand
+field: product_type
+field: product_images
+field: url
