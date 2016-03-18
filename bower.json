@@ -1,0 +1,26 @@
+{
+  "name": "groupby-cloud-demo",
+  "description": "GroupBy Cloud Demo",
+  "version": "0.0.1",
+  "homepage": "https://github.com/groupby/demos",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "^1.5.0",
+    "angular-route": "^1.5.0",
+    "angular-loader": "^1.5.0",
+    "html5-boilerplate": "~5.2.0",
+    "bootstrap": "^3.3.6",
+    "angular-bootstrap": "^1.0.3",
+    "json-formatter": "^0.4.2",
+    "angularjs-slider": "^2.5.0",
+    "ng-sortable" : "^1.3.2",
+    "ngcart" : "^1.0.0",
+    "angular-ui-router" : "^0.2.18",
+    "braintree-angular" : "^1.3.1",
+    "angular-cookies" : "^1.5.0",
+    "angular-animate" : "^1.5.0",
+    "lodash" : "4.5.1",
+    "octicons": "*"
+  }
+}

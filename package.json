@@ -1,0 +1,23 @@
+{
+  "name": "groupby-cloud-demo",
+  "private": true,
+  "version": "0.0.1",
+  "description": "GroupBy Cloud Demo",
+  "repository": "https://github.com/groupby/demos",
+  "license": "MIT",
+  "devDependencies": {
+    "bower": "^1.7.2",
+    "express": "^4.13.3",
+    "http-proxy": "^1.12.0",
+    "shelljs": "^0.5.3"
+  },
+  "scripts": {
+    "postinstall": "bower install",
+
+    "prestart": "npm install",
+    "start": "node index.js",
+
+    "update-index-async": "node -e \"require('shelljs/global'); sed('-i', /\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/, '//@@NG_LOADER_START@@\\n' + sed(/sourceMappingURL=angular-loader.min.js.map/,'sourceMappingURL=bower_components/angular-loader/angular-loader.min.js.map','app/bower_components/angular-loader/angular-loader.min.js') + '\\n//@@NG_LOADER_END@@', 'app/index-async.html');\"",
+    "stop": "taskkill /IM node.exe /F"
+  }
+}

@@ -1,0 +1,11 @@
+modified index.html to add SAYT - demo-seed
+Added sayt.js in demo-seed
+Added autocompleteTemplate.dust in demoseed
+*********************************************************
+
+Start Server in node.js cmd. Navigate to Github > Demos> Demoseed   Use  npm start
+Log on to localhost:8000
+
+Modify Settings.srv.js for App Settings
+Modify index.js for Server Settings.
+Modify search.js to modify returned JSON. For ex. 200x200 image.

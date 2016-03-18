@@ -1,0 +1,27 @@
+{#items}
+	{#searchTerms}
+  		<li class="ui-menu-item" data-ui-autocomplete-item='{"value":"{value}", "type":"searchTerm"}'>
+			<a>
+				<span class="sayt-content">{value}</span> <span class="sayt-additional">
+					{@if cond="'{additionalInfo.manufacturer}'.length"}
+						Brand: 
+						{#additionalInfo.manufacturer}
+							<span class="sayt-hyperlink">{.}</span>{@sep} {/sep}
+						{/additionalInfo.manufacturer}
+					{/if} 
+				</span>
+			</a>
+		</li>
+	{/searchTerms}
+	
+	{#navigations}
+        <li class="ui-autocomplete-category">{name}</li>
+        {#values}
+            <li class="ui-menu-item" data-ui-autocomplete-item='{"value":"{.}", "type":"navigation", "category":"{name}"}'>
+                <a>
+                    <span class="sayt-content">{.}</span>
+                </a>
+            </li>
+        {/values}
+	{/navigations}
+{/items}
