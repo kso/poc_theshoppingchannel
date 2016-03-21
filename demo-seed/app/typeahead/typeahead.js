@@ -131,18 +131,10 @@ angular.module('groupByDemo.typeahead', [])
                   if (product.allMeta){
                       var newProd = {};
                       newProd.value = product.allMeta[displayFields.title];
-                      newProd.url = 'https://www.theshoppingchannel.com/' + product.allMeta.url;
+                      newProd.url = 'https://www.theshoppingchannel.com/' + product.allMeta[displayFields.url];
                       newProd.type = 'products';
                       newProd.price = product.allMeta[displayFields.price];
-                      newProd.image = product.allMeta[displayFields.product_images];
-						var arrayLength = product.allMeta.product_images.length;
-					for (var i = 0; i < arrayLength; i++) {
-						console.log (product.allMeta.product_images[i]);
-					if (product.allMeta.product_images[i].search ("200x200")> -1){
-						newProd.image = product.allMeta.product_images[i];
-						break;
-						}
-					}
+                      newProd.image = urlService.findImage(product.allMeta[displayFields.image], "160x160");
                       products.push(newProd);
                   }
                 }

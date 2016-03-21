@@ -471,6 +471,9 @@ angular.module("groupByDemo.search",['ui.bootstrap'])
 			});
 		};
 
+		view_model.bindImage = function(img) {
+			return urlService.findImage(img, "200x200");
+		};
 
 		console.groupEnd();
 		view_model.search();

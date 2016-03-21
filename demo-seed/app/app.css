@@ -3,12 +3,16 @@
 body {
 	padding: 110px 15px 0px 15px;
 	overflow-y: scroll;
+	/*background: #e2e2e4;*/
 }
 
 body.modal-open {
 	overflow-y: scroll;
 }
 
+.navbar-inverse {
+	background: #e2e2e4;
+}
 
 .section-title {
 	font-family: 'Lobster', cursive;
@@ -30,7 +34,7 @@ body.modal-open {
 }
 
 .navbar-brand img {
-	height: 45px;
+	height: 67px;
 	padding: 5px 0px 0px 15px;
 }
 
@@ -366,3 +370,42 @@ rzslider .rz-bar.rz-selection {
 .settings-modal {
 	top:100px;
 } 
+
+
+/* TSC SAYT Demo */
+.search-box-control:active,.search-box-control:focus {
+    -webkit-box-shadow: 0 0 5px rgba(221,93,217,1),0 1px 0 rgba(0,0,0,.07) inset;
+    -moz-box-shadow: 0 0 5px rgba(221,93,217,1),0 1px 0 rgba(0,0,0,.07) inset;
+    box-shadow: 0 0 5px rgba(221,93,217,1),0 1px 0 rgba(0,0,0,.07) inset;
+}
+
+.scoped-sayt {
+	color: #963093 !important;
+	text-transform: uppercase;
+}
+
+#homepade-live-video {
+	    border-radius: 6px;
+    border: 1px solid #000;
+    margin-top: 4px;
+}
+
+.cart-summary {
+	background: #953092;
+    border-radius: 5px;
+}
+
+.cart-summary:hover .cart-icon, .cart-summary:hover .cart-text-summary {
+	color: #1984cc;
+}
+
+.cart-icon {
+    margin-top: 5px;
+}
+
+.cart-text-summary {
+    padding-left: 10px;
+    padding-right: 0;
+    padding-bottom: 4px;
+}
+

@@ -44,8 +44,8 @@ angular.module('groupByDemo.util.settings', [])
 			saytKeywords : 5,
 			saytNavigation : 4,
 			saytProducts : 3,
-			saytScopedKeywordField : "QtopRatedType",
-			saytNavigationFields: [ { displayName: "Brands", value: "CBrand", limit: 3}, { displayName: "Departments", value: "QtopRatedType", limit:3} ]
+			saytScopedKeywordField : "product_type",
+			saytNavigationFields: [ { displayName: "Brands", value: "brand", limit: 3}, { displayName: "Product", value: "product_type", limit:3} ]
 		};
 
 		settings['Nav Menu Defaults'] = {
@@ -87,7 +87,7 @@ angular.module('groupByDemo.util.settings', [])
 					{ value: "Special Pricing" }
 				]
 			},
-			{ displayName: "Kitchen", searchTerm: "Kitchen",  submenu: 
+			{ displayName: "Beauty", searchTerm: "Beauty",  submenu: 
 				[
 					{ value: "Cookware & Bakeware" },
 					{ value: "Cutlery" },
@@ -95,7 +95,7 @@ angular.module('groupByDemo.util.settings', [])
 					{ value: "Kitchen Accessories", displayName: "Accessories" }
 				]
 			},
-			{ displayName: "Decor & Pillows", searchTerm: "decor", submenu: 
+			{ displayName: "Fashion", searchTerm: "decor", submenu: 
 				[
 					{ value: "Pillows & Throws" },
 					{ value: "Candle Holders & Vases" },
@@ -103,24 +103,54 @@ angular.module('groupByDemo.util.settings', [])
 					{ value: "Home Accessories" }
 				]
 			},
-			{ navigationName: "QtopRatedType", searchTerm: "lighting",
-				value: "Lighting", 
-				displayName: "Lighting", 
-				menuField: "Qtype",
-			},
-			{ displayName: "Bed & Bath", searchTerm: "bedroom", submenu: 
+			{ displayName: "Handbags & Shoes", searchTerm: "handbags shoes", submenu: 
 				[
 					{ value: "Bedding" },
 					{ value: "Bath" },
 				]
 			},
-			{ displayName: "Outdoor", searchTerm: "grill", submenu: 
+			{ displayName: "Home", searchTerm: "grill", submenu: 
 				[
 					{ value: "Outdoor Entertaining", displayName: "Entertaining" },
 					{ value: "Outdoor Accessories", displayName: "Accessories" },
 					{ value: "Outdoor Dining Furniture", displayName: "Dining" }
 				]
 			},	
+			{ displayName: "Kitchen", searchTerm: "grill", submenu: 
+				[
+					{ value: "Outdoor Entertaining", displayName: "Entertaining" },
+					{ value: "Outdoor Accessories", displayName: "Accessories" },
+					{ value: "Outdoor Dining Furniture", displayName: "Dining" }
+				]
+			},
+			{ displayName: "Electronics", searchTerm: "grill", submenu: 
+				[
+					{ value: "Outdoor Entertaining", displayName: "Entertaining" },
+					{ value: "Outdoor Accessories", displayName: "Accessories" },
+					{ value: "Outdoor Dining Furniture", displayName: "Dining" }
+				]
+			},
+			{ displayName: "NHL Shop", searchTerm: "grill", submenu: 
+				[
+					{ value: "Outdoor Entertaining", displayName: "Entertaining" },
+					{ value: "Outdoor Accessories", displayName: "Accessories" },
+					{ value: "Outdoor Dining Furniture", displayName: "Dining" }
+				]
+			},
+			{ displayName: "Clearance", searchTerm: "grill", submenu: 
+				[
+					{ value: "Outdoor Entertaining", displayName: "Entertaining" },
+					{ value: "Outdoor Accessories", displayName: "Accessories" },
+					{ value: "Outdoor Dining Furniture", displayName: "Dining" }
+				]
+			},
+			{ displayName: "More", searchTerm: "grill", submenu: 
+				[
+					{ value: "Outdoor Entertaining", displayName: "Entertaining" },
+					{ value: "Outdoor Accessories", displayName: "Accessories" },
+					{ value: "Outdoor Dining Furniture", displayName: "Dining" }
+				]
+			}
 		];
 		settings.Personalization = {
 			Status : "on",

@@ -269,5 +269,15 @@ angular.module("groupByDemo.util.url",[])
 			return queryString;
 		};
 
+		// service to return the image in an image list that has the needle found in the path		
+		service.findImage = function(images, needle) {
+			var i;
+			for(i=0;i<images.length;i++) {
+				if(images[i].search(needle) > -1) {
+					return images[i];
+				}
+			}
+		}
+
 
 	}]);
