@@ -43,13 +43,14 @@
               <input  type="text" 
                       ng-model="typeahead.data.query" 
                       placeholder="Search..." 
-                      uib-typeahead="searchSuggestion as searchSuggestion.value for searchSuggestion in typeahead.fetch($viewValue)" 
+                      uib-typeahead="searchSuggestion as searchSuggestion.value for searchSuggestion in typeahead.fetch($viewValue)"                      
                       typeahead-popup-template-url="typeahead/sayt.tpl.html"
                       typeahead-focus-first = "false"
                       typeahead-no-results="noResults"
                       typeahead-on-select="typeahead.onSelectItem($item, $model, $label)"
-                      ng-keyup="$event.keyCode == 13 ? typeahead.onEnterKey(typeahead.data.query) : null"
-                      class="search-box-control form-control">            
+                      ng-keyup="$event.keyCode == 13 ? typeahead.onEnterKey(typeahead.data.query) : null" 
+                      class="search-box-control form-control">
+              <!-- {{typeahead.fetchProductSuggestions("as")}} -->
           </div>
           <div ng-controller="settingsCtrl as settings" 
               class="settings-button navbar-menu navbar-text navbar-right" 

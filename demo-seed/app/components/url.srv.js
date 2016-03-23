@@ -271,6 +271,8 @@ angular.module("groupByDemo.util.url",[])
 
 		// service to return the image in an image list that has the needle found in the path		
 		service.findImage = function(images, needle) {
+			if(images === undefined || needle === undefined) return;
+
 			var i;
 			for(i=0;i<images.length;i++) {
 				if(images[i].search(needle) > -1) {

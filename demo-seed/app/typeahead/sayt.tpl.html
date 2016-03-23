@@ -1,74 +1,81 @@
-<ul class="dropdown-menu saytDropdown" ng-show="isOpen() && !moveInProgress" ng-style="{top: position().top+'px', left: position().left+'px'}" role="listbox" aria-hidden="{{!isOpen()}}">
-    <li ng-repeat="match in matches track by $index" ng-class="{active: isActive($index) }" ng-mouseenter="selectActive($index)" 
-    class="saytSection" role="option" id="{{::match.id}}">
+<div class="dropdown-menu saytDropdown" ng-show="isOpen() && !moveInProgress" ng-style="{top: position().top+'px', left: position().left+'px'}" role="listbox" aria-hidden="{{!isOpen()}}">
+    <div class="col-md-5 saytLeftList">
+	    <div ng-repeat="match in matches | limitTo: 2 track by $index" ng-class="{active: isActive($index) }" ng-mouseenter="selectActive($index)" 
+	    class="saytSection" role="option" id="{{::match.id}}">
 
-		<ul class="saytList" role="listbox" ng-if="match.model.length > 0">
-			<div ng-if="!$first" class="sayt-header-background"></div>
-		    <li class="saytItem" ng-repeat="m in match.model track by $index" ng-mouseenter="selectActive($index)" role="option">
+			<ul class="saytList" role="listbox" ng-if="match.model.length > 0">
+				<div ng-if="!$first" class="sayt-header-background"></div>
+			    <li class="saytItem" ng-repeat="m in match.model track by $index" ng-mouseenter="selectActive($index)" role="option">
 
-				<!--            -->
-				<!-- KEYWORDS   -->
-				<!--            -->
-				<div ng-if="m.type === 'searchTerms' && $index == 0">
-					<div class="sayt-link-container">
+					<!--            -->
+					<!-- KEYWORDS   -->
+					<!--            -->
+					<div ng-if="m.type === 'searchTerms' && $index == 0">
+						<div class="sayt-link-container">
+							<a class="saytLink" href="{{m.url}}"
+							   tabindex="-1"
+							   ng-attr-title="{{m.value}}"
+							   ng-mouseover="m.fetchProductSuggestions()"><span ng-bind-html="m.value | uibTypeaheadHighlight:query"></span>
+							   <span>in </span><span class="scoped-sayt"> All Departments</span></a>
+						</div>
+						<div class="sayt-link-container" ng-repeat="addnInfo in (m.scopes | limitTo:3) ">
+							<a class="saytLink" href="{{m.scopedURLs[$index]}}"
+							   tabindex="-1"
+							   ng-attr-title="{{m.value}}"
+							   ng-mouseover="m.fetchProductSuggestions($index)"><span ng-bind-html="m.value | uibTypeaheadHighlight:query"></span>
+							   <span>in </span><span class="scoped-sayt"> {{addnInfo}}</span></a>
+							<div ng-if="$last">
+								<div class="scoped-sayt-last"></div>
+							</div>
+						</div>
+					</div>
+					<div class="sayt-link-container" ng-if="m.type === 'searchTerms' && $index > 0">
 						<a class="saytLink" href="{{m.url}}"
 						   tabindex="-1"
-						   ng-attr-title="{{m.value}}"><span ng-bind-html="m.value | uibTypeaheadHighlight:query"></span>
-						   <span>in </span><span class="scoped-sayt"> All Departments</span></a>
+						   ng-bind-html="m.value | uibTypeaheadHighlight:query"
+						   ng-attr-title="{{m.value}}"
+						   ng-mouseover="m.fetchProductSuggestions()"></a>
 					</div>
-					<div class="sayt-link-container" ng-repeat="addnInfo in (m.scopes | limitTo:5) ">
-						<a class="saytLink" href="{{m.scopedURLs[$index]}}"
-						   tabindex="-1"
-						   ng-attr-title="{{m.value}}"><span ng-bind-html="m.value | uibTypeaheadHighlight:query"></span>
-						   <span>in </span><span class="scoped-sayt"> {{addnInfo}}</span></a>
-						<div ng-if="$last">
-							<div class="scoped-sayt-last"></div>
+
+					<!--            -->
+					<!-- NAVIGATION -->
+					<!--            -->
+					<div ng-class="{ 'extra-sayt-navigation-section' : !$first }" ng-if="m.type === 'navigations'">
+						<div ng-repeat="refinement in (m.refinements | limitTo:m.limit)">
+							<div ng-if="$first" class="sayt-header-background"></div>
+							<div ng-if="$first">
+								<p class="message saytHeader">{{refinement.fieldDisplayName}}</p>
+							</div>
+							<div class="sayt-link-container">
+								<a class="saytLink" href="{{refinement.url}}"
+								   tabindex="-1"
+								   ng-bind-html="refinement.value | uibTypeaheadHighlight:query"
+								   ng-attr-title="{{refinement.value}}"></a>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="sayt-link-container" ng-if="m.type === 'searchTerms' && $index > 0">
-					<a class="saytLink" href="{{m.url}}"
+			    </li>
+			</ul>
+	    </div>
+	</div>
+	<div class="col-md-7 saytProductList" >
+		<div class="saytList" role="listbox" ng-if="matches[2].model.length > 0">
+
+			<!--          -->
+			<!-- PRODUCTS -->
+			<!--          -->
+		    <div class="saytItem saytProduct col-md-4" ng-repeat="m in matches[2].model track by $index" ng-mouseenter="selectActive($index)" role="option">	
+				
+				<div ng-class="{ 'saytImage-container-first': $first, 'saytImage-container-last': $last, 'saytImage-container-middle' : $middle }"  ng-if="m.type === 'products'">
+					<a href="{{m.url}}">
+						<img class="img-responsive saytImage" ng-src="{{m.image}}" src="{{m.image}}"/>
+					</a>
+					<a class="saytLink saytProductTitle" href="{{m.url}}"
 					   tabindex="-1"
-					   ng-bind-html="m.value | uibTypeaheadHighlight:query"
+					   ng-bind-html="m.value | cut:true:50:'...' | uibTypeaheadHighlight:query"
 					   ng-attr-title="{{m.value}}"></a>
-				</div>
-
-				<!--            -->
-				<!-- NAVIGATION -->
-				<!--            -->
-				<div ng-class="{ 'extra-sayt-navigation-section' : !$first }" ng-if="m.type === 'navigations'">
-					<div ng-repeat="refinement in (m.refinements | limitTo:m.limit)">
-						<div ng-if="$first" class="sayt-header-background"></div>
-						<div ng-if="$first">
-							<p class="message saytHeader">{{refinement.fieldDisplayName}}</p>
-						</div>
-						<div class="sayt-link-container">
-							<a class="saytLink" href="{{refinement.url}}"
-							   tabindex="-1"
-							   ng-bind-html="refinement.value | uibTypeaheadHighlight:query"
-							   ng-attr-title="{{refinement.value}}"></a>
-						</div>
-					</div>
-				</div>
-
-				<!--          -->
-				<!-- PRODUCTS -->
-				<!--          -->
-				<div ng-if="m.type === 'products' && $index == 0">
-					<p class="message saytHeader">Top Matches</p>
-				</div>
-				<div ng-if="m.type === 'products'">
-					<div ng-class="{ 'saytImage-container-first': $first, 'saytImage-container-last': $last, 'saytImage-container-middle' : $middle }" class="col-md-4">
-						<a href="{{m.url}}">
-							<img class="img-responsive saytImage" ng-src="{{m.image}}" src="{{m.image}}"/>
-						</a>
-						<a class="saytLink saytProductTitle" href="{{m.url}}"
-						   tabindex="-1"
-						   ng-bind-html="m.value | cut:true:50:'...' | uibTypeaheadHighlight:query"
-						   ng-attr-title="{{m.value}}"></a>
-					 </div>
-				</div>
-		    </li>
-		</ul>
-    </li>
-</ul>
+				 </div>
+			</div>
+		</div>
+	</div>
+</div>

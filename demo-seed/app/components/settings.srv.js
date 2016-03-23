@@ -39,13 +39,14 @@ angular.module('groupByDemo.util.settings', [])
 			collection : "shoppingchannel",
 			area : "Production",
 			pageSize : 50,
-			saytURL : "https://tscpoc.groupbycloud.com",
+			saytURL : "https://tscpoc.groupbycloud.com",			
 			fields : searchFields,
 			saytKeywords : 5,
 			saytNavigation : 4,
-			saytProducts : 3,
+			saytProducts : 9,
 			saytScopedKeywordField : "product_type",
-			saytNavigationFields: [ { displayName: "Brands", value: "brand", limit: 3}, { displayName: "Product", value: "product_type", limit:3} ]
+			saytNavigationFields: [ { displayName: "Brands", value: "brand", limit: 3}, { displayName: "Product Types", value: "product_type", limit:3} ],
+			liveSiteRoot: "https://www.theshoppingchannel.com"
 		};
 
 		settings['Nav Menu Defaults'] = {
