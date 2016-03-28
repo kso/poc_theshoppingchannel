@@ -145,7 +145,7 @@
         <div class="product-thumb-container" style="position:relative">
           <a href="product/{{result.allMeta[search.displayFields.id]}}" class="product-thumb">
             <img class="img-responsive" 
-              ng-src="{{result.allMeta[search.displayFields.image] ? search.bindImage(result.allMeta[search.displayFields.image],'200x200') : 'http://prodimage.images-bn.com/mimages/0000000000000_p0_v0_s192x300.jpg'}}"
+              ng-src="{{result.allMeta[search.displayFields.image] ? search.bindImage(result.allMeta[search.displayFields.image],'200x200') : '/assets/no-img.png'}}"
               ng-class="search.isPinned(result.allMeta[search.displayFields.id]) ? 'curated' : ''">
             <h5>{{result.allMeta[search.displayFields.title] | cut:true:50:'...'}} - {{result.allMeta[search.displayFields.price] | currency}}</h5>
           </a>

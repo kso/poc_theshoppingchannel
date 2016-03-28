@@ -16,6 +16,7 @@ angular.module('groupByDemo.templates', [])
 		var day = today.slice(8,10);
 		var todaySpecial = "https://src.tscimg.ca/Content/en_CA/Images/Category/Homepage/" + fullYear +"/" + month + "/" + day + "/HP_MN1_" + year + month + day +".jpg";
 		var pastSpecials = [];
+		var homepageBanner = "https://src.tscimg.ca/Content/en_CA/Images/Category/Homepage/" + fullYear +"/" + month + "/" + day + "/HP_MNR_" + year + month + day +".jpg";
 
 		// https://src.tscimg.ca/Content/en_CA/Images/Category/Homepage/2016/03/21/HP_BNR_160321.jpg
 
@@ -27,6 +28,8 @@ angular.module('groupByDemo.templates', [])
 			}
 			pastSpecials.push("https://src.tscimg.ca/Content/en_CA/Images/Category/Homepage/" + fullYear +"/" + month + "/" + day + "/HP_MN1_" + year + month + day +".jpg");
 		}
+
+
 		console.log(todaySpecial);
 		console.log(pastSpecials);
 		

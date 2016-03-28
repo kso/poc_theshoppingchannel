@@ -195,6 +195,10 @@ angular.module('groupByDemo.primarynav', [])
 		  	return menu;
 		};
 
+		vm.bindImage = function(img) {
+			return urlService.findImage(img, "200x200");
+		}
+
 		vm.navs = [];
 
 		//do the searches for each menu to populate nav with data

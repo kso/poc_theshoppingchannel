@@ -1,5 +1,5 @@
 <div class="dropdown-menu saytDropdown" ng-show="isOpen() && !moveInProgress" ng-style="{top: position().top+'px', left: position().left+'px'}" role="listbox" aria-hidden="{{!isOpen()}}">
-    <div class="col-md-5 saytLeftList">
+    <div class="col-md-5 col-sm-5 saytLeftList">
 	    <div ng-repeat="match in matches | limitTo: 2 track by $index" ng-class="{active: isActive($index) }" ng-mouseenter="selectActive($index)" 
 	    class="saytSection" role="option" id="{{::match.id}}">
 
@@ -24,7 +24,7 @@
 							   ng-attr-title="{{m.value}}"
 							   ng-mouseover="m.fetchProductSuggestions($index)"><span ng-bind-html="m.value | uibTypeaheadHighlight:query"></span>
 							   <span>in </span><span class="scoped-sayt"> {{addnInfo}}</span></a>
-							<div ng-if="$last">
+							<div ng-if="$last && match.model.length > 1">
 								<div class="scoped-sayt-last"></div>
 							</div>
 						</div>
@@ -44,13 +44,14 @@
 						<div ng-repeat="refinement in (m.refinements | limitTo:m.limit)">
 							<div ng-if="$first" class="sayt-header-background"></div>
 							<div ng-if="$first">
-								<p class="message saytHeader">{{refinement.fieldDisplayName}}</p>
+								<p class="message saytHeader accent-title">{{refinement.fieldDisplayName}}</p>
 							</div>
 							<div class="sayt-link-container">
 								<a class="saytLink" href="{{refinement.url}}"
 								   tabindex="-1"
 								   ng-bind-html="refinement.value | uibTypeaheadHighlight:query"
-								   ng-attr-title="{{refinement.value}}"></a>
+								   ng-attr-title="{{refinement.value}}"
+								   ></a>
 							</div>
 						</div>
 					</div>
@@ -58,22 +59,31 @@
 			</ul>
 	    </div>
 	</div>
-	<div class="col-md-7 saytProductList" >
-		<div class="saytList" role="listbox" ng-if="matches[2].model.length > 0">
+	<div class="col-md-7 col-sm-5 saytProductList" >
+		<div class="media-banner col-md-12" ng-if="matches[3].model.length > 0 && matches[3].model[0].zones !== undefined">
+				<img class="img-responsive" ng-src="{{matches[3].model[0].zones['Media Banner'].content}}" />
+				<div class="clearfix"></div>
+			</div>
+
+		<div class="saytList" role="listbox" ng-if="matches[2].model.length > 0">		
 
 			<!--          -->
 			<!-- PRODUCTS -->
 			<!--          -->
-		    <div class="saytItem saytProduct col-md-4" ng-repeat="m in matches[2].model track by $index" ng-mouseenter="selectActive($index)" role="option">	
-				
+		    <div class="saytItem saytProduct" ng-repeat="m in matches[2].model track by $index" ng-mouseenter="selectActive($index)" role="option" ng-class="matches[2].model.length < 3? 'col-md-6': 'col-md-4'">	
 				<div ng-class="{ 'saytImage-container-first': $first, 'saytImage-container-last': $last, 'saytImage-container-middle' : $middle }"  ng-if="m.type === 'products'">
 					<a href="{{m.url}}">
 						<img class="img-responsive saytImage" ng-src="{{m.image}}" src="{{m.image}}"/>
 					</a>
 					<a class="saytLink saytProductTitle" href="{{m.url}}"
 					   tabindex="-1"
+					   ng-bind-html="m.item_number | cut:true:8:'...' | uibTypeaheadHighlight:query"
+					   ng-attr-title="{{m.item_number}}"></a> 
+					<a class="saytLink saytProductTitle" href="{{m.url}}"
+					   tabindex="-1"
 					   ng-bind-html="m.value | cut:true:50:'...' | uibTypeaheadHighlight:query"
 					   ng-attr-title="{{m.value}}"></a>
+
 				 </div>
 			</div>
 		</div>

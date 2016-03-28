@@ -7,13 +7,16 @@ angular.module('groupByDemo.util.settings', [])
 
 		settings['SAYT Display Fields'] = {
 			image : "product_images",
+			product_type : "product_type",
 			title : "title",
 			brand : "brand",
-			url : "url"
+			url : "url",
+			item_number: "p_item_number"
 		};
 
 		settings['Display Fields'] = {
 			image : "product_images",
+			product_type : "product_type",
 			title : "title",
 			brand : "brand",
 			url : "url"
@@ -82,75 +85,74 @@ angular.module('groupByDemo.util.settings', [])
 		settings['Nav Menu'] = [
 			{ displayName: "Jewellery", searchTerm: "jewellery", submenu: 
 				[
-					{ value: "Products" },
-					{ value: "Brands" },
-					{ value: "Quick Links" },
-					{ value: "Special Pricing" }
+					{ value: "Beads & Charms" },
+					{ value: "Bracelets" },
+					{ value: "Brooches" },
+					{ value: "Earrings" },
+					{ value: "Jewellery Sets" },
+					{ value: "Men's Jewellery" },
+					{ value: "Necklaces" },
 				]
 			},
 			{ displayName: "Beauty", searchTerm: "Beauty",  submenu: 
 				[
-					{ value: "Cookware & Bakeware" },
-					{ value: "Cutlery" },
-					{ value: "Kitchen Appliances & Electrics", displayName: "Appliances & Electrics" },
-					{ value: "Kitchen Accessories", displayName: "Accessories" }
+					{ value: "Bath & Body" },
+					{ value: "Makeup" },
+					{ value: "Hair Care" },
+					{ value: "Nails" }
 				]
 			},
 			{ displayName: "Fashion", searchTerm: "decor", submenu: 
 				[
-					{ value: "Pillows & Throws" },
-					{ value: "Candle Holders & Vases" },
-					{ value: "Wall Decor & Mirrors" },
-					{ value: "Home Accessories" }
+					{ value: "Accessories" },
+					{ value: "Activewear" },
+					{ value: "Benchwear" },
+					{ value: "Bottoms" }
 				]
 			},
-			{ displayName: "Handbags & Shoes", searchTerm: "handbags shoes", submenu: 
+			{ displayName: "Handbags & Shoes", searchTerm: "shoes", submenu: 
 				[
-					{ value: "Bedding" },
+					{ value: "Handbags" },
+					{ value: "Girls' Shoes" },
+					{ value: "Women's Shoes" },
+					{ value: "Boys' Shoes" },
+					{ value: "Men's Shoes" }
+				]
+			},
+			{ displayName: "Home", searchTerm: "bed", submenu: 
+				[
 					{ value: "Bath" },
-				]
-			},
-			{ displayName: "Home", searchTerm: "grill", submenu: 
-				[
-					{ value: "Outdoor Entertaining", displayName: "Entertaining" },
-					{ value: "Outdoor Accessories", displayName: "Accessories" },
-					{ value: "Outdoor Dining Furniture", displayName: "Dining" }
+					{ value: "Bedding" },
+					{ value: "Pilow" },
+					{ value: "Furniture" }
 				]
 			},	
-			{ displayName: "Kitchen", searchTerm: "grill", submenu: 
+			{ displayName: "Kitchen", searchTerm: "kitchen", submenu: 
 				[
-					{ value: "Outdoor Entertaining", displayName: "Entertaining" },
-					{ value: "Outdoor Accessories", displayName: "Accessories" },
-					{ value: "Outdoor Dining Furniture", displayName: "Dining" }
+					{ value: "Baking" },
+					{ value: "Kitchen Accessories" },
+					{ value: "Food Storage" }
 				]
 			},
-			{ displayName: "Electronics", searchTerm: "grill", submenu: 
+			{ displayName: "Electronics", searchTerm: "Tablets accessories", submenu: 
 				[
-					{ value: "Outdoor Entertaining", displayName: "Entertaining" },
-					{ value: "Outdoor Accessories", displayName: "Accessories" },
-					{ value: "Outdoor Dining Furniture", displayName: "Dining" }
+					{ value: "Tablets & Accessories"},
+					{ value: "Computers & Accessories"},
+					{ value: "Phones & Accessories"}
 				]
 			},
-			{ displayName: "NHL Shop", searchTerm: "grill", submenu: 
+			{ displayName: "NHL Shop", searchTerm: "nhl jersey", submenu: 
 				[
-					{ value: "Outdoor Entertaining", displayName: "Entertaining" },
-					{ value: "Outdoor Accessories", displayName: "Accessories" },
-					{ value: "Outdoor Dining Furniture", displayName: "Dining" }
+					{ value: "Toronto Maple Leafs"},
+					{ value: "Montreal Canadiens"},
+					{ value: "Vancouver Canucks"},
+					{ value: "Ottawa Senators"},
+					{ value: "Edmonton Oilers" }
 				]
 			},
-			{ displayName: "Clearance", searchTerm: "grill", submenu: 
-				[
-					{ value: "Outdoor Entertaining", displayName: "Entertaining" },
-					{ value: "Outdoor Accessories", displayName: "Accessories" },
-					{ value: "Outdoor Dining Furniture", displayName: "Dining" }
-				]
+			{ displayName: "Clearance", searchTerm: "Clearance", submenu: []
 			},
-			{ displayName: "More", searchTerm: "grill", submenu: 
-				[
-					{ value: "Outdoor Entertaining", displayName: "Entertaining" },
-					{ value: "Outdoor Accessories", displayName: "Accessories" },
-					{ value: "Outdoor Dining Furniture", displayName: "Dining" }
-				]
+			{ displayName: "More", searchTerm: "vitamin", submenu: []
 			}
 		];
 		settings.Personalization = {

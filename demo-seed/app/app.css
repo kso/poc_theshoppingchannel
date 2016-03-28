@@ -1,5 +1,48 @@
 @import url("//fonts.googleapis.com/css?family=Lobster");
 
+@font-face {
+font-family: 'Avenir LT Std 95 Black';
+font-style: normal;
+font-weight: normal;
+src: local('Avenir LT Std 95 Black'), url('/assets/AvenirLTStd-Black.woff') format('woff');
+}
+
+
+@font-face {
+font-family: 'Avenir LT Std 45 Book';
+font-style: normal;
+font-weight: normal;
+src: local('Avenir LT Std 45 Book'), url('/assets/AvenirLTStd-Book.woff') format('woff');
+}
+
+
+@font-face {
+font-family: 'Avenir LT Std 85 Heavy';
+font-style: normal;
+font-weight: normal;
+src: local('Avenir LT Std 85 Heavy'), url('/assets/AvenirLTStd-Heavy.woff') format('woff');
+}
+
+
+@font-face {
+font-family: 'Avenir LT Std 35 Light';
+font-style: normal;
+font-weight: normal;
+src: local('Avenir LT Std 35 Light'), url('/assets/AvenirLTStd-Light.woff') format('woff');
+}
+
+
+@font-face {
+font-family: 'Avenir LT Std 65 Medium';
+font-style: normal;
+font-weight: normal;
+src: local('Avenir LT Std 65 Medium'), url('/assets/AvenirLTStd-Medium.woff') format('woff');
+}
+
+/** { font-family: verdana;}*/
+
+* { font-family: 'Avenir LT Std 65 Medium', 'Helvetica Neue', Helvetica, Arial, sans-serif }
+
 body {
 	padding: 110px 15px 0px 15px;
 	overflow-y: scroll;
@@ -12,16 +55,24 @@ body.modal-open {
 
 .navbar-inverse {
 	background: #e2e2e4;
+	border-bottom: 1px solid #ddd;
+}
+
+.accent-title {
+	font-family: 'Avenir LT Std 95 Black';
+	color: #963093;
 }
 
 .section-title {
-	font-family: 'Lobster', cursive;
-	font-weight: bold;
+	font-family: 'Avenir LT Std 35 Light';
+	color: #555;
+	/*font-weight: bold;*/
 	line-height: 1.1;
 	font-size: 26px;
 	margin-top: 0px;
 	padding: 15px;
 	float: left;
+	text-transform: uppercase;
 }
 
 .section-recommendations {

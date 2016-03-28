@@ -34,7 +34,7 @@ angular.module('groupByDemo.typeahead', [])
 
       // The uib-typeahead expects data in arrays, so we need to restructure.
       //  The SAYT template takes nested arrays into consideration
-      var arrayResponse = [[],[],[]]; //searchTerms, Navigation, Products
+      var arrayResponse = [[],[],[],{}]; //searchTerms, Navigation, Products
 
       var firstSuggestion = "";
 
@@ -57,7 +57,8 @@ angular.module('groupByDemo.typeahead', [])
               item.scopedURLs = [];
               for(var scope_idx = 0; scope_idx < item.scopes.length; scope_idx ++){
                 // to-do: map refinement to endeca dimval
-                item.scopedURLs.push( searchChar + scopeChar + '/' + urlService.encodeSearch(item.value) + '/' +  encodeRefinement(item.scopes[scope_idx])) ;
+                // item.scopedURLs.push( searchChar + scopeChar + '/' + urlService.encodeSearch(item.value) + '/' +  encodeRefinement(item.scopes[scope_idx])) ;
+                item.scopedURLs.push( settingsService.search.liveSiteRoot + '/search/' + urlService.encodeSearch(item.value) + "+" + encodeRefinement(item.scopes[scope_idx]));
               }
             }
             item.type = 'searchTerms';
@@ -70,8 +71,8 @@ angular.module('groupByDemo.typeahead', [])
               console.time("fetchProductSuggestions");
 
               var scope = scopeIndex===undefined? "": item.additionalInfo[settingsService.search.saytScopedKeywordField][scopeIndex];
-
               var refinements = undefined;
+
               if(scopeIndex !== undefined) {
                 refinements = [
                   {
@@ -88,6 +89,10 @@ angular.module('groupByDemo.typeahead', [])
               apiService.search(getProductSearchParameters(this.value, refinements)).then(function(response) {
                 console.timeEnd("fetchProductSuggestions");
                 var displayFields = settingsService['SAYT Display Fields'];
+                console.log(response.data.template);
+
+                searchTemplate.length = 0;
+                searchTemplate.push(response.data.template);
 
                 if (response.data.records){
 
@@ -100,18 +105,22 @@ angular.module('groupByDemo.typeahead', [])
                         newProd.value = product.allMeta[displayFields.title];
                         newProd.url = settingsService.search.liveSiteRoot + '/' + product.allMeta[displayFields.url];
                         newProd.type = 'products';
+                        newProd.product_type = product.allMeta[displayFields.product_type];
                         newProd.price = product.allMeta[displayFields.price];
-                        newProd.image = urlService.findImage(product.allMeta[displayFields.image], "160x160");
-                        products.push(newProd);
+                        newProd.image = product.allMeta[displayFields.image]? urlService.findImage(product.allMeta[displayFields.image], "160x160"):"/assets/no-img.png";
+                        newProd.item_number = product.allMeta[displayFields.item_number].slice(0,3) + "-" + product.allMeta[displayFields.item_number].slice(3,6);
+                        if(newProd.product_type !== undefined) {
+                          products.push(newProd);
+                        }
                     }
                   }
 
-                  vm.saytdata[2] = products;
                   console.log("fetchProductSuggestions", vm.saytdata);
                 }
               }); 
             };
         }
+
         arrayResponse[0] = response.data.result.searchTerms;
       }
   
@@ -158,18 +167,37 @@ angular.module('groupByDemo.typeahead', [])
 
       // Products
       var products = vm.saytdata.length > 0 ? vm.saytdata[2].slice() : [];
+      var searchTemplate = vm.saytdata.length > 2 ? vm.saytdata[3].slice() : [];
 
       var productQuery = firstSuggestion.length === 0 ? val : firstSuggestion;
 
       //don't make repeated product queries for the same thing. The first keyword doesn't change that often
-      if(vm.lastProductSearch !== productQuery){
+      if(true /*vm.lastProductSearch !== productQuery*/){
 
         vm.lastProductSearch = productQuery;
+
+        // check if query is a item number search
+        var regex = new RegExp(/^\d\d\d( )?-?\d?\d?\d?$/i);
+        var wildcard = false;
+        if(regex.test(productQuery)) {
+          productQuery = productQuery.replace(/\D/g, '');
+        }
+
+        // if number only with more than 3 digits, enable wildcard search for matching item numbers
+        regex = new RegExp(/^[0-9]*$/)
+        if(regex.test(productQuery) && productQuery.length > 2) {
+          wildcard = true;
+          productQuery += "*";
+        }
+
         console.time("saytProducts");
-        apiService.search(getProductSearchParameters(productQuery)).then( function(response) {
+        apiService.search(getProductSearchParameters(productQuery, [], wildcard)).then( function(response) {
               console.timeEnd("saytProducts");
               var displayFields = settingsService['SAYT Display Fields'];
 
+              // update template
+              searchTemplate.length = 0;
+              searchTemplate.push(response.data.template); 
 
               if (response.data.records){
 
@@ -178,15 +206,20 @@ angular.module('groupByDemo.typeahead', [])
                 products.length = 0;
 
                 for (var product_idx = 0; product_idx < response.data.records.length; product_idx++){
+
                   var product = response.data.records[product_idx];
                   if (product.allMeta){
                       var newProd = {};
                       newProd.value = product.allMeta[displayFields.title];
                       newProd.url = settingsService.search.liveSiteRoot + '/'+ product.allMeta[displayFields.url];
                       newProd.type = 'products';
+                      newProd.product_type = product.allMeta[displayFields.product_type];
                       newProd.price = product.allMeta[displayFields.price];
-                      newProd.image = urlService.findImage(product.allMeta[displayFields.image], "160x160");
-                      products.push(newProd);
+                      newProd.image = product.allMeta[displayFields.image]? urlService.findImage(product.allMeta[displayFields.image], "160x160"):"/assets/no-img.png";
+                      newProd.item_number = product.allMeta[displayFields.item_number].slice(0,3) + "-" + product.allMeta[displayFields.item_number].slice(3,6);
+                      if(newProd.product_type !== undefined) {
+                        products.push(newProd);
+                      }
                   }
                 }
               }
@@ -194,6 +227,7 @@ angular.module('groupByDemo.typeahead', [])
       }
 
       arrayResponse[2] = products;
+      arrayResponse[3] = searchTemplate;
 
       //if the request was cancelled after we got the response, suppress the results
       if(canceller.promise.$$state.status !== 0){
@@ -218,7 +252,7 @@ angular.module('groupByDemo.typeahead', [])
     });
   };
 
-  var getProductSearchParameters = function (searchTerm, refinements){
+  var getProductSearchParameters = function (searchTerm, refinements, wildcard=false){
 
     var refinement_parameter = [];
 
@@ -228,7 +262,8 @@ angular.module('groupByDemo.typeahead', [])
       query : searchTerm,
       refinements : refinement_parameter,
       fields: settingsService.getNames(settingsService['SAYT Display Fields']),
-      customUrlParams: { "key":"source","value":"sayt" }      
+      customUrlParams: { "key":"source","value":"sayt" },
+      wildcardSearchEnabled: wildcard
     };
 
     if(refinements !== undefined) {
@@ -248,38 +283,6 @@ angular.module('groupByDemo.typeahead', [])
     return parameters;
 
   };
-
-  // vm.fetchProductSuggestions = function(keyword, refinements) {
-  //   console.log("fetchProductSuggestions",keyword,refinements);
-  //   console.time("fetchProductSuggestions");
-
-  //       apiService.search(keyword).then( function(response) {
-  //         console.timeEnd("fetchProductSuggestions");
-  //         var displayFields = settingsService['SAYT Display Fields'];
-
-  //         if (response.data.records){
-
-  //           response.data.records = merchandisingService.curateResults(productQuery, [], response.data.records);
-  //           products.length = 0;
-
-  //           for (var product_idx = 0; product_idx < response.data.records.length; product_idx++){
-  //             var product = response.data.records[product_idx];
-  //             if (product.allMeta){
-  //                 var newProd = {};
-  //                 newProd.value = product.allMeta[displayFields.title];
-  //                 newProd.url = settingsService.search.liveSiteRoot + '/' + product.allMeta[displayFields.url];
-  //                 newProd.type = 'products';
-  //                 newProd.price = product.allMeta[displayFields.price];
-  //                 newProd.image = urlService.findImage(product.allMeta[displayFields.image], "160x160");
-  //                 products.push(newProd);
-  //             }
-  //           }
-
-  //           vm.saytdata[2] = products;
-  //           console("fetchProductSuggestions", vm.saytdata);
-  //         }
-  //       }); 
-  // };
 
   var redirect = function(label){
 
