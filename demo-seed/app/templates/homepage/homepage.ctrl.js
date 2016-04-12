@@ -33,12 +33,17 @@ angular.module('groupByDemo.templates', [])
 				else {
 					day = 30;
 				}
-
+				
 				// change month to string and pad 0
 				if(month < 10) {
 					month = "0"+month;
 				}
-				
+											
+			}
+
+
+			if(day < 10) {
+				day = "0"+day;
 			}
 			pastSpecials.push("https://src.tscimg.ca/Content/en_CA/Images/Category/Homepage/" + fullYear +"/" + month + "/" + day + "/HP_MN1_" + year + month + day +".jpg");
 		}
